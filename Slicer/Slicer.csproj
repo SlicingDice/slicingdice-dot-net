@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{375CE479-5E7B-4FDA-858E-9C044FEFD65B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Slicer</RootNamespace>
+    <AssemblyName>SlicingDice</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\HandlerResponse.cs" />
+    <Compile Include="Core\Requester.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SlicingDice.cs" />
+    <Compile Include="Utils\Exceptions\Account\AccountPaymentRequiredException.cs" />
+    <Compile Include="Utils\Exceptions\Account\AccountMissingPaymentMethodException.cs" />
+    <Compile Include="Utils\Exceptions\Account\AccountDisabledException.cs" />
+    <Compile Include="Utils\Exceptions\Account\AccountBannedException.cs" />
+    <Compile Include="Utils\Exceptions\Auth\AuthInvalidRemoteAddrException.cs" />
+    <Compile Include="Utils\Exceptions\Auth\CustomKeyRouteNotPermittedException.cs" />
+    <Compile Include="Utils\Exceptions\Auth\CustomKeyNotPermittedException.cs" />
+    <Compile Include="Utils\Exceptions\Auth\CustomKeyInvalidOperationException.cs" />
+    <Compile Include="Utils\Exceptions\Auth\CustomKeyInvalidPermissionForFieldException.cs" />
+    <Compile Include="Utils\Exceptions\Auth\AuthInvalidRemoteException.cs" />
+    <Compile Include="Utils\Exceptions\Auth\AuthAPIKeyException.cs" />
+    <Compile Include="Utils\Exceptions\Auth\AuthMissingHeaderException.cs" />
+    <Compile Include="Utils\Exceptions\Auth\AuthInvalidAPIKeyException.cs" />
+    <Compile Include="Utils\Exceptions\Auth\AuthIncorrectPermissionException.cs" />
+    <Compile Include="Utils\Exceptions\Client\InvalidFieldDescriptionException.cs" />
+    <Compile Include="Utils\Exceptions\Client\InvalidFieldNameException.cs" />
+    <Compile Include="Utils\Exceptions\Client\InvalidFieldException.cs" />
+    <Compile Include="Utils\Exceptions\Client\InvalidQueryException.cs" />
+    <Compile Include="Utils\Exceptions\Client\MaxLimitException.cs" />
+    <Compile Include="Utils\Exceptions\Client\InvalidQueryTypeException.cs" />
+    <Compile Include="Utils\Exceptions\Field\FieldAlreadyExistsException.cs" />
+    <Compile Include="Utils\Exceptions\Field\FieldRangeLimitException.cs" />
+    <Compile Include="Utils\Exceptions\Field\FieldDecimalLimitException.cs" />
+    <Compile Include="Utils\Exceptions\Field\FieldInvalidCardinalityException.cs" />
+    <Compile Include="Utils\Exceptions\Field\FieldInvalidDescriptionException.cs" />
+    <Compile Include="Utils\Exceptions\Field\FieldInvalidNameException.cs" />
+    <Compile Include="Utils\Exceptions\Field\FieldInvalidApiNameException.cs" />
+    <Compile Include="Utils\Exceptions\Field\FieldStorageValueException.cs" />
+    <Compile Include="Utils\Exceptions\Field\FieldDecimalTypeException.cs" />
+    <Compile Include="Utils\Exceptions\Field\FieldTimeSeriesSystemLimitException.cs" />
+    <Compile Include="Utils\Exceptions\Field\FieldTimeSeriesLimitException.cs" />
+    <Compile Include="Utils\Exceptions\Field\FieldTypeException.cs" />
+    <Compile Include="Utils\Exceptions\Field\FieldMissingParamException.cs" />
+    <Compile Include="Utils\Exceptions\Field\FieldLimitException.cs" />
+    <Compile Include="Utils\Exceptions\Field\FieldIntegerValuesException.cs" />
+    <Compile Include="Utils\Exceptions\Index\QueryTimeSeriesInvalidPrecisionHoursException.cs" />
+    <Compile Include="Utils\Exceptions\Index\QueryTimeSeriesInvalidPrecisionMinutesException.cs" />
+    <Compile Include="Utils\Exceptions\Index\QueryTimeSeriesInvalidPrecisionSecondsException.cs" />
+    <Compile Include="Utils\Exceptions\Index\IndexFieldTimeseriesMissingValueException.cs" />
+    <Compile Include="Utils\Exceptions\Index\IndexFieldNumericInvalidValueException.cs" />
+    <Compile Include="Utils\Exceptions\Index\IndexFieldTimeSeriesInvalidParameterException.cs" />
+    <Compile Include="Utils\Exceptions\Index\IndexFieldStringEmptyValueException.cs" />
+    <Compile Include="Utils\Exceptions\Index\IndexEntityKeyTypeException.cs" />
+    <Compile Include="Utils\Exceptions\Index\IndexEntityNameTooBigException.cs" />
+    <Compile Include="Utils\Exceptions\Index\IndexEntityValueTypeException.cs" />
+    <Compile Include="Utils\Exceptions\Index\IndexFieldLimitException.cs" />
+    <Compile Include="Utils\Exceptions\Index\IndexFieldNameTypeException.cs" />
+    <Compile Include="Utils\Exceptions\Index\IndexFieldNotActiveException.cs" />
+    <Compile Include="Utils\Exceptions\Index\IndexFieldTypeException.cs" />
+    <Compile Include="Utils\Exceptions\Index\IndexFieldValueTooBigException.cs" />
+    <Compile Include="Utils\Exceptions\Index\IndexIdLimitException.cs" />
+    <Compile Include="Utils\Exceptions\Index\IndexLimitException.cs" />
+    <Compile Include="Utils\Exceptions\Index\IndexDateFormatException.cs" />
+    <Compile Include="Utils\Exceptions\FieldCreateInternalException.cs" />
+    <Compile Include="Utils\Exceptions\SlicingDiceException.cs" />
+    <Compile Include="Utils\Exceptions\InvalidSlicingDiceKeysException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryAggregationInvalidParameterException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryCountInvalidParameterException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryDataExtractionFieldLimitException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryBadAggsFormationException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryDataExtractionLimitValueTooBigException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryExistsMissingIdsException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryDataExtractionLimitValueException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryDataExtractionLimitAndPageTokenValueException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryDataExtractionPageTokenValueException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryExistsEntityEmptyException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryAggregationInvalidFilterQueryException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QuerySavedInvalidNameException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QuerySavedInvalidQueryValueException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QuerySavedInvalidCachePeriodValueException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryTopValuesParameterEmptyException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryInvalidFormatException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QuerySavedAlreadyExistsException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryMissingNameParamException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryDateFormatException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryEventCountQueryException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryContainsValueTypeException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryMultipleFiltersException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryFieldLimitException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryFieldNotActiveException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryIncompleteException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryIncorrectOperatorUsageException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryExistsEntityLimitException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryIntegerException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryInvalidAggFilterException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryContainsNumericException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryMetricsTypeException.cs" />
+    <Compile Include="Utils\Exceptions\Query\MethodNotAllowedException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QuerySavedInvalidTypeException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QuerySavedNotExistsException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryTimeSeriesException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryMetricsLevelException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryInvalidTypeException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryLevelLimitException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryMissingOperatorException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryMissingQueryException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryTypeException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryMissingTypeParamException.cs" />
+    <Compile Include="Utils\Exceptions\Query\QueryInvalidOperatorException.cs" />
+    <Compile Include="Utils\Exceptions\Request\RequestRateLimitException.cs" />
+    <Compile Include="Utils\Exceptions\Request\RequestMissingContentTypeException.cs" />
+    <Compile Include="Utils\Exceptions\Request\RequestInvalidJsonException.cs" />
+    <Compile Include="Utils\Exceptions\Request\RequestIncorrectContentTypeValueException.cs" />
+    <Compile Include="Utils\Exceptions\InternalException.cs" />
+    <Compile Include="Utils\Exceptions\SlicingDiceHttpException.cs" />
+    <Compile Include="Utils\URLResources.cs" />
+    <Compile Include="Utils\Validators\DataExtractionQueryValidator.cs" />
+    <Compile Include="Utils\Validators\FieldValidator.cs" />
+    <Compile Include="Utils\Validators\QueryCountValidator.cs" />
+    <Compile Include="Utils\Validators\QueryTopValuesValidator.cs" />
+    <Compile Include="Utils\Validators\SavedQueryValidator.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
