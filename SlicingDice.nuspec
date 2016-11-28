@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>SlicingDice</id>
+    <version>1.0.0</version>
+    <authors>SlicingDice LLC</authors>
+    <owners>SlicingDice LLC</owners>
+    <licenseUrl>https://www.github.com/SlicingDice/slicingdice-dot-net/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://www.github.com/SlicingDice/slicingdice-dot-net</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Official .NET/C# client for SlicingDice, Data Warehouse and Analytics Database as a Service.</description>
+    <releaseNotes>First release of the SlicingDice client.</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>slicingdice slicing dice data analysis business intelligence</tags>
+    <dependencies>
+      <dependency id="SampleDependency" version="1.0" />
+    </dependencies>
+  </metadata>
+</package>
