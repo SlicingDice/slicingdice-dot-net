@@ -5,6 +5,7 @@
 - CLIENT: Add missing API exceptions in client
 - CLIENT: Add support to custom key
 - CLIENT: Add endpoints keys level
+- CLIENT: Add tests for data extraction
 
 ## [0.3] - 2016-09-29
 ### Added
