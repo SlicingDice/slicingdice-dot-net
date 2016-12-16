@@ -215,7 +215,7 @@ namespace Slicer.Test
             }
             else if (queryType == "score")
             {
-                result = this.Client.Aggregation(queryData, test: true);
+                result = this.Client.Score(queryData, test: true);
             }
 
             return result;
