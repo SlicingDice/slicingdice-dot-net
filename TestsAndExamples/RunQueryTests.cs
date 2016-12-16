@@ -15,7 +15,9 @@ namespace Slicer.Test
                 "count_entity",
                 "count_event",
                 "top_values",
-                "aggregation"
+                "aggregation",
+                "result",
+                "score"
             };
 
             SlicingDiceTester sdTester = new SlicingDiceTester(
