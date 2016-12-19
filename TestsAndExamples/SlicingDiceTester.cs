@@ -209,6 +209,14 @@ namespace Slicer.Test
             {
                 result = this.Client.Aggregation(queryData, test: true);
             }
+            else if (queryType == "resutl")
+            {
+                result = this.Client.Result(queryData, test: true);
+            }
+            else if (queryType == "score")
+            {
+                result = this.Client.Score(queryData, test: true);
+            }
 
             return result;
         }
