@@ -6,6 +6,9 @@
 - CLIENT: Add support to custom key
 - CLIENT: Add endpoints keys level
 
+### Updated
+- Update API errors code
+
 ## [0.3] - 2016-09-29
 ### Added
 - CLIENT: Create method isMasterLeveKey in SlicingDice class
