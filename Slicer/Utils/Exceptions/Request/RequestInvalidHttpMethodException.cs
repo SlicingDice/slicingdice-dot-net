@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Exceptions
 {
-    public class IndexEntityKeyTypeException : SlicingDiceException
+    public class RequestInvalidHttpMethodException : SlicingDiceException
     {
-        public IndexEntityKeyTypeException()
+        public RequestInvalidHttpMethodException()
             : base() { }
 
-        public IndexEntityKeyTypeException(string message)
+        public RequestInvalidHttpMethodException(string message)
             : base(message) { }
 
-        public IndexEntityKeyTypeException(string format, params object[] args)
+        public RequestInvalidHttpMethodException(string format, params object[] args)
             : base(string.Format(format, args)) { }
 
     }

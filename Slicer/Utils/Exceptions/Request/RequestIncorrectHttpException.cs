@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Exceptions
 {
-    public class QueryContainsValueTypeException : SlicingDiceException
+    public class RequestIncorrectHttpException : SlicingDiceException
     {
-        public QueryContainsValueTypeException()
+        public RequestIncorrectHttpException()
             : base() { }
 
-        public QueryContainsValueTypeException(string message)
+        public RequestIncorrectHttpException(string message)
             : base(message) { }
 
-        public QueryContainsValueTypeException(string format, params object[] args)
+        public RequestIncorrectHttpException(string format, params object[] args)
             : base(string.Format(format, args)) { }
 
     }

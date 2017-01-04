@@ -7,6 +7,9 @@
 - CLIENT: Add endpoints keys level
 - CLIENT: Add tests for data extraction
 
+### Updated
+- Update API errors code
+
 ## [0.3] - 2016-09-29
 ### Added
 - CLIENT: Create method isMasterLeveKey in SlicingDice class

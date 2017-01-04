@@ -31,6 +31,8 @@ namespace Slicer.Core
                     throw new AuthIncorrectPermissionException(message);
                 case 14:
                     throw new AuthInvalidRemoteAddrException(message);
+                case 15:
+                    throw new CustomKeyInvalidFieldCreationException(message);
                 case 16:
                     throw new CustomKeyInvalidPermissionForFieldException(message);
                 case 17:
@@ -39,6 +41,8 @@ namespace Slicer.Core
                     throw new CustomKeyNotPermittedException(message);
                 case 19:
                     throw new CustomKeyRouteNotPermittedException(message);
+                case 20:
+                    throw new DemoApiInvalidEndpointException(message);
                 // Request validations (20 - 29)
                 case 21:
                     throw new RequestMissingContentTypeException(message);
@@ -48,6 +52,14 @@ namespace Slicer.Core
                     throw new RequestRateLimitException(message);
                 case 24:
                     throw new RequestInvalidJsonException(message);
+                case 25:
+                    throw new RequestInvalidHttpMethodException(message);
+                case 26:
+                    throw new RequestInvalidEndpointException(message);
+                case 27:
+                    throw new RequestIncorrectHttpException(message);
+                case 28:
+                    throw new RequestExceedLimitException(message);
                 // Account Errors (30 - 39)
                 case 30:
                     throw new AccountMissingPaymentMethodException(message);
@@ -82,15 +94,25 @@ namespace Slicer.Core
                     throw new FieldInvalidNameException(message);
                 case 51:
                     throw new FieldInvalidDescriptionException(message);
+                case 52:
+                    throw new FieldExceedDescriptionlengthException(message);
                 case 53:
                     throw new FieldInvalidCardinalityException(message);
                 case 54:
                     throw new FieldDecimalLimitException(message);
                 case 55:
                     throw new FieldRangeLimitException(message);
+                case 56:
+                    throw new FieldExceededMaxNameLenghtException(message);
+                case 57:
+                    throw new FieldExceededMaxApiNameLenghtException(message);
+                case 58:
+                    throw new FieldEmptyEntityIdException(message);
+                case 59:
+                    throw new FieldExceededPermitedValueException(message);
                 // Index errors (60 - 79)
                 case 60:
-                    throw new IndexEntityKeyTypeException(message);
+                    throw new IndexInvalidDecimalPlacesException(message);
                 case 61:
                     throw new IndexEntityValueTypeException(message);
                 case 62:
@@ -102,13 +124,15 @@ namespace Slicer.Core
                 case 65:
                  throw new IndexFieldValueTooBigException(message);
                 case 66:
-                    throw new IndexDateFormatException(message);
+                    throw new IndexTimeSeriesDateFormatException(message);
                 case 67:
                     throw new IndexFieldNotActiveException(message);
                 case 68:
                     throw new IndexIdLimitException(message);
                 case 69:
                     throw new IndexFieldLimitException(message);
+                case 70:
+                    throw new IndexDateFormatException(message);
                 case 71:
                     throw new IndexFieldStringEmptyValueException(message);
                 case 72:
@@ -123,6 +147,10 @@ namespace Slicer.Core
                     throw new QueryTimeSeriesInvalidPrecisionMinutesException(message);
                 case 77:
                     throw new QueryTimeSeriesInvalidPrecisionHoursException(message);
+                case 78:
+                    throw new QueryDateFormatException(message);
+                case 79:
+                    throw new QueryRelativeIntervalException(message);
                 // Query errors (80 - 109)
                 case 80:
                     throw new QueryMissingQueryException(message);
@@ -143,7 +171,7 @@ namespace Slicer.Core
                 case 88:
                     throw new QueryEventCountQueryException(message);
                 case 89:
-                    throw new QueryDateFormatException(message);
+                    throw new QueryInvalidMetricException(message);
                 case 90:
                     throw new QueryIntegerException(message);
                 case 91:
@@ -166,8 +194,6 @@ namespace Slicer.Core
                     throw new QueryExistsEntityLimitException(message);
                 case 100:
                     throw new QueryMultipleFiltersException(message);
-                case 101:
-                    throw new QueryContainsValueTypeException(message);
                 case 102:
                     throw new QueryMissingNameParamException(message);
                 case 103:
@@ -208,6 +234,18 @@ namespace Slicer.Core
                     throw new QueryAggregationInvalidParameterException(message);
                 case 121:
                     throw new QueryAggregationInvalidFilterQueryException(message);
+                case 122:
+                    throw new QueryInvalidMinfreqException(message);
+                case 123:
+                    throw new QueryExceededMaxNumberQuerysException(message);
+                case 124:
+                    throw new QueryInvalidOperatorUsageException(message);
+                case 125:
+                    throw new QueryInvalidParameterUsageException(message);
+                case 126:
+                    throw new QueryParameterInvalidFieldUsageException(message);
+                case 127:
+                    throw new QueryInvalidFieldUsageException(message);
                 // Internal errors (110 - 120)
                 case 130:
                     throw new InternalException(message);
