@@ -11,6 +11,7 @@ namespace Slicer.Test
         public static void Main(string[] args)
         {
             bool _canceled = false;
+            // The query types to test
             List<string> queryTypes = new List<string>(){
                 "count_entity",
                 "count_event",
@@ -20,8 +21,10 @@ namespace Slicer.Test
                 "score"
             };
 
+            // Testing class with demo API key
+            // To get a new Demo API key visit: http://panel.slicingdice.com/docs/#api-details-api-connection-api-keys-demo-key
             SlicingDiceTester sdTester = new SlicingDiceTester(
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfX3NhbHQiOiJkZW1vMW0iLCJwZXJtaXNzaW9uX2xldmVsIjozLCJwcm9qZWN0X2lkIjoyMCwiY2xpZW50X2lkIjoxMH0.xRBHeDxTzYAgFyuU94SWFbjITeoxgyRCQGdIee8qrLA",
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfX3NhbHQiOiJkZW1vODRtIiwicGVybWlzc2lvbl9sZXZlbCI6MywicHJvamVjdF9pZCI6MjQ1LCJjbGllbnRfaWQiOjEwfQ.iJ2GH_OrgunwK8-5iEov7IZbAHObLVNnNzPTcrrpDtY",
                 verbose: false);
 
             Console.CancelKeyPress += delegate(object sender, ConsoleCancelEventArgs e)
@@ -37,6 +40,7 @@ namespace Slicer.Test
             showResults(sdTester);
         }
 
+        // Show test results
         private static void showResults(SlicingDiceTester sdTester)
         {
             System.Console.WriteLine("\n");
