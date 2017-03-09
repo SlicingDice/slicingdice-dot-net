@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Validators
 {
+    // Validates data extraction queries
     public class DataExtractionQueryValidator
     {
         Dictionary<string, dynamic> Query;
@@ -15,6 +16,7 @@ namespace Slicer.Utils.Validators
             this.Query = query;
         }
 
+        // Validate data extraction query, if the query is valid will return true
         public bool Validator()
         {
             if (this.Query.ContainsKey("limit"))

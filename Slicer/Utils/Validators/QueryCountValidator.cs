@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Validators
 {
+    // Validates count query
     public class QueryCountValidator
     {
         Dictionary<string, dynamic> Query;
@@ -14,6 +15,7 @@ namespace Slicer.Utils.Validators
         {
             this.Query = query;
         }
+        // Validates query, if query is valid returns true
         public bool Validator()
         {
             if (this.Query.Count > 10)

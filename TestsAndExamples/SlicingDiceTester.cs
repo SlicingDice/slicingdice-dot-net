@@ -27,14 +27,19 @@ namespace Slicer.Test
         {
             this.Client = new SlicingDice(masterKey: apiKey);
             this.Verbose = verbose;
+            // Path of examples directory
             this.Path = Directory.GetCurrentDirectory().Replace(@"\bin\Debug", @"\examples\");
+            // Extension of examples files
             this.Extension = ".json";
             this.NumSuccesses = 0;
             this.NumFails = 0;
-            this.SleepTime = 5;
+            // Sleep time in seconds
+            this.SleepTime = 10;
             this.FailedTests = new List<dynamic>();
         }
 
+        /// <summary>Run all the tests for a determined query type</summary>
+        /// <param name="queryType">The type of the query to test</param>
         public void RunTests(string queryType)
         {
             List<Dictionary<string, dynamic>> testData = this.LoadTestData(queryType);
@@ -74,10 +79,14 @@ namespace Slicer.Test
             }
         }
 
+        // Erase field translation dictionary
         private void EmptyFieldTranslation()
         {
             this.FieldTranslation = new Dictionary<string, dynamic>();
         }
+
+        /// <summary>Load test data from examples files</summary>
+        /// <param name="queryType">Type of the query</param>
         private List<Dictionary<string, dynamic>> LoadTestData(string queryType)
         {
             string queriesText = string.Empty;
@@ -88,6 +97,8 @@ namespace Slicer.Test
             return JsonConvert.DeserializeObject<List<Dictionary<string, dynamic>>>(queriesText);
         }
 
+        /// <summary>Create fields for a given test</summary>
+        /// <param name="test">Dictionary containing test name, fields metadata, data to be indexed, query, and expected results.</param>
         private void CreateFields(Dictionary<string, dynamic> test)
         {
             JArray fieldsData = test["fields"];
@@ -116,6 +127,10 @@ namespace Slicer.Test
             }
         }
 
+        /// <summary> Add timestamp to field name
+        /// This technique allows the same test suite to be executed over and over again, since each execution will use different field names.
+        /// </summary>
+        /// <param name="field">Dicitonary containing the field to append timestamp</param>
         private void AddTimestampToFieldName(Dictionary<string, dynamic> field)
         {
             string oldName = string.Format("\"{0}\"", field["api-name"]);
@@ -128,11 +143,14 @@ namespace Slicer.Test
             this.FieldTranslation[oldName] = newName;
         }
 
+        // Get current timestamp in string format
         private string GetTimestamp()
         {
             return DateTime.Now.Ticks.ToString();
         }
 
+        ///<summary>Index test data on SlicingDice API</summary>
+        ///<param name="test">Dictionary containing test name, fields metadata, data to be indexed, query, and expected results.</param>
         private void IndexData(Dictionary<string, dynamic> test)
         {
             JObject indexObject = test["index"];
@@ -166,6 +184,7 @@ namespace Slicer.Test
             Thread.Sleep(this.SleepTime * 1000);
         }
 
+        // Translate field name to match field name with timestamp.
         private Dictionary<string, dynamic> TranslateFieldNames(Dictionary<string, dynamic> data){
             string dataString = JsonConvert.SerializeObject(data);
 
@@ -177,6 +196,9 @@ namespace Slicer.Test
             return JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(dataString);
         }
 
+        /// <summary>Execute a query on SlicingDice API</summary>
+        /// <param name="queryType">The type of the query</param>
+        /// <param name="test">Dictionary containing test name, fields metadata, data to be indexed, query, and expected results.</param>
         private Dictionary<string, dynamic> ExecuteQuery(string queryType, Dictionary<string, dynamic> test)
         {
             JObject testQuery = test["query"];
@@ -221,6 +243,7 @@ namespace Slicer.Test
             return result;
         }
 
+        // Compare expected result with the result obtained from SlicingDice API
         private void CompareResult(Dictionary<string, dynamic> test, Dictionary<string, dynamic> result)
         {
             Dictionary<string, dynamic> rawExpected = test["expected"].ToObject<Dictionary<string, dynamic>>();
