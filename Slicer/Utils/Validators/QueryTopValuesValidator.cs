@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Validators
 {
+    // Validates top values queries
     public class QueryTopValuesValidator
     {
         Dictionary<string, dynamic> Query;
@@ -14,6 +15,7 @@ namespace Slicer.Utils.Validators
         {
             this.Query = query;
         }
+        // Check if top values query exceeds query limit
         private bool ExceedsQueriesLimit(){
             if (this.Query.Count > 5)
             {
@@ -21,7 +23,7 @@ namespace Slicer.Utils.Validators
             }
             return false;
         }
-
+        // Validate if top values query exceeds fields limit
         private bool ExceedsFieldsLimit()
         {
             foreach (KeyValuePair<string, dynamic> data in this.Query)
@@ -34,6 +36,7 @@ namespace Slicer.Utils.Validators
             }
             return false;
         }
+        // Validate if top values query exceeds contains limit
         private bool ExceedsValuesContainsLimit()
         {
             foreach (KeyValuePair<string, dynamic> data in this.Query)
@@ -50,6 +53,7 @@ namespace Slicer.Utils.Validators
             }
             return false;
         }
+        // Validates top values query, if the query is valid returns true, otherwise return false
         public bool Validator()
         {
             if (!this.ExceedsQueriesLimit() && !this.ExceedsFieldsLimit() && !this.ExceedsValuesContainsLimit())

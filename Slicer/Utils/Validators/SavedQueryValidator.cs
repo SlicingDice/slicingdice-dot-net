@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Validators
 {
+    // Validates saved query
     public class SavedQueryValidator
     {
         Dictionary<string, dynamic> Query;
@@ -19,12 +20,14 @@ namespace Slicer.Utils.Validators
         {
             this.Query = query;
         }
+        // Check if saved query has a valid type
         private bool HasValidType()
         {
             var queryType = (string) this.Query["type"];
-            if (!this._listQueryTypes.Contains(queryType)) throw new InvalidQueryTypeException("This dictionary don't have query type valid.");
+            if (!this._listQueryTypes.Contains(queryType)) throw new InvalidQueryTypeException("This dictionary doesn't have a valid type.");
             return true;
         }
+        // Validates saved query, returns true if is valid
         public bool Validator()
         {
             return this.HasValidType();

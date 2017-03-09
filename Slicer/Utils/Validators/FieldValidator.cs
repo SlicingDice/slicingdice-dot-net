@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Validators
 {
+    // Validates field
     public class FieldValidator
     {
         Dictionary<string, dynamic> Query;
@@ -21,6 +22,7 @@ namespace Slicer.Utils.Validators
                 "decimal-time-series", "string-time-series"
             };
         }
+        // Check if field name is valid
         private void ValidateName()
         {
             if (!this.Query.ContainsKey("name"))
@@ -32,18 +34,20 @@ namespace Slicer.Utils.Validators
                 var nameField = (string) this.Query["name"];
                 if (nameField.Count() > 80)
                 {
-                    throw new InvalidFieldNameException("The field's name have a very big name.(Max: 80 chars)");
+                    throw new InvalidFieldNameException("The field's name have a very big content. (Max: 80 chars)");
                 }
             }
         }
+        // Check if field description is valid
         private void ValidateDescription()
         {
             var description = (string)this.Query["description"];
             if (description.Count() > 300)
             {
-                throw new InvalidFieldDescriptionException("The field's description have a very big name.(Max: 300chars)");
+                throw new InvalidFieldDescriptionException("The field's description have a very big content. (Max: 300chars)");
             }
         }
+        // Check if field has a valid type
         private void ValidateFieldType()
         {
             if (!this.Query.ContainsKey("type"))
@@ -53,10 +57,11 @@ namespace Slicer.Utils.Validators
             var fieldType = (string)this.Query["type"];
             if (!this.validTypesFields.Contains(fieldType))
             {
-                throw new InvalidFieldException("This field have a invalid type.");
+                throw new InvalidFieldException("This field has a invalid type.");
             }
         }
-        private void ValidateDecimalPlaces()
+        // Check if decimal field has a valid type
+        private void ValidateDecimalType()
         {
             var decimalTypes = new List<string>()
             {
@@ -65,9 +70,10 @@ namespace Slicer.Utils.Validators
             var typeField = (string) this.Query["type"];
             if (!decimalTypes.Contains(typeField))
             {
-                throw new InvalidFieldException("This field is only accepted on type 'decimal' or 'decimal-time-series'");
+                throw new InvalidFieldException("This field only accepts 'decimal' or 'decimal-time-series' types");
             }
         }
+        // Check if string field is valid
         private void CheckStringIntegrity()
         {
             if (!this.Query.ContainsKey("cardinality"))
@@ -84,11 +90,13 @@ namespace Slicer.Utils.Validators
                 throw new InvalidFieldException("The field 'cardinality' has invalid value.");
             }
         }
+        // Check if enumerate field is valid
         private void ValidateEnumerateType()
         {
             if (!this.Query.ContainsKey("range"))
                 throw new InvalidFieldException("The 'enumerate' type needs of the 'range' parameter.");
         }
+        // Validate a field, returns true if the field is valid
         public bool Validator()
         {
             this.ValidateName();
@@ -97,7 +105,7 @@ namespace Slicer.Utils.Validators
             if (typeField == "string") this.CheckStringIntegrity();
             if (typeField == "enumerated") this.ValidateEnumerateType();
             if (this.Query.ContainsKey("description")) this.ValidateDescription();
-            if (this.Query.ContainsKey("decimal-place")) this.ValidateDecimalPlaces();
+            if (this.Query.ContainsKey("decimal-place")) this.ValidateDecimalType();
             return true;
         }
     }

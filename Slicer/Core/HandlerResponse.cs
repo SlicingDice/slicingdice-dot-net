@@ -15,6 +15,7 @@ namespace Slicer.Core
         {
             this.Result = result;
         }
+        // Raise proper exception according to the error code
         private void RaiseError(Dictionary<string, dynamic> error)
         {
             var statusError = (int) error["status"];
@@ -256,6 +257,7 @@ namespace Slicer.Core
                     throw new SlicingDiceHttpException(message);
             }
         }
+        // Handle successful requests
         public bool RequestSuccessful()
         {
             if (this.Result.ContainsKey("errors"))
