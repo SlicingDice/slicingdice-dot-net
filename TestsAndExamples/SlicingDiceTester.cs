@@ -149,7 +149,7 @@ namespace Slicer.Test
             return DateTime.Now.Ticks.ToString();
         }
 
-        ///<summary>Index test data on Slicing Dice API</summary>
+        ///<summary>Index test data on SlicingDice API</summary>
         ///<param name="test">Dictionary containing test name, fields metadata, data to be indexed, query, and expected results.</param>
         private void IndexData(Dictionary<string, dynamic> test)
         {
@@ -196,7 +196,7 @@ namespace Slicer.Test
             return JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(dataString);
         }
 
-        /// <summary>Execute a query on Slicing Dice API</summary>
+        /// <summary>Execute a query on SlicingDice API</summary>
         /// <param name="queryType">The type of the query</param>
         /// <param name="test">Dictionary containing test name, fields metadata, data to be indexed, query, and expected results.</param>
         private Dictionary<string, dynamic> ExecuteQuery(string queryType, Dictionary<string, dynamic> test)
@@ -243,7 +243,7 @@ namespace Slicer.Test
             return result;
         }
 
-        // Compare expected result with the result obtained from Slicing Dice API
+        // Compare expected result with the result obtained from SlicingDice API
         private void CompareResult(Dictionary<string, dynamic> test, Dictionary<string, dynamic> result)
         {
             Dictionary<string, dynamic> rawExpected = test["expected"].ToObject<Dictionary<string, dynamic>>();
