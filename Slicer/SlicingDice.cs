@@ -18,7 +18,7 @@ namespace Slicer
         private int Timeout { get; set; }
         private Dictionary<string, string> Keys { get; set; }
 
-        private string _enviromentAddress = Environment.GetEnvironmentVariable("SD_ADDRESS_API", EnvironmentVariableTarget.Machine);
+        private string _enviromentAddress = Environment.GetEnvironmentVariable("SD_API_ADDRESS");
         private string _baseUrl = null;
         public SlicingDice(string masterKey=null, string customKey=null, string writeKey=null, string readKey=null, int timeout=60)
         {

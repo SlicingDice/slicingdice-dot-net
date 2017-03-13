@@ -28,7 +28,7 @@ namespace Slicer.Test
             this.Client = new SlicingDice(masterKey: apiKey);
             this.Verbose = verbose;
             // Path of examples directory
-            this.Path = Directory.GetCurrentDirectory().Replace(@"\bin\Debug", @"\examples\");
+            this.Path = Directory.GetCurrentDirectory().Replace(@"\bin\Debug", @"\examples\").Replace(@"/bin/Debug", @"/examples/");
             // Extension of examples files
             this.Extension = ".json";
             this.NumSuccesses = 0;
@@ -116,13 +116,13 @@ namespace Slicer.Test
             }
             System.Console.WriteLine(string.Format("  Creating {0} {1}", fields.Count, fieldOrFields));
 
-            foreach(Dictionary<string, dynamic> field in fields){
-                this.AddTimestampToFieldName(field);
-                this.Client.CreateField(field, test: true);
+            for(int i = 0; i < fields.Count; i++) {
+                this.AddTimestampToFieldName(fields[i]);
+                this.Client.CreateField(fields[i], test: true);
 
                 if (this.Verbose)
                 {
-                    System.Console.WriteLine(string.Format("    - {0}", field["api-name"]));
+                    System.Console.WriteLine(string.Format("    - {0}", fields[i]["api-name"]));
                 }
             }
         }
@@ -136,8 +136,8 @@ namespace Slicer.Test
             string oldName = string.Format("\"{0}\"", field["api-name"]);
 
             string timestamp = this.GetTimestamp();
-            field["name"] += timestamp;
-            field["api-name"] += timestamp;
+            field["name"] = field["name"] + timestamp;
+            field["api-name"] = field["api-name"] + timestamp;
 
             string newName = string.Format("\"{0}\"", field["api-name"]);
             this.FieldTranslation[oldName] = newName;
@@ -231,7 +231,7 @@ namespace Slicer.Test
             {
                 result = this.Client.Aggregation(queryData, test: true);
             }
-            else if (queryType == "resutl")
+            else if (queryType == "result")
             {
                 result = this.Client.Result(queryData, test: true);
             }

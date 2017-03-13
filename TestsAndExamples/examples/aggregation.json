@@ -980,7 +980,7 @@
             "status": "ignore",
             "result": {
                 "integer-test-field": {
-                    "avg": 1500000
+                    "avg": 1500000.0
                 }
             },
             "took": "ignore"
@@ -10354,7 +10354,7 @@
                                         "uniqueid-test-field": [
                                             {
                                                 "integer-test-field": {
-                                                    "avg": 1500000
+                                                    "avg": 1500000.0
                                                 },
                                                 "value": "value:matched_value",
                                                 "quantity": 100
@@ -44897,7 +44897,7 @@
             "result": {
                 "time-series-integer-test-field": [
                     {
-                        "avg": 1500000,
+                        "avg": 1500000.0,
                         "between": [
                             "2016-01-01T00:00:00Z",
                             "2016-01-02T00:00:00Z"
@@ -61367,7 +61367,7 @@
             "result": {
                 "time-series-integer-test-field": [
                     {
-                        "avg": 1500000,
+                        "avg": 1500000.0,
                         "between": [
                             "2016-01-01T00:00:00Z",
                             "2016-01-02T00:00:00Z"
