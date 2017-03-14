@@ -27,8 +27,8 @@ namespace Slicer.Test
         {
             this.Client = new SlicingDice(masterKey: apiKey);
             this.Verbose = verbose;
-            // Path of examples directory
-            this.Path = Directory.GetCurrentDirectory().Replace(@"\bin\Debug", @"\examples\");
+            // Path of examples directory, the replace is needed to point to the correct path, and it works on Unix and Windows systems
+            this.Path = Directory.GetCurrentDirectory().Replace(@"\bin\Debug", @"\examples\").Replace(@"/bin/Debug", @"/examples/");
             // Extension of examples files
             this.Extension = ".json";
             this.NumSuccesses = 0;
@@ -116,7 +116,8 @@ namespace Slicer.Test
             }
             System.Console.WriteLine(string.Format("  Creating {0} {1}", fields.Count, fieldOrFields));
 
-            foreach(Dictionary<string, dynamic> field in fields){
+            for(int i = 0; i < fields.Count; i++) {
+                Dictionary<string, dynamic> field = fields[i];
                 this.AddTimestampToFieldName(field);
                 this.Client.CreateField(field, test: true);
 
@@ -136,8 +137,8 @@ namespace Slicer.Test
             string oldName = string.Format("\"{0}\"", field["api-name"]);
 
             string timestamp = this.GetTimestamp();
-            field["name"] += timestamp;
-            field["api-name"] += timestamp;
+            field["name"] = field["name"] + timestamp;
+            field["api-name"] = field["api-name"] + timestamp;
 
             string newName = string.Format("\"{0}\"", field["api-name"]);
             this.FieldTranslation[oldName] = newName;
@@ -231,7 +232,7 @@ namespace Slicer.Test
             {
                 result = this.Client.Aggregation(queryData, test: true);
             }
-            else if (queryType == "resutl")
+            else if (queryType == "result")
             {
                 result = this.Client.Result(queryData, test: true);
             }
