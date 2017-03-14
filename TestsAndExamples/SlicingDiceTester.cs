@@ -27,7 +27,7 @@ namespace Slicer.Test
         {
             this.Client = new SlicingDice(masterKey: apiKey);
             this.Verbose = verbose;
-            // Path of examples directory
+            // Path of examples directory, the replace is needed to point to the correct path, and it works on Unix and Windows systems
             this.Path = Directory.GetCurrentDirectory().Replace(@"\bin\Debug", @"\examples\").Replace(@"/bin/Debug", @"/examples/");
             // Extension of examples files
             this.Extension = ".json";
@@ -117,12 +117,13 @@ namespace Slicer.Test
             System.Console.WriteLine(string.Format("  Creating {0} {1}", fields.Count, fieldOrFields));
 
             for(int i = 0; i < fields.Count; i++) {
-                this.AddTimestampToFieldName(fields[i]);
-                this.Client.CreateField(fields[i], test: true);
+                Dictionary<string, dynamic> field = fields[i];
+                this.AddTimestampToFieldName(field);
+                this.Client.CreateField(field, test: true);
 
                 if (this.Verbose)
                 {
-                    System.Console.WriteLine(string.Format("    - {0}", fields[i]["api-name"]));
+                    System.Console.WriteLine(string.Format("    - {0}", field["api-name"]));
                 }
             }
         }
