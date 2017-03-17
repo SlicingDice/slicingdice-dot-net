@@ -25,7 +25,7 @@ namespace Slicer.Test
         public List<dynamic> FailedTests { get; set; }
         public SlicingDiceTester(string apiKey, bool verbose = false)
         {
-            this.Client = new SlicingDice(masterKey: apiKey);
+            this.Client = new SlicingDice(masterKey: apiKey, usesTestEndpoint: true);
             this.Verbose = verbose;
             // Path of examples directory, the replace is needed to point to the correct path, and it works on Unix and Windows systems
             this.Path = Directory.GetCurrentDirectory().Replace(@"\bin\Debug", @"\examples\").Replace(@"/bin/Debug", @"/examples/");
@@ -119,7 +119,7 @@ namespace Slicer.Test
             for(int i = 0; i < fields.Count; i++) {
                 Dictionary<string, dynamic> field = fields[i];
                 this.AddTimestampToFieldName(field);
-                this.Client.CreateField(field, test: true);
+                this.Client.CreateField(field);
 
                 if (this.Verbose)
                 {
@@ -179,7 +179,7 @@ namespace Slicer.Test
                 }
             }
 
-            this.Client.Index(indexData, test: true);
+            this.Client.Index(indexData);
 
             // Wait a few seconds so the data can be indexed by SlicingDice
             Thread.Sleep(this.SleepTime * 1000);
@@ -218,27 +218,27 @@ namespace Slicer.Test
             Dictionary<string, dynamic> result = null;
             if (queryType == "count_entity")
             {
-                result = this.Client.CountEntity(queryData, test: true);
+                result = this.Client.CountEntity(queryData);
             }
             else if (queryType == "count_event")
             {
-                result = this.Client.CountEvent(queryData, test: true);
+                result = this.Client.CountEvent(queryData);
             }
             else if (queryType == "top_values")
             {
-                result = this.Client.TopValues(queryData, test: true);
+                result = this.Client.TopValues(queryData);
             }
             else if (queryType == "aggregation")
             {
-                result = this.Client.Aggregation(queryData, test: true);
+                result = this.Client.Aggregation(queryData);
             }
             else if (queryType == "result")
             {
-                result = this.Client.Result(queryData, test: true);
+                result = this.Client.Result(queryData);
             }
             else if (queryType == "score")
             {
-                result = this.Client.Score(queryData, test: true);
+                result = this.Client.Score(queryData);
             }
 
             return result;

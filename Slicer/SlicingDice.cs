@@ -20,11 +20,13 @@ namespace Slicer
 
         private string _enviromentAddress = Environment.GetEnvironmentVariable("SD_API_ADDRESS");
         private string _baseUrl = null;
-        public SlicingDice(string masterKey=null, string customKey=null, string writeKey=null, string readKey=null, int timeout=60)
+        private bool _usesTestEndpoint;
+        public SlicingDice(string masterKey=null, string customKey=null, string writeKey=null, string readKey=null, int timeout=60, bool usesTestEndpoint=false)
         {
             this.Keys = this.OrganizeKeys(masterKey, customKey, writeKey, readKey);
             this.Timeout = timeout;
             this._baseUrl = this.GetBaseUrl();
+            this._usesTestEndpoint = usesTestEndpoint;
         }
         private Dictionary<string, string> OrganizeKeys(string masterKey, string customKey, string writeKey, string readKey)
         {
@@ -166,9 +168,9 @@ namespace Slicer
             }
             return null;
         }
-        private string testWrapper(bool test)
+        private string testWrapper()
         {
-            if (test) return this._baseUrl + "/test";
+            if (this._usesTestEndpoint) return this._baseUrl + "/test";
             return this._baseUrl;
         }
 
@@ -186,44 +188,39 @@ namespace Slicer
         }
 
         /// <summary>Get all fields</summary>
-        /// <param name="test">if true it will use test end-point, otherwise will use production.</param>
-        public Dictionary<string, dynamic> GetFields(bool test = false)
+        public Dictionary<string, dynamic> GetFields()
         {
-            var url = this.testWrapper(test) + URLResources.Field;
+            var url = this.testWrapper() + URLResources.Field;
             return this.MakeRequest(url, false, 2);
         }
 
         /// <summary>Get all projects</summary>
-        /// <param name="test">if true it will use test end-point, otherwise will use production.</param>
-        public Dictionary<string, dynamic> GetProjects(bool test = false)
+        public Dictionary<string, dynamic> GetProjects()
         {
-            var url = this.testWrapper(test) + URLResources.Project;
+            var url = this.testWrapper() + URLResources.Project;
             return this.MakeRequest(url, false, 2);
         }
 
         /// <summary>Get a saved query</summary>
         /// <param name="savedQueryName">The name of the saved query that will be retrieved.</param>
-        /// <param name="test">if true it will use test end-point, otherwise will use production.</param>
-        public Dictionary<string, dynamic> GetSavedQuery(string savedQueryName, bool test = false)
+        public Dictionary<string, dynamic> GetSavedQuery(string savedQueryName)
         {
-            var url = this.testWrapper(test) + URLResources.QuerySaved + savedQueryName;
+            var url = this.testWrapper() + URLResources.QuerySaved + savedQueryName;
             return this.MakeRequest(url, false, 0);
         }
 
         /// <summary>Get all saved queries</summary>
-        /// <param name="test">if true it will use test end-point, otherwise will use production.</param>
-        public Dictionary<string, dynamic> GetSavedQueries(bool test = false)
+        public Dictionary<string, dynamic> GetSavedQueries()
         {
-            var url = this.testWrapper(test) + URLResources.QuerySaved;
+            var url = this.testWrapper() + URLResources.QuerySaved;
             return this.MakeRequest(url, false, 2);
         }
 
         /// <summary>Create a field on SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
-        /// <param name="test">if true it will use test end-point, otherwise will use production.</param>
-        public Dictionary<string, dynamic> CreateField(Dictionary<string, dynamic> query, bool test = false)
+        public Dictionary<string, dynamic> CreateField(Dictionary<string, dynamic> query)
         {
-            var url = this.testWrapper(test) + URLResources.Field;
+            var url = this.testWrapper() + URLResources.Field;
             var sdValidator = new FieldValidator(query);
             if (sdValidator.Validator()) return this.MakeRequest(url, query, false, 1);
             return null;
@@ -232,58 +229,52 @@ namespace Slicer
         /// <summary>Send a indexation command to SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
         /// <param name="autoCreateFields">if true SlicingDice API will create nonexistent fields automatically</param>
-        /// <param name="test">if true it will use test end-point, otherwise will use production.</param>
-        public Dictionary<string, dynamic> Index(Dictionary<string, dynamic> query, bool autoCreateFields = false, bool test = false)
+        public Dictionary<string, dynamic> Index(Dictionary<string, dynamic> query, bool autoCreateFields = false)
         {
             if (autoCreateFields)
             {
                 query.Add("auto-create-fields", autoCreateFields);
             }
-            var url = this.testWrapper(test) + URLResources.Index;
+            var url = this.testWrapper() + URLResources.Index;
             return this.MakeRequest(url, query, false, 1);
         }
         
         /// <summary>Makes a count entity query to SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
-        /// <param name="test">if true it will use test end-point, otherwise will use production.</param>
-        public Dictionary<string, dynamic> CountEntity(Dictionary<string, dynamic> query, bool test = false)
+        public Dictionary<string, dynamic> CountEntity(Dictionary<string, dynamic> query)
         {
-            var url = this.testWrapper(test) + URLResources.QueryCountEntity;
+            var url = this.testWrapper() + URLResources.QueryCountEntity;
             return this.CountQueryWrapper(url, query);
         }
 
         /// <summary>Makes a total query to SlicingDice API</summary>
-        /// <param name="test">if true it will use test end-point, otherwise will use production.</param>
-        public Dictionary<string, dynamic> CountEntityTotal(bool test = false)
+        public Dictionary<string, dynamic> CountEntityTotal()
         {
-            var url = this.testWrapper(test) + URLResources.QueryCountEntityTotal;
+            var url = this.testWrapper() + URLResources.QueryCountEntityTotal;
             return this.MakeRequest(url, false, 0);
         }
 
         /// <summary>Makes a count event query to SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
-        /// <param name="test">if true it will use test end-point, otherwise will use production.</param>
-        public Dictionary<string, dynamic> CountEvent(Dictionary<string, dynamic> query, bool test = false)
+        public Dictionary<string, dynamic> CountEvent(Dictionary<string, dynamic> query)
         {
-            var url = this.testWrapper(test) + URLResources.QueryCountEvent;
+            var url = this.testWrapper() + URLResources.QueryCountEvent;
             return this.CountQueryWrapper(url, query);
         }
 
         /// <summary>Makes a aggregation query to SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
-        /// <param name="test">if true it will use test end-point, otherwise will use production.</param>
-        public Dictionary<string, dynamic> Aggregation(Dictionary<string, dynamic> query, bool test = false)
+        public Dictionary<string, dynamic> Aggregation(Dictionary<string, dynamic> query)
         {
-            var url = this.testWrapper(test) + URLResources.QueryAggregation;
+            var url = this.testWrapper() + URLResources.QueryAggregation;
             return this.MakeRequest(url, query, false, 0);
         }
 
         /// <summary>Makes a Top Values query to SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
-        /// <param name="test">if true it will use test end-point, otherwise will use production.</param>
-        public Dictionary<string, dynamic> TopValues(Dictionary<string, dynamic> query, bool test = false)
+        public Dictionary<string, dynamic> TopValues(Dictionary<string, dynamic> query)
         {
-            var url = this.testWrapper(test) + URLResources.QueryTopValues;
+            var url = this.testWrapper() + URLResources.QueryTopValues;
             var sdValidator = new QueryTopValuesValidator(query);
             if (sdValidator.Validator())
             {
@@ -294,22 +285,20 @@ namespace Slicer
 
         /// <summary>Makes a exists query to SlicingDice API</summary>
         /// <param name="ids">List of ids to test existence on SlicingDice API.</param>
-        /// <param name="test">if true it will use test end-point, otherwise will use production.</param>
-        public Dictionary<string, dynamic> ExistsEntity(List<string> ids, bool test = false)
+        public Dictionary<string, dynamic> ExistsEntity(List<string> ids)
         {
             Dictionary<string, dynamic> query = new Dictionary<string, dynamic>{
                 {"ids", ids}
             };
-            var url = this.testWrapper(test) + URLResources.QueryExistsEntity;
+            var url = this.testWrapper() + URLResources.QueryExistsEntity;
             return this.MakeRequest(url, query, false, 0);
         }
 
         /// <summary>Create a saved query on SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
-        /// <param name="test">if true it will use test end-point, otherwise will use production.</param>
-        public Dictionary<string, dynamic> CreateSavedQuery(Dictionary<string, dynamic> query, bool test = false)
+        public Dictionary<string, dynamic> CreateSavedQuery(Dictionary<string, dynamic> query)
         {
-            var url = this.testWrapper(test) + URLResources.QuerySaved;
+            var url = this.testWrapper() + URLResources.QuerySaved;
             var savedQuery = new SavedQueryValidator(query);
             if (savedQuery.Validator())
             {
@@ -321,37 +310,33 @@ namespace Slicer
         /// <summary>Update a previous saved query on SlicingDice API</summary>
         /// <param name="querySavedName">The name of the saved query that will be updated.</param>
         /// <param name="query">The query to send to SlicingDice API</param>
-        /// <param name="test">if true it will use test end-point, otherwise will use production.</param>
-        public Dictionary<string, dynamic> UpdateSavedQuery(string querySavedName, Dictionary<string, dynamic> query, bool test = false)
+        public Dictionary<string, dynamic> UpdateSavedQuery(string querySavedName, Dictionary<string, dynamic> query)
         {
-            var url = this.testWrapper(test) + URLResources.QuerySaved + querySavedName;
+            var url = this.testWrapper() + URLResources.QuerySaved + querySavedName;
             return this.MakeRequest(url, query, true, 2);
         }
 
         /// <summary>Delete a saved query on SlicingDice API</summary>
         /// <param name="savedQueryName">The name of the saved query that will be deleted.</param>
-        /// <param name="test">if true it will use test end-point, otherwise will use production.</param>
-        public Dictionary<string, dynamic> DeleteSavedQuery(string savedQueryName, bool test = false)
+        public Dictionary<string, dynamic> DeleteSavedQuery(string savedQueryName)
         {
-            var url = this.testWrapper(test) + URLResources.QuerySaved + savedQueryName;
+            var url = this.testWrapper() + URLResources.QuerySaved + savedQueryName;
             return this.MakeRequest(url, true, 2);
         }
 
         /// <summary>Makes a result query to SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
-        /// <param name="test">if true it will use test end-point, otherwise will use production.</param>
-        public Dictionary<string, dynamic> Result(Dictionary<string, dynamic> query, bool test = false)
+        public Dictionary<string, dynamic> Result(Dictionary<string, dynamic> query)
         {
-            var url = this.testWrapper(test) + URLResources.QueryDataExtractionResult;
+            var url = this.testWrapper() + URLResources.QueryDataExtractionResult;
             return this.DataExtractionQueryWrapper(url, query);
         }
 
         /// <summary>Makes a score query to SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
-        /// <param name="test">if true it will use test end-point, otherwise will use production.</param>
-        public Dictionary<string, dynamic> Score(Dictionary<string, dynamic> query, bool test = false)
+        public Dictionary<string, dynamic> Score(Dictionary<string, dynamic> query)
         {
-            var url = this.testWrapper(test) + URLResources.QueryDataExtractionScore;
+            var url = this.testWrapper() + URLResources.QueryDataExtractionScore;
             return this.DataExtractionQueryWrapper(url, query);
         }
     }
