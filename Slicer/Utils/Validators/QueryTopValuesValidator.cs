@@ -28,7 +28,7 @@ namespace Slicer.Utils.Validators
         {
             foreach (KeyValuePair<string, dynamic> data in this.Query)
             {
-                var v = data.Value.ToObject<Dictionary<string, dynamic>>();
+                var v = data.Value;
                 if (v.Count > 6)
                 {
                     throw new MaxLimitException(string.Format("The query '{0}' exceeds the limit of fields per query in request", data.Key));
@@ -41,10 +41,10 @@ namespace Slicer.Utils.Validators
         {
             foreach (KeyValuePair<string, dynamic> data in this.Query)
             {
-                var v = data.Value.ToObject<Dictionary<string, dynamic>>();
+                var v = data.Value;
                 if (v.ContainsKey("contains"))
                 {
-                    var valuesContains = v["contains"].ToObject<List<string>>();
+                    var valuesContains = v["contains"];
                     if (valuesContains.Count > 5)
                     {
                         throw new MaxLimitException(string.Format("The query '{0}' exceeds the limit of contains per query in request", data.Key));

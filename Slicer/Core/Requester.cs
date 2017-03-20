@@ -47,6 +47,7 @@ namespace Slicer.Core
         {
             var client = GetHttpClientConfigured(headers);
             var content = new StringContent(JsonConvert.SerializeObject(data).ToString(), Encoding.UTF8, "application/json");
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             var response = client.PutAsync(new Uri(url), content).Result;
             
             return response;
