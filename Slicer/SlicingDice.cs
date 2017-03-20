@@ -103,7 +103,7 @@ namespace Slicer
         /// <param name="query">The query to send to SlicingDice API.</param>
         /// <param name="update">if true it will make a put request.</param>
         /// <param name="keyLevel">Minimum key level to make the request.</param>
-        private Dictionary<string, dynamic> MakeRequest(string url, Dictionary<string, dynamic> query, bool update, int keyLevel)
+        private Dictionary<string, dynamic> MakeRequest(string url, dynamic query, bool update, int keyLevel)
         {
             HttpResponseMessage response;
             var key = this.GetKey(keyLevel);
@@ -218,7 +218,7 @@ namespace Slicer
 
         /// <summary>Create a field on SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
-        public Dictionary<string, dynamic> CreateField(Dictionary<string, dynamic> query)
+        public Dictionary<string, dynamic> CreateField(dynamic query)
         {
             var url = this.testWrapper() + URLResources.Field;
             var sdValidator = new FieldValidator(query);

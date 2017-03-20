@@ -30,7 +30,7 @@ namespace Slicer.Core
             var responseString = client.GetStringAsync(new Uri(url)).Result;
             return responseString;
         }
-        public static HttpResponseMessage Post(string url, Dictionary<string, dynamic> data, Dictionary<string, string> headers) {
+        public static HttpResponseMessage Post(string url, dynamic data, Dictionary<string, string> headers) {
             var client = GetHttpClientConfigured(headers);
             var content = new StringContent(JsonConvert.SerializeObject(data).ToString(), Encoding.UTF8, "application/json");
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -43,7 +43,7 @@ namespace Slicer.Core
             var response = client.DeleteAsync(new Uri(url)).Result;
             return response;
         }
-        public static HttpResponseMessage Put(string url, Dictionary<string, object> data, Dictionary<string, string> headers)
+        public static HttpResponseMessage Put(string url, dynamic data, Dictionary<string, string> headers)
         {
             var client = GetHttpClientConfigured(headers);
             var content = new StringContent(JsonConvert.SerializeObject(data).ToString(), Encoding.UTF8, "application/json");
