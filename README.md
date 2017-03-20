@@ -37,6 +37,7 @@ nuget install Slicer
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace Slicer.Console
 {
@@ -82,7 +83,9 @@ namespace Slicer.Console
                     }
                 }
             };
-            System.Console.WriteLine(client.CountEntity(queryData));
+
+            var result = client.CountEntity(queryData);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 }
@@ -111,6 +114,7 @@ Get all created projects, both active and inactive ones. This method corresponds
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace SlicerTester.Console
 {
@@ -121,8 +125,7 @@ namespace SlicerTester.Console
             var client = new SlicingDice(masterKey: "MASTER_API_KEY", usesTestEndpoint: false);
 
             var result = client.GetProjects();
-            System.Console.WriteLine(result["active"]);
-            System.Console.WriteLine(result["inactive"]);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 }
@@ -159,6 +162,7 @@ Get all created fields, both active and inactive ones. This method corresponds t
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace SlicerTester.Console
 {
@@ -170,8 +174,7 @@ namespace SlicerTester.Console
 
             var result = client.GetFields();
 
-            System.Console.WriteLine(result["active"]);
-            System.Console.WriteLine(result["inactive"]);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 }
@@ -213,6 +216,7 @@ Create a new field. This method corresponds to a [POST request at /field](http:/
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace SlicerTester.Console
 {
@@ -229,7 +233,8 @@ namespace SlicerTester.Console
                 {"description", "Year of manufacturing"},
                 {"storage", "latest-value"}
             };
-            System.Console.WriteLine(client.CreateField(field)["status"]);
+            var result = client.CreateField(field);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 }
@@ -252,6 +257,7 @@ Index data to existing entities or create new entities, if necessary. This metho
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace SlicerTester.Console
 {
@@ -300,7 +306,8 @@ namespace SlicerTester.Console
                 }}
             };
 
-            System.Console.WriteLine(client.Index(index)["status"]);
+            var result = client.Index(index);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 }
@@ -325,6 +332,7 @@ Verify which entities exist in a project given a list of entity IDs. This method
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace SlicerTester.Console
 {
@@ -338,9 +346,8 @@ namespace SlicerTester.Console
                 "user2@slicingdice.com",
                 "user3@slicingdice.com"
             };
-            System.Console.WriteLine(client.ExistsEntity(ids)["status"]);
-            System.Console.WriteLine(client.ExistsEntity(ids)["exists"]);
-            System.Console.WriteLine(client.ExistsEntity(ids)["not-exists"]);
+            var result = client.ExistsEntity(ids);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 }
@@ -370,6 +377,7 @@ Count the number of indexed entities. This method corresponds to a [GET request 
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace SlicerTester.Console
 {
@@ -379,8 +387,7 @@ namespace SlicerTester.Console
         {
             var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
             var result = client.CountEntityTotal();
-            System.Console.WriteLine(result["status"]);
-            System.Console.WriteLine(result["result"]);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 }
@@ -406,6 +413,7 @@ Count the number of entities attending the given query. This method corresponds 
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace SlicerTester.Console
 {
@@ -440,8 +448,7 @@ namespace SlicerTester.Console
             };
 
             var result = client.CountEntity(query);
-            System.Console.WriteLine(result["status"]);
-            System.Console.WriteLine(result["result"]);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 }
@@ -468,6 +475,7 @@ Count the number of occurrences for time-series events attending the given query
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace SlicerTester.Console
 {
@@ -504,8 +512,7 @@ namespace SlicerTester.Console
             };
 
             var result = client.CountEvent(query);
-            System.Console.WriteLine(result["status"]);
-            System.Console.WriteLine(result["result"]);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 }
@@ -532,6 +539,7 @@ Return the top values for entities attending the given query. This method corres
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace SlicerTester.Console
 {
@@ -551,8 +559,7 @@ namespace SlicerTester.Console
             };
 
             var result = client.TopValues(query);
-            System.Console.WriteLine(result["status"]);
-            System.Console.WriteLine(result["result"]);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 }
@@ -605,6 +612,7 @@ Return the aggregation of all fields in the given query. This method corresponds
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace SlicerTester.Console
 {
@@ -630,8 +638,7 @@ namespace SlicerTester.Console
             };
 
             var result = client.Aggregation(query);
-            System.Console.WriteLine(result["status"]);
-            System.Console.WriteLine(result["result"]);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 
@@ -672,6 +679,7 @@ Get all saved queries. This method corresponds to a [GET request at /query/saved
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace SlicerTester.Console
 {
@@ -681,8 +689,7 @@ namespace SlicerTester.Console
         {
             var client = new SlicingDice(masterKey: "MASTER_API_KEY", usesTestEndpoint: false);
             var result = client.GetSavedQueries();
-            System.Console.WriteLine(result["status"]);
-            System.Console.WriteLine(result["saved-queries"]);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 }
@@ -736,6 +743,7 @@ Create a saved query at SlicingDice. This method corresponds to a [POST request 
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace SlicerTester.Console
 {
@@ -765,10 +773,7 @@ namespace SlicerTester.Console
             };
 
             var result = client.CreateSavedQuery(query);
-            System.Console.WriteLine(result["status"]);
-            System.Console.WriteLine(result["name"]);
-            System.Console.WriteLine(result["type"]);
-            System.Console.WriteLine(result["query"]);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 }
@@ -807,6 +812,7 @@ Update an existing saved query at SlicingDice. This method corresponds to a [PUT
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace SlicerTester.Console
 {
@@ -835,9 +841,7 @@ namespace SlicerTester.Console
             };
             
             var result = client.UpdateSavedQuery("my-saved-query", query);
-            System.Console.WriteLine(result["status"]);
-            System.Console.WriteLine(result["type"]);
-            System.Console.WriteLine(result["query"]);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 }
@@ -875,6 +879,7 @@ Executed a saved query at SlicingDice. This method corresponds to a [GET request
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace SlicerTester.Console
 {
@@ -884,10 +889,7 @@ namespace SlicerTester.Console
         {
             var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
             var result = client.GetSavedQuery("my-saved-query");
-            System.Console.WriteLine(result["status"]);
-            System.Console.WriteLine(result["type"]);
-            System.Console.WriteLine(result["query"]);
-            System.Console.WriteLine(result["result"]);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 }
@@ -927,6 +929,7 @@ Delete a saved query at SlicingDice. This method corresponds to a [DELETE reques
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace SlicerTester.Console
 {
@@ -935,7 +938,8 @@ namespace SlicerTester.Console
         static void Main(string[] args)
         {
             var client = new SlicingDice(masterKey: "MASTER_API_KEY", usesTestEndpoint: false);
-            System.Console.WriteLine(client.DeleteSavedQuery("my-saved-query")["status"]);
+            var result = client.DeleteSavedQuery("my-saved-query");
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 }
@@ -974,6 +978,7 @@ Retrieve indexed values for entities attending the given query. This method corr
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace SlicerTester.Console
 {
@@ -1003,8 +1008,7 @@ namespace SlicerTester.Console
 
             var result = client.Result(query);
             
-            System.Console.WriteLine(result["status"]);
-            System.Console.WriteLine(result["data"]);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 }
@@ -1039,6 +1043,7 @@ Retrieve indexed values as well as their relevance for entities attending the gi
 ```csharp
 using System.Collections.Generic;
 using Slicer;
+using Newtonsoft.Json;
 
 namespace SlicerTester.Console
 {
@@ -1067,8 +1072,7 @@ namespace SlicerTester.Console
             };
 
             var result = client.Score(query);
-            System.Console.WriteLine(result["status"]);
-            System.Console.WriteLine(result["data"]);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
 }
