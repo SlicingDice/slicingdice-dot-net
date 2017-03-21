@@ -10,9 +10,9 @@ namespace Slicer.Utils.Validators
     // Validates field
     public class FieldValidator
     {
-        Dictionary<string, dynamic> Query;
+        dynamic Query;
         List<string> validTypesFields;
-        public FieldValidator(Dictionary<string, dynamic> query)
+        public FieldValidator(dynamic query)
         {
             this.Query = query;
             this.validTypesFields = new List<string>()
@@ -23,15 +23,15 @@ namespace Slicer.Utils.Validators
             };
         }
         // Check if field name is valid
-        private void ValidateName()
+        private void ValidateName(Dictionary<string, dynamic> Query)
         {
-            if (!this.Query.ContainsKey("name"))
+            if (!Query.ContainsKey("name"))
             {
                 throw new InvalidFieldException("The field should have a name.");
             }
             else
             {
-                var nameField = (string) this.Query["name"];
+                var nameField = (string) Query["name"];
                 if (nameField.Count() > 80)
                 {
                     throw new InvalidFieldNameException("The field's name have a very big content. (Max: 80 chars)");
@@ -39,44 +39,44 @@ namespace Slicer.Utils.Validators
             }
         }
         // Check if field description is valid
-        private void ValidateDescription()
+        private void ValidateDescription(Dictionary<string, dynamic> Query)
         {
-            var description = (string)this.Query["description"];
+            var description = (string)Query["description"];
             if (description.Count() > 300)
             {
                 throw new InvalidFieldDescriptionException("The field's description have a very big content. (Max: 300chars)");
             }
         }
         // Check if field has a valid type
-        private void ValidateFieldType()
+        private void ValidateFieldType(Dictionary<string, dynamic> Query)
         {
-            if (!this.Query.ContainsKey("type"))
+            if (!Query.ContainsKey("type"))
             {
                 throw new InvalidFieldException("The field should have a type.");
             }
-            var fieldType = (string)this.Query["type"];
-            if (!this.validTypesFields.Contains(fieldType))
+            var fieldType = (string)Query["type"];
+            if (!validTypesFields.Contains(fieldType))
             {
                 throw new InvalidFieldException("This field has a invalid type.");
             }
         }
         // Check if decimal field has a valid type
-        private void ValidateDecimalType()
+        private void ValidateDecimalType(Dictionary<string, dynamic> Query)
         {
             var decimalTypes = new List<string>()
             {
                 "decimal", "decimal-time-series"
             };
-            var typeField = (string) this.Query["type"];
+            var typeField = (string) Query["type"];
             if (!decimalTypes.Contains(typeField))
             {
                 throw new InvalidFieldException("This field only accepts 'decimal' or 'decimal-time-series' types");
             }
         }
         // Check if string field is valid
-        private void CheckStringIntegrity()
+        private void CheckStringIntegrity(Dictionary<string, dynamic> Query)
         {
-            if (!this.Query.ContainsKey("cardinality"))
+            if (!Query.ContainsKey("cardinality"))
             {
                 throw new InvalidFieldException("The field with type string should have 'cardinality' key.");
             }
@@ -84,29 +84,40 @@ namespace Slicer.Utils.Validators
             {
                 "high", "low"
             };
-            var cardinality = (string) this.Query["cardinality"];
+            var cardinality = (string) Query["cardinality"];
             if (!cardinalityTypes.Contains(cardinality))
             {
                 throw new InvalidFieldException("The field 'cardinality' has invalid value.");
             }
         }
         // Check if enumerate field is valid
-        private void ValidateEnumerateType()
+        private void ValidateEnumerateType(Dictionary<string, dynamic> Query)
         {
-            if (!this.Query.ContainsKey("range"))
+            if (!Query.ContainsKey("range"))
                 throw new InvalidFieldException("The 'enumerate' type needs of the 'range' parameter.");
         }
         // Validate a field, returns true if the field is valid
         public bool Validator()
         {
-            this.ValidateName();
-            this.ValidateFieldType();
-            var typeField = (string)this.Query["type"];
-            if (typeField == "string") this.CheckStringIntegrity();
-            if (typeField == "enumerated") this.ValidateEnumerateType();
-            if (this.Query.ContainsKey("description")) this.ValidateDescription();
-            if (this.Query.ContainsKey("decimal-place")) this.ValidateDecimalType();
+            if (this.Query is List<dynamic>) {
+                foreach (var q in this.Query) {
+                    this.ValidateField(q);
+                }
+            } else {
+                this.ValidateField(this.Query);
+            }
+
             return true;
+        }
+
+        public void ValidateField(Dictionary<string, dynamic> Query) {
+            this.ValidateName(Query);
+            this.ValidateFieldType(Query);
+            var typeField = (string) Query["type"];
+            if (typeField == "string") this.CheckStringIntegrity(Query);
+            if (typeField == "enumerated") this.ValidateEnumerateType(Query);
+            if (Query.ContainsKey("description")) this.ValidateDescription(Query);
+            if (Query.ContainsKey("decimal-place")) this.ValidateDecimalType(Query);
         }
     }
 }
