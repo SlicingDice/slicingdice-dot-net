@@ -208,7 +208,7 @@ namespace SlicerTester.Console
 }
 ```
 
-### Dictionary&lt;string, dynamic> CreateField(Dictionary&lt;string, dynamic> querye)
+### Dictionary&lt;string, dynamic> CreateField(Dictionary&lt;string, dynamic> query)
 Create a new field. This method corresponds to a [POST request at /field](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-field).
 
 #### Request example
