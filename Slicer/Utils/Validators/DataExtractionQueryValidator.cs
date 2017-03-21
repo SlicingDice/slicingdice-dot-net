@@ -29,7 +29,7 @@ namespace Slicer.Utils.Validators
             }
             if (this.Query.ContainsKey("fields"))
             {
-                var fields = this.Query["fields"].ToObject<List<string>>();
+                var fields = this.Query["fields"];
                 if (fields.Count > 10)
                 {
                     throw new InvalidQueryException("The key 'fields' in data extraction result must have up to 10 fields.");
