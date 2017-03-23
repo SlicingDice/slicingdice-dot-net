@@ -1,0 +1,8 @@
+dependencies:
+  pre:
+    - sudo apt-get update; sudo apt-get install -y mono-complete
+
+test:
+  override:
+    - cd TestsAndExamples/; xbuild Slicer.Tests.csproj
+    - cd TestsAndExamples/bin/Debug; mono Slicer.Tests.exe
