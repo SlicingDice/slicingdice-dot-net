@@ -35,6 +35,13 @@ nuget install Slicer
 
 ### Example:
 
+The following code snippet is an example of how to add and query data
+using the SlicingDice C\# client. We entry data informing
+'user1@slicingdice.com' has age 22 and then query the database for
+the number of users with age between 20 and 40 years old.
+If this is the first record ever entered into the system,
+ the answer should be 1.
+
 ```csharp
 using System.Collections.Generic;
 using Slicer;
@@ -407,7 +414,7 @@ namespace SlicerTester.Console
 ```
 
 ### Dictionary&lt;string, dynamic> CountEntity(Dictionary&lt;string, dynamic> query)
-Count the number of entities attending the given query. This method corresponds to a [POST request at /query/count/entity](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-count-entity).
+Count the number of entities matching the given query. This method corresponds to a [POST request at /query/count/entity](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-count-entity).
 
 #### Request example
 
@@ -469,7 +476,7 @@ namespace SlicerTester.Console
 ```
 
 ### Dictionary&lt;string, dynamic> CountEvent(Dictionary&lt;string, dynamic> query)
-Count the number of occurrences for time-series events attending the given query. This method corresponds to a [POST request at /query/count/event](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-count-event).
+Count the number of occurrences for time-series events matching the given query. This method corresponds to a [POST request at /query/count/event](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-count-event).
 
 #### Request example
 
@@ -533,7 +540,7 @@ namespace SlicerTester.Console
 ```
 
 ### Dictionary&lt;string, dynamic> TopValues(Dictionary&lt;string, dynamic> query)
-Return the top values for entities attending the given query. This method corresponds to a [POST request at /query/top_values](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-top-values).
+Return the top values for entities matching the given query. This method corresponds to a [POST request at /query/top_values](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-top-values).
 
 #### Request example
 
@@ -840,7 +847,7 @@ namespace SlicerTester.Console
                 }},
                 {"cache-period", 100}
             };
-            
+
             var result = client.UpdateSavedQuery("my-saved-query", query);
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
@@ -972,7 +979,7 @@ namespace SlicerTester.Console
 ```
 
 ### Dictionary&lt;string, dynamic> Result(Dictionary&lt;string, dynamic> query)
-Retrieve indexed values for entities attending the given query. This method corresponds to a [POST request at /data_extraction/result](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-data-extraction-result).
+Retrieve indexed values for entities matching the given query. This method corresponds to a [POST request at /data_extraction/result](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-data-extraction-result).
 
 #### Request example
 
@@ -1008,7 +1015,7 @@ namespace SlicerTester.Console
             };
 
             var result = client.Result(query);
-            
+
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
@@ -1037,7 +1044,7 @@ namespace SlicerTester.Console
 ```
 
 ### Dictionary&lt;string, dynamic> Score(Dictionary&lt;string, dynamic> query)
-Retrieve indexed values as well as their relevance for entities attending the given query. This method corresponds to a [POST request at /data_extraction/score](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-data-extraction-score).
+Retrieve indexed values as well as their relevance for entities matching the given query. This method corresponds to a [POST request at /data_extraction/score](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-data-extraction-score).
 
 #### Request example
 
