@@ -70,12 +70,11 @@ namespace Slicer.Test
                 }
 
                 System.Console.WriteLine(string.Format("FAIL: {0} {1} failed", sdTester.NumFails, testOrTests));
+                System.Environment.Exit(1);
             }
-            else
-            {
-                System.Console.WriteLine("SUCCESS: All tests passed");
-            }
-            Environment.Exit(Environment.ExitCode);
+
+            System.Console.WriteLine("SUCCESS: All tests passed");
+            System.Environment.Exit(Environment.ExitCode);
         }
     }
 }
