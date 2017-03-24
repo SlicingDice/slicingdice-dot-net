@@ -250,41 +250,108 @@ namespace Slicer.Test
             Dictionary<string, dynamic> rawExpected = test["expected"].ToObject<Dictionary<string, dynamic>>();
             Dictionary<string, dynamic> expected = this.TranslateFieldNames(rawExpected);
 
-            foreach (KeyValuePair<string, dynamic> entry in expected)
-            {
-                if (entry.Value is string && entry.Value == "ignore")
-                {
+            if (!this.CompareDictionary(expected, result)) {
+                this.NumFails += 1;
+                this.FailedTests.Add(test["name"]);
+
+                string expectedString = JsonConvert.SerializeObject(expected).Trim();
+                string resultString = JsonConvert.SerializeObject(result).Trim();
+
+                System.Console.WriteLine(string.Format("  Expected: {0}", expectedString));
+                System.Console.WriteLine(string.Format("  Result: {0}", resultString));
+                System.Console.WriteLine("  Status: Failed\n");
+                return;
+            }
+
+            this.NumSuccesses += 1;
+            System.Console.WriteLine("  Status: Passed\n");
+        }
+
+        private bool CompareDictionary(IDictionary<string, dynamic> expected, IDictionary<string, dynamic> got)
+        {
+            // early-exit checks
+            if (null == got) {
+                return null == expected;
+            }
+            if (null == expected) {
+                return false;
+            }
+            if (object.ReferenceEquals(expected, got)) {
+                return true;
+            }
+            if (expected.Count != got.Count) {
+                return false;
+            }
+
+            // check if keys and values are the same
+            foreach (string k in expected.Keys) {
+                if (!got.ContainsKey(k)) {
+                    return false;
+                }
+                string expectedString = expected[k].ToString();
+
+                if(expectedString == "ignore") {
                     continue;
                 }
 
-                Dictionary<string, dynamic> expectedValue = expected[entry.Key].ToObject<Dictionary<string, dynamic>>();
-                Dictionary<string, dynamic> resultValue;
-
-                if (result[entry.Key] is JObject)
-                {
-                    resultValue = result[entry.Key].ToObject<Dictionary<string, dynamic>>(); 
-                }
-                else
-                {
-                    resultValue = result[entry.Key];
-                }
-
-                string expectedString = JsonConvert.SerializeObject(expectedValue).Trim();
-                string resultString = JsonConvert.SerializeObject(resultValue).Trim();
-
-                if (expectedString != resultString)
-                {
-                    this.NumFails += 1;
-                    this.FailedTests.Add(test["name"]);
-
-                    System.Console.WriteLine(string.Format("  Expected: \"{0}\": {1}", entry.Key, expectedString));
-                    System.Console.WriteLine(string.Format("  Result: \"{0}\": {1}", entry.Key, resultString));
-                    System.Console.WriteLine("  Status: Failed\n");
-                    return;
+                dynamic expectedValue = expected[k];
+                dynamic gotValue = got[k];
+                if(!this.CompareDictionaryValue(expectedValue, gotValue)) {
+                    return false;
                 }
             }
-            this.NumSuccesses += 1;
-            System.Console.WriteLine("  Status: Passed\n");
+
+            return true;
+        }
+
+        private bool CompareList(List<dynamic> expected, List<dynamic> got)
+        {
+            // early-exit checks
+            if (null == got) {
+                return null == expected;
+            }
+            if (null == expected) {
+                return false;
+            }
+            if (object.ReferenceEquals(expected, got)) {
+                return true;
+            }
+            if (expected.Count != got.Count) {
+                return false;
+            }
+
+            // check if keys and values are the same
+            for (var i = 0; i < expected.Count; i++) {
+                dynamic expectedValue = expected[i];
+                dynamic gotValue = got[i];
+                if (!CompareDictionaryValue(expectedValue, gotValue)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool CompareDictionaryValue(dynamic expected, dynamic got)
+        {
+            if(expected is Dictionary<string, dynamic>) {
+                if(!this.CompareDictionary(expected, got)) {
+                    return false;
+                }
+            } else if(expected is List<dynamic>) {
+                if(!this.CompareList(expected, got)) {
+                    return false;
+                }
+            } else {
+                string expectedString = expected.ToString();
+                string gotString = got.ToString();
+
+                if (!expectedString.Equals(gotString)) {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

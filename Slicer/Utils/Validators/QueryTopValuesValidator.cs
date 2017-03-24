@@ -42,6 +42,11 @@ namespace Slicer.Utils.Validators
             foreach (KeyValuePair<string, dynamic> data in this.Query)
             {
                 var v = data.Value;
+
+                if (!(v is Dictionary<string, dynamic>)) {
+                    v = data.Value.ToObject<Dictionary<string, dynamic>>();
+                }
+
                 if (v.ContainsKey("contains"))
                 {
                     var valuesContains = v["contains"];
