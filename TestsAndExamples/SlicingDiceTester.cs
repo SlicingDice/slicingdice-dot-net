@@ -318,7 +318,7 @@ namespace Slicer.Test
             for (var i = 0; i < expected.Count; i++) {
                 dynamic expectedValue = expected[i];
                 dynamic gotValue = got[i];
-                if (!CompareDictionaryValue(expectedValue, gotValue)) {
+                if (!this.CompareDictionaryValue(expectedValue, gotValue)) {
                     return false;
                 }
             }
@@ -328,11 +328,21 @@ namespace Slicer.Test
 
         private bool CompareDictionaryValue(dynamic expected, dynamic got)
         {
-            if(expected is Dictionary<string, dynamic>) {
+            if(expected is Dictionary<string, dynamic> || expected is JObject) {
+                if (expected is JObject) {
+                    expected = expected.ToObject<Dictionary<string, dynamic>>();
+                    got = got.ToObject<Dictionary<string, dynamic>>();
+                }
+
                 if(!this.CompareDictionary(expected, got)) {
                     return false;
                 }
-            } else if(expected is List<dynamic>) {
+            } else if(expected is List<dynamic> || expected is JArray) {
+                if (expected is JArray) {
+                    expected = expected.ToObject<List<dynamic>>();
+                    got = got.ToObject<List<dynamic>>();
+                }
+
                 if(!this.CompareList(expected, got)) {
                     return false;
                 }
