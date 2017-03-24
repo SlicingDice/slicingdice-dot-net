@@ -111,6 +111,7 @@
     <Compile Include="Utils\Exceptions\Index\IndexTimeSeriesDateFormatException.cs" />
     <Compile Include="Utils\Exceptions\Index\QueryDateFormatException.cs" />
     <Compile Include="Utils\Exceptions\Index\QueryRelativeIntervalException.cs" />
+    <Compile Include="Utils\Exceptions\Index\IndexInvalidRangeException.cs" />
     <Compile Include="Utils\Exceptions\FieldCreateInternalException.cs" />
     <Compile Include="Utils\Exceptions\SlicingDiceException.cs" />
     <Compile Include="Utils\Exceptions\InvalidSlicingDiceKeysException.cs" />
