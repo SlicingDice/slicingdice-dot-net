@@ -279,9 +279,6 @@ namespace Slicer.Test
             if (object.ReferenceEquals(expected, got)) {
                 return true;
             }
-            if (expected.Count != got.Count) {
-                return false;
-            }
 
             // check if keys and values are the same
             foreach (string k in expected.Keys) {
@@ -315,9 +312,6 @@ namespace Slicer.Test
             }
             if (object.ReferenceEquals(expected, got)) {
                 return true;
-            }
-            if (expected.Count != got.Count) {
-                return false;
             }
 
             // check if keys and values are the same
