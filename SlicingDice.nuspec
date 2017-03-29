@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SlicingDice</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>SlicingDice LLC</authors>
     <owners>SlicingDice LLC</owners>
     <licenseUrl>https://www.github.com/SlicingDice/slicingdice-dot-net/blob/master/LICENSE.txt</licenseUrl>
