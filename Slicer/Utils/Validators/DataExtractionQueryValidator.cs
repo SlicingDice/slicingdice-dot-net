@@ -19,14 +19,6 @@ namespace Slicer.Utils.Validators
         // Validate data extraction query, if the query is valid will return true
         public bool Validator()
         {
-            if (this.Query.ContainsKey("limit"))
-            {
-                var limitValue = (int) this.Query["limit"];
-                if (limitValue > 100)
-                {
-                    throw new InvalidQueryException("The field 'limit' has a value max of 100.");
-                }
-            }
             if (this.Query.ContainsKey("fields"))
             {
                 var fields = this.Query["fields"];
