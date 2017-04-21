@@ -17,16 +17,16 @@ Whether you want to test the client installation or simply check more examples o
 
 ## Installing
 
-In order to install the .NET/C# client, you only need to install our package `Slicer` through the Package Manager from Visual Studio.
+In order to install the .NET/C# client, you only need to install our package `SlicingDice` through the Package Manager from Visual Studio.
 
 ```
-Install-Package Slicer
+Install-Package SlicingDice
 ```
 
 You can also install our client through the following `nuget` command.
 
 ```
-nuget install Slicer
+nuget install SlicingDice
 ```
 
 ## Usage
