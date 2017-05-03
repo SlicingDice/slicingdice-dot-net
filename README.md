@@ -257,7 +257,7 @@ namespace SlicerTester.Console
 }
 ```
 
-### Dictionary&lt;string, dynamic> Index(Dictionary&lt;string, dynamic> index, bool autoCreateFields = false)
+### Dictionary&lt;string, dynamic> Index(Dictionary&lt;string, dynamic> index)
 Index data to existing entities or create new entities, if necessary. This method corresponds to a [POST request at /index](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-index).
 
 #### Request example
