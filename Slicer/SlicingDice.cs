@@ -228,13 +228,8 @@ namespace Slicer
 
         /// <summary>Send a indexation command to SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
-        /// <param name="autoCreateFields">if true SlicingDice API will create nonexistent fields automatically</param>
-        public Dictionary<string, dynamic> Index(Dictionary<string, dynamic> query, bool autoCreateFields = false)
+        public Dictionary<string, dynamic> Index(Dictionary<string, dynamic> query)
         {
-            if (autoCreateFields)
-            {
-                query.Add("auto-create-fields", autoCreateFields);
-            }
             var url = this.testWrapper() + URLResources.Index;
             return this.MakeRequest(url, query, false, 1);
         }
