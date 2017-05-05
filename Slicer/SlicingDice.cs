@@ -168,6 +168,20 @@ namespace Slicer
             }
             return null;
         }
+
+        /// <summary>Makes a count query on SlicingDice API</summary>
+        /// <param name="URL">Url to make request, identify if it's a count entity or a count event.</param>
+        /// <param name="query">The count query.</param>
+        private Dictionary<string, dynamic> CountQueryWrapper(string url, List<dynamic> query)
+        {
+            var sdValidator = new QueryCountValidator(query);
+            if (sdValidator.Validator())
+            {
+                return this.MakeRequest(url, query, false, 0);
+            }
+            return null;
+        }
+
         private string testWrapper()
         {
             if (this._usesTestEndpoint) return this._baseUrl + "/test";
@@ -247,6 +261,14 @@ namespace Slicer
             return this.CountQueryWrapper(url, query);
         }
 
+        /// <summary>Makes a count entity query to SlicingDice API</summary>
+        /// <param name="query">The query to send to SlicingDice API</param>
+        public Dictionary<string, dynamic> CountEntity(List<dynamic> query)
+        {
+            var url = this.testWrapper() + URLResources.QueryCountEntity;
+            return this.CountQueryWrapper(url, query);
+        }
+
         /// <summary>Makes a total query to SlicingDice API</summary>
         public Dictionary<string, dynamic> CountEntityTotal()
         {
@@ -257,6 +279,14 @@ namespace Slicer
         /// <summary>Makes a count event query to SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
         public Dictionary<string, dynamic> CountEvent(Dictionary<string, dynamic> query)
+        {
+            var url = this.testWrapper() + URLResources.QueryCountEvent;
+            return this.CountQueryWrapper(url, query);
+        }
+
+        /// <summary>Makes a count event query to SlicingDice API</summary>
+        /// <param name="query">The query to send to SlicingDice API</param>
+        public Dictionary<string, dynamic> CountEvent(List<dynamic> query)
         {
             var url = this.testWrapper() + URLResources.QueryCountEvent;
             return this.CountQueryWrapper(url, query);

@@ -78,19 +78,20 @@ namespace Slicer.Console
 
             // Querying data
             var queryData = new Dictionary<string, dynamic>()
-            {
-                {"users-between-20-and-40",
-                    new List<Dictionary<string, dynamic>>()
-                    {
-                        new Dictionary<string, dynamic>(){
-                            {"age", new Dictionary<string, dynamic>(){
-                                    {"range", new List<int>(){ 20, 40 }}
+                        {
+                            {"query-name", "users-between-20-and-40"},
+                            {"query",
+                                new List<Dictionary<string, dynamic>>()
+                                {
+                                    new Dictionary<string, dynamic>(){
+                                        {"age", new Dictionary<string, dynamic>(){
+                                                {"range", new List<int>(){ 20, 40 }}
+                                            }
+                                        }
+                                    }
                                 }
                             }
-                        }
-                    }
-                }
-            };
+                        };
 
             var result = client.CountEntity(queryData);
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
@@ -276,6 +277,7 @@ namespace SlicerTester.Console
             var client = new SlicingDice(masterKey: "MASTER_OR_WRITE_API_KEY", usesTestEndpoint: false);
             var index = new Dictionary<string, dynamic>()
             {
+                {"auto-create-fields", true},
                 {"user1@slicingdice.com", new Dictionary<string, dynamic>{
                     {"car-model", "Ford Ka"},
                     {"year", 2006}
@@ -430,29 +432,37 @@ namespace SlicerTester.Console
         static void Main(string[] args)
         {
             var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
-            var query = new Dictionary<string, dynamic>()
-            {
-                {"corolla-or-fit", new List<dynamic>{
-                    new Dictionary<string, dynamic>{
-                        {"car-model", new Dictionary<string, dynamic>{
-                            {"equals", "toyota corolla"}
-                        }}
+            var query = new List<dynamic>{
+                new Dictionary<string, dynamic>()
+                    {
+                        {"query-name", "corolla-or-fit"},
+                        {"query", new List<dynamic>{
+                            new Dictionary<string, dynamic>{
+                                {"car-model", new Dictionary<string, dynamic>{
+                                    {"equals", "toyota corolla"}
+                                }}
+                            },
+                            "or",
+                            new Dictionary<string, dynamic>{
+                                {"car-model", new Dictionary<string, dynamic>{
+                                    {"equals", "honda fit"}
+                                }}
+                            }
+                        }},
+                        {"bypass-cache", false}
                     },
-                    "or",
-                    new Dictionary<string, dynamic>{
-                        {"car-model", new Dictionary<string, dynamic>{
-                            {"equals", "honda fit"}
-                        }}
+                new Dictionary<string, dynamic>()
+                    {
+                        {"query-name", "users-from-ny"},
+                        {"query", new List<Dictionary<string, dynamic>>{
+                            new Dictionary<string, dynamic>{
+                                {"car-model", new Dictionary<string, dynamic>{
+                                    {"equals", "ford ka"}
+                                }}
+                            }
+                        }},
+                        {"bypass-cache", false}
                     }
-                }},
-                {"users-from-ny", new List<Dictionary<string, dynamic>>{
-                    new Dictionary<string, dynamic>{
-                        {"car-model", new Dictionary<string, dynamic>{
-                            {"equals", "ford ka"}
-                        }}
-                    }
-                }},
-                {"bypass-cache", false}
             };
 
             var result = client.CountEntity(query);
@@ -492,31 +502,39 @@ namespace SlicerTester.Console
         static void Main(string[] args)
         {
             var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
-            var query = new Dictionary<string, dynamic>()
-            {
-                {"test-drives-in-ny", new List<Dictionary<string, dynamic>>{
-                    new Dictionary<string, dynamic>{
-                        {"test-drives", new Dictionary<string, dynamic>{
-                            {"equals", "NY"},
-                            {"between", new List<string>{
-                                "2016-08-16T00:00:00Z",
-                                "2016-08-18T00:00:00Z"
-                            }}
-                        }}
+            var query = new List<dynamic>{
+                new Dictionary<string, dynamic>()
+                    {
+                        {"query-name", "test-drives-in-ny"},
+                        {"query", new List<Dictionary<string, dynamic>>{
+                            new Dictionary<string, dynamic>{
+                                {"test-drives", new Dictionary<string, dynamic>{
+                                    {"equals", "NY"},
+                                    {"between", new List<string>{
+                                        "2016-08-16T00:00:00Z",
+                                        "2016-08-18T00:00:00Z"
+                                    }}
+                                }}
+                            }
+                        }},
+                        {"bypass-cache", false}
                     },
-                }},
-                {"test-drives-in-ca", new List<Dictionary<string, dynamic>>{
-                    new Dictionary<string, dynamic>{
-                        {"test-drives", new Dictionary<string, dynamic>{
-                            {"equals", "CA"},
-                            {"between", new List<string>{
-                                "2016-04-04T00:00:00Z",
-                                "2016-04-06T00:00:00Z"
-                            }}
-                        }}
-                    },
-                }},
-                {"bypass-cache", false}
+                new Dictionary<string, dynamic>()
+                    {
+                        {"query-name", "test-drives-in-ca"},
+                        {"query", new List<Dictionary<string, dynamic>>{
+                            new Dictionary<string, dynamic>{
+                                {"test-drives", new Dictionary<string, dynamic>{
+                                    {"equals", "CA"},
+                                    {"between", new List<string>{
+                                        "2016-04-04T00:00:00Z",
+                                        "2016-04-06T00:00:00Z"
+                                    }}
+                                }}
+                            }
+                        }},
+                        {"bypass-cache", false}
+                    }
             };
 
             var result = client.CountEvent(query);
