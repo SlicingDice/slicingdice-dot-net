@@ -2,7 +2,7 @@
 
 In this directory, you find unitary and regression tests for SlicingDice client. These tests are self-contained and have two purposes:
 
-1. Present examples of field creation, data Inserting, and queries, as well as expected query results
+1. Present examples of field creation, data inserting, and queries, as well as expected query results
 2. Provide regression tests that can be executed by anyone with one simple command
 
 ## Data

@@ -277,7 +277,9 @@ namespace SlicerTester.Console
             var client = new SlicingDice(masterKey: "MASTER_OR_WRITE_API_KEY", usesTestEndpoint: false);
             var insert = new Dictionary<string, dynamic>()
             {
-                {"auto-create-fields", true},
+                {"auto-create", new List<string>(){
+                    "table", "column"
+                }},
                 {"user1@slicingdice.com", new Dictionary<string, dynamic>{
                     {"car-model", "Ford Ka"},
                     {"year", 2006}

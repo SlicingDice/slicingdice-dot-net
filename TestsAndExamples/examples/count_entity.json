@@ -24407,7 +24407,7 @@
         "name": "Test for a \"COUNT ENTITY\" query using automatically created fields, operator \"AND\" and parameter \"EQUALS\".",
         "fields": [],
         "insert": {
-            "auto-create-fields": true,
+            "auto-create": ["table", "column"],
             "24": {
                 "string-test-field": "value:matched_value",
                 "numeric-test-field": 1000001
@@ -24837,7 +24837,7 @@
         "name": "Test for a \"COUNT ENTITY\" query using automatically created fields, operators \"AND\" and \"OR\" and parameter \"EQUALS\".",
         "fields": [],
         "insert": {
-            "auto-create-fields": true,
+            "auto-create": ["table", "column"],
             "24": {
                 "string-test-field": "value:matched_value",
                 "boolean-test-field": "true",
@@ -25375,7 +25375,7 @@
         "name": "Test for a \"COUNT ENTITY\" query using automatically created fields, operators \"AND\" and \"OR\" and parameters \"EQUALS\", \"BETWEEN\" and \"MINFREQ\".",
         "fields": [],
         "insert": {
-            "auto-create-fields": true,
+            "auto-create": ["table", "column"],
             "24": {
                 "string-test-field": "value:matched_value",
                 "boolean-test-field": "true",
