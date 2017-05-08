@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Exceptions
 {
-    public class IndexTimeSeriesDateFormatException : SlicingDiceException
+    public class InsertDateFormatException : SlicingDiceException
     {
-        public IndexTimeSeriesDateFormatException()
+        public InsertDateFormatException()
             : base() { }
 
-        public IndexTimeSeriesDateFormatException(string message)
+        public InsertDateFormatException(string message)
             : base(message) { }
 
-        public IndexTimeSeriesDateFormatException(string format, params object[] args)
+        public InsertDateFormatException(string format, params object[] args)
             : base(string.Format(format, args)) { }
 
     }

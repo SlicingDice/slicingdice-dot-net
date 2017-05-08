@@ -63,7 +63,7 @@ namespace Slicer.Test
                 try
                 {
                     this.CreateFields(test);
-                    this.IndexData(test);
+                    this.InsertData(test);
                     result = this.ExecuteQuery(queryType, test);
                 }
                 catch (Exception e)
@@ -98,7 +98,7 @@ namespace Slicer.Test
         }
 
         /// <summary>Create fields for a given test</summary>
-        /// <param name="test">Dictionary containing test name, fields metadata, data to be indexed, query, and expected results.</param>
+        /// <param name="test">Dictionary containing test name, fields metadata, data to be inserted, query, and expected results.</param>
         private void CreateFields(Dictionary<string, dynamic> test)
         {
             JArray fieldsData = test["fields"];
@@ -150,13 +150,13 @@ namespace Slicer.Test
             return DateTime.Now.Ticks.ToString();
         }
 
-        ///<summary>Index test data on SlicingDice API</summary>
-        ///<param name="test">Dictionary containing test name, fields metadata, data to be indexed, query, and expected results.</param>
-        private void IndexData(Dictionary<string, dynamic> test)
+        ///<summary>Insert test data on SlicingDice API</summary>
+        ///<param name="test">Dictionary containing test name, fields metadata, data to be inserted, query, and expected results.</param>
+        private void InsertData(Dictionary<string, dynamic> test)
         {
-            JObject indexObject = test["index"];
-            Dictionary<string, dynamic> index = indexObject.ToObject<Dictionary<string, dynamic>>();
-            bool isSingular = index.Count == 1;
+            JObject insertionObject = test["insert"];
+            Dictionary<string, dynamic> insert = insertionObject.ToObject<Dictionary<string, dynamic>>();
+            bool isSingular = insert.Count == 1;
             string entityOrEntities = string.Empty;
 
             if (isSingular)
@@ -167,21 +167,21 @@ namespace Slicer.Test
             {
                 entityOrEntities = "entities";
             }
-            System.Console.WriteLine(string.Format("  Indexing {0} {1}", index.Count, entityOrEntities));
+            System.Console.WriteLine(string.Format("  Inserting {0} {1}", insert.Count, entityOrEntities));
 
-            Dictionary<string, dynamic> indexData = this.TranslateFieldNames(index);
+            Dictionary<string, dynamic> insertionData = this.TranslateFieldNames(insert);
 
             if (this.Verbose)
             {
-                foreach (KeyValuePair<string, dynamic> entity in indexData)
+                foreach (KeyValuePair<string, dynamic> entity in insertionData)
                 {
                     System.Console.WriteLine(string.Format("    - \"{0}\": {1}", entity.Key, entity.Value));
                 }
             }
 
-            this.Client.Index(indexData);
+            this.Client.Insert(insertionData);
 
-            // Wait a few seconds so the data can be indexed by SlicingDice
+            // Wait a few seconds so the data can be inserted by SlicingDice
             Thread.Sleep(this.SleepTime * 1000);
         }
 
@@ -199,7 +199,7 @@ namespace Slicer.Test
 
         /// <summary>Execute a query on SlicingDice API</summary>
         /// <param name="queryType">The type of the query</param>
-        /// <param name="test">Dictionary containing test name, fields metadata, data to be indexed, query, and expected results.</param>
+        /// <param name="test">Dictionary containing test name, fields metadata, data to be inserted, query, and expected results.</param>
         private Dictionary<string, dynamic> ExecuteQuery(string queryType, Dictionary<string, dynamic> test)
         {
             JObject testQuery = test["query"];

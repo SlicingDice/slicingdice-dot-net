@@ -240,17 +240,12 @@ namespace Slicer
             return null;
         }
 
-        /// <summary>Send a indexation command to SlicingDice API</summary>
-        /// <param name="query">The query to send to SlicingDice API</param>
-        /// <param name="autoCreateFields">if true SlicingDice API will create nonexistent fields automatically</param>
-        public Dictionary<string, dynamic> Index(Dictionary<string, dynamic> query, bool autoCreateFields = false)
+        /// <summary>Send a insertion command to SlicingDice API</summary>
+        /// <param name="data">The query to send to SlicingDice API</param>
+        public Dictionary<string, dynamic> Insert(Dictionary<string, dynamic> data)
         {
-            if (autoCreateFields)
-            {
-                query.Add("auto-create-fields", autoCreateFields);
-            }
-            var url = this.testWrapper() + URLResources.Index;
-            return this.MakeRequest(url, query, false, 1);
+            var url = this.testWrapper() + URLResources.Insert;
+            return this.MakeRequest(url, data, false, 1);
         }
         
         /// <summary>Makes a count entity query to SlicingDice API</summary>

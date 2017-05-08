@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Added
+- CLIENT: Rename Index() to Insert()
 - CLIENT: Add missing API exceptions in client
 - CLIENT: Add support to custom key
 - CLIENT: Add endpoints keys level

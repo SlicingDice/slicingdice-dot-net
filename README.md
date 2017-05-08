@@ -9,7 +9,7 @@ Official .NET/C# client for [SlicingDice](http://www.slicingdice.com/), Data War
 
 If you are new to SlicingDice, check our [quickstart guide](http://panel.slicingdice.com/docs/#quickstart-guide) and learn to use it in 15 minutes.
 
-Please refer to the [SlicingDice official documentation](http://panel.slicingdice.com/docs/) for more information on [analytics databases](http://panel.slicingdice.com/docs/#analytics-concepts), [data modeling](http://panel.slicingdice.com/docs/#data-modeling), [indexing](http://panel.slicingdice.com/docs/#data-indexing), [querying](http://panel.slicingdice.com/docs/#data-querying), [limitations](http://panel.slicingdice.com/docs/#current-slicingdice-limitations) and [API details](http://panel.slicingdice.com/docs/#api-details).
+Please refer to the [SlicingDice official documentation](http://panel.slicingdice.com/docs/) for more information on [analytics databases](http://panel.slicingdice.com/docs/#analytics-concepts), [data modeling](http://panel.slicingdice.com/docs/#data-modeling), [inserting](http://panel.slicingdice.com/docs/#data-inserting), [querying](http://panel.slicingdice.com/docs/#data-querying), [limitations](http://panel.slicingdice.com/docs/#current-slicingdice-limitations) and [API details](http://panel.slicingdice.com/docs/#api-details).
 
 ## Tests and Examples
 
@@ -67,14 +67,14 @@ namespace Slicer.Console
             };
             client.CreateField(fieldData);
 
-            // Indexing data
-            var indexData = new Dictionary<string, dynamic>()
+            // Inserting data
+            var insert = new Dictionary<string, dynamic>()
             {
                 {"user1@slicingdice.com", new Dictionary<string, int>(){
                     {"age", 2}
                }}
             };
-            client.Index(indexData);
+            client.Insert(insert);
 
             // Querying data
             var queryData = new Dictionary<string, dynamic>()
@@ -258,8 +258,8 @@ namespace SlicerTester.Console
 }
 ```
 
-### Dictionary&lt;string, dynamic> Index(Dictionary&lt;string, dynamic> index, bool autoCreateFields = false)
-Index data to existing entities or create new entities, if necessary. This method corresponds to a [POST request at /index](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-index).
+### Dictionary&lt;string, dynamic> Insert(Dictionary&lt;string, dynamic> data, bool autoCreateFields = false)
+Insert data to existing entities or create new entities, if necessary. This method corresponds to a [POST request at /insert](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-insert).
 
 #### Request example
 
@@ -275,7 +275,7 @@ namespace SlicerTester.Console
         static void Main(string[] args)
         {
             var client = new SlicingDice(masterKey: "MASTER_OR_WRITE_API_KEY", usesTestEndpoint: false);
-            var index = new Dictionary<string, dynamic>()
+            var insert = new Dictionary<string, dynamic>()
             {
                 {"auto-create-fields", true},
                 {"user1@slicingdice.com", new Dictionary<string, dynamic>{
@@ -316,7 +316,7 @@ namespace SlicerTester.Console
                 }}
             };
 
-            var result = client.Index(index);
+            var result = client.Insert(insert);
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
@@ -328,8 +328,8 @@ namespace SlicerTester.Console
 ```json
 {
     "status": "success",
-    "indexed-entities": 4,
-    "indexed-fields": 10,
+    "inserted-entities": 4,
+    "inserted-fields": 10,
     "took": 0.023
 }
 ```
@@ -380,7 +380,7 @@ namespace SlicerTester.Console
 ```
 
 ### Dictionary&lt;string, dynamic> CountEntityTotal()
-Count the number of indexed entities. This method corresponds to a [GET request at /query/count/entity/total](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-query-count-entity-total).
+Count the number of inserted entities. This method corresponds to a [GET request at /query/count/entity/total](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-query-count-entity-total).
 
 #### Request example
 
@@ -997,7 +997,7 @@ namespace SlicerTester.Console
 ```
 
 ### Dictionary&lt;string, dynamic> Result(Dictionary&lt;string, dynamic> query)
-Retrieve indexed values for entities matching the given query. This method corresponds to a [POST request at /data_extraction/result](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-data-extraction-result).
+Retrieve inserted values for entities matching the given query. This method corresponds to a [POST request at /data_extraction/result](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-data-extraction-result).
 
 #### Request example
 
@@ -1062,7 +1062,7 @@ namespace SlicerTester.Console
 ```
 
 ### Dictionary&lt;string, dynamic> Score(Dictionary&lt;string, dynamic> query)
-Retrieve indexed values as well as their relevance for entities matching the given query. This method corresponds to a [POST request at /data_extraction/score](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-data-extraction-score).
+Retrieve inserted values as well as their relevance for entities matching the given query. This method corresponds to a [POST request at /data_extraction/score](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-data-extraction-score).
 
 #### Request example
 

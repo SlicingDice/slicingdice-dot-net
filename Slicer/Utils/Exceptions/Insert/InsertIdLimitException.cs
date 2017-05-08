@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Exceptions
 {
-    public class IndexFieldLimitException : SlicingDiceException
+    public class InsertIdLimitException : SlicingDiceException
     {
-        public IndexFieldLimitException()
+        public InsertIdLimitException()
             : base() { }
 
-        public IndexFieldLimitException(string message)
+        public InsertIdLimitException(string message)
             : base(message) { }
 
-        public IndexFieldLimitException(string format, params object[] args)
+        public InsertIdLimitException(string format, params object[] args)
             : base(string.Format(format, args)) { }
 
     }

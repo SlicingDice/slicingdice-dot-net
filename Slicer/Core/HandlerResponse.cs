@@ -71,7 +71,7 @@ namespace Slicer.Core
                 case 33:
                     throw new AccountDisabledException(message);
                 case 39:
-                    throw new IndexInvalidRangeException(message);   
+                    throw new InsertInvalidRangeException(message);   
                 // Field errors (40 - 59)
                 case 40:
                     throw new FieldMissingParamException(message);
@@ -113,37 +113,37 @@ namespace Slicer.Core
                     throw new FieldEmptyEntityIdException(message);
                 case 59:
                     throw new FieldExceededPermitedValueException(message);
-                // Index errors (60 - 79)
+                // Insert errors (60 - 79)
                 case 60:
-                    throw new IndexInvalidDecimalPlacesException(message);
+                    throw new InsertInvalidDecimalPlacesException(message);
                 case 61:
-                    throw new IndexEntityValueTypeException(message);
+                    throw new InsertEntityValueTypeException(message);
                 case 62:
-                    throw new IndexFieldNameTypeException(message);
+                    throw new InsertFieldNameTypeException(message);
                 case 63:
-                    throw new IndexFieldTypeException(message);
+                    throw new InsertFieldTypeException(message);
                 case 64:
-                    throw new IndexEntityNameTooBigException(message);
+                    throw new InsertEntityNameTooBigException(message);
                 case 65:
-                 throw new IndexFieldValueTooBigException(message);
+                 throw new InsertFieldValueTooBigException(message);
                 case 66:
-                    throw new IndexTimeSeriesDateFormatException(message);
+                    throw new InsertTimeSeriesDateFormatException(message);
                 case 67:
-                    throw new IndexFieldNotActiveException(message);
+                    throw new InsertFieldNotActiveException(message);
                 case 68:
-                    throw new IndexIdLimitException(message);
+                    throw new InsertIdLimitException(message);
                 case 69:
-                    throw new IndexFieldLimitException(message);
+                    throw new InsertFieldLimitException(message);
                 case 70:
-                    throw new IndexDateFormatException(message);
+                    throw new InsertDateFormatException(message);
                 case 71:
-                    throw new IndexFieldStringEmptyValueException(message);
+                    throw new InsertFieldStringEmptyValueException(message);
                 case 72:
-                    throw new IndexFieldTimeSeriesInvalidParameterException(message);
+                    throw new InsertFieldTimeSeriesInvalidParameterException(message);
                 case 73:
-                    throw new IndexFieldNumericInvalidValueException(message);
+                    throw new InsertFieldNumericInvalidValueException(message);
                 case 74:
-                    throw new IndexFieldTimeseriesMissingValueException(message);
+                    throw new InsertFieldTimeseriesMissingValueException(message);
                 case 75:
                     throw new QueryTimeSeriesInvalidPrecisionSecondsException(message);
                 case 76:

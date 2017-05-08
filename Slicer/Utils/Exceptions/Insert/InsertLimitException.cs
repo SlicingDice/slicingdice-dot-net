@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Exceptions
 {
-    public class IndexInvalidRangeException : SlicingDiceException
+    public class InsertLimitException : SlicingDiceException
     {
-        public IndexInvalidRangeException()
+        public InsertLimitException()
             : base() { }
 
-        public IndexInvalidRangeException(string message)
+        public InsertLimitException(string message)
             : base(message) { }
 
-        public IndexInvalidRangeException(string format, params object[] args)
+        public InsertLimitException(string format, params object[] args)
             : base(string.Format(format, args)) { }
 
     }
