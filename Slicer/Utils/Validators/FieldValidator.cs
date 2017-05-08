@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 namespace Slicer.Utils.Validators
 {
     // Validates field
-    public class FieldValidator
+    public class ColumnValidator
     {
         dynamic Query;
-        List<string> validTypesFields;
-        public FieldValidator(dynamic query)
+        List<string> validTypesColumns;
+        public ColumnValidator(dynamic query)
         {
             this.Query = query;
-            this.validTypesFields = new List<string>()
+            this.validTypesColumns = new List<string>()
             {
                 "unique-id", "boolean", "string", "integer", "decimal",
                 "enumerated", "date", "integer-time-series",
@@ -27,14 +27,14 @@ namespace Slicer.Utils.Validators
         {
             if (!Query.ContainsKey("name"))
             {
-                throw new InvalidFieldException("The field should have a name.");
+                throw new InvalidColumnException("The field should have a name.");
             }
             else
             {
-                var nameField = (string) Query["name"];
-                if (nameField.Count() > 80)
+                var nameColumn = (string) Query["name"];
+                if (nameColumn.Count() > 80)
                 {
-                    throw new InvalidFieldNameException("The field's name have a very big content. (Max: 80 chars)");
+                    throw new InvalidColumnNameException("The field's name have a very big content. (Max: 80 chars)");
                 }
             }
         }
@@ -44,20 +44,20 @@ namespace Slicer.Utils.Validators
             var description = (string)Query["description"];
             if (description.Count() > 300)
             {
-                throw new InvalidFieldDescriptionException("The field's description have a very big content. (Max: 300chars)");
+                throw new InvalidColumnDescriptionException("The field's description have a very big content. (Max: 300chars)");
             }
         }
         // Check if field has a valid type
-        private void ValidateFieldType(Dictionary<string, dynamic> Query)
+        private void ValidateColumnType(Dictionary<string, dynamic> Query)
         {
             if (!Query.ContainsKey("type"))
             {
-                throw new InvalidFieldException("The field should have a type.");
+                throw new InvalidColumnException("The field should have a type.");
             }
             var fieldType = (string)Query["type"];
-            if (!validTypesFields.Contains(fieldType))
+            if (!validTypesColumns.Contains(fieldType))
             {
-                throw new InvalidFieldException("This field has a invalid type.");
+                throw new InvalidColumnException("This field has a invalid type.");
             }
         }
         // Check if decimal field has a valid type
@@ -67,10 +67,10 @@ namespace Slicer.Utils.Validators
             {
                 "decimal", "decimal-time-series"
             };
-            var typeField = (string) Query["type"];
-            if (!decimalTypes.Contains(typeField))
+            var typeColumn = (string) Query["type"];
+            if (!decimalTypes.Contains(typeColumn))
             {
-                throw new InvalidFieldException("This field only accepts 'decimal' or 'decimal-time-series' types");
+                throw new InvalidColumnException("This field only accepts 'decimal' or 'decimal-time-series' types");
             }
         }
         // Check if string field is valid
@@ -78,7 +78,7 @@ namespace Slicer.Utils.Validators
         {
             if (!Query.ContainsKey("cardinality"))
             {
-                throw new InvalidFieldException("The field with type string should have 'cardinality' key.");
+                throw new InvalidColumnException("The field with type string should have 'cardinality' key.");
             }
             var cardinalityTypes = new List<string>()
             {
@@ -87,35 +87,35 @@ namespace Slicer.Utils.Validators
             var cardinality = (string) Query["cardinality"];
             if (!cardinalityTypes.Contains(cardinality))
             {
-                throw new InvalidFieldException("The field 'cardinality' has invalid value.");
+                throw new InvalidColumnException("The field 'cardinality' has invalid value.");
             }
         }
         // Check if enumerate field is valid
         private void ValidateEnumerateType(Dictionary<string, dynamic> Query)
         {
             if (!Query.ContainsKey("range"))
-                throw new InvalidFieldException("The 'enumerate' type needs of the 'range' parameter.");
+                throw new InvalidColumnException("The 'enumerate' type needs of the 'range' parameter.");
         }
         // Validate a field, returns true if the field is valid
         public bool Validator()
         {
             if (this.Query is List<dynamic>) {
                 foreach (var q in this.Query) {
-                    this.ValidateField(q);
+                    this.ValidateColumn(q);
                 }
             } else {
-                this.ValidateField(this.Query);
+                this.ValidateColumn(this.Query);
             }
 
             return true;
         }
 
-        public void ValidateField(Dictionary<string, dynamic> Query) {
+        public void ValidateColumn(Dictionary<string, dynamic> Query) {
             this.ValidateName(Query);
-            this.ValidateFieldType(Query);
-            var typeField = (string) Query["type"];
-            if (typeField == "string") this.CheckStringIntegrity(Query);
-            if (typeField == "enumerated") this.ValidateEnumerateType(Query);
+            this.ValidateColumnType(Query);
+            var typeColumn = (string) Query["type"];
+            if (typeColumn == "string") this.CheckStringIntegrity(Query);
+            if (typeColumn == "enumerated") this.ValidateEnumerateType(Query);
             if (Query.ContainsKey("description")) this.ValidateDescription(Query);
             if (Query.ContainsKey("decimal-place")) this.ValidateDecimalType(Query);
         }

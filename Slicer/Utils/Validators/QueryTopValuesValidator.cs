@@ -24,7 +24,7 @@ namespace Slicer.Utils.Validators
             return false;
         }
         // Validate if top values query exceeds fields limit
-        private bool ExceedsFieldsLimit()
+        private bool ExceedsColumnsLimit()
         {
             foreach (KeyValuePair<string, dynamic> data in this.Query)
             {
@@ -61,7 +61,7 @@ namespace Slicer.Utils.Validators
         // Validates top values query, if the query is valid returns true, otherwise return false
         public bool Validator()
         {
-            if (!this.ExceedsQueriesLimit() && !this.ExceedsFieldsLimit() && !this.ExceedsValuesContainsLimit())
+            if (!this.ExceedsQueriesLimit() && !this.ExceedsColumnsLimit() && !this.ExceedsValuesContainsLimit())
             {
                 return true;
             }

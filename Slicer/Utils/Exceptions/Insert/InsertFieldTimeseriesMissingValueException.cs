@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Exceptions
 {
-    public class InsertFieldTimeseriesMissingValueException : SlicingDiceException
+    public class InsertColumnTimeseriesMissingValueException : SlicingDiceException
     {
-        public InsertFieldTimeseriesMissingValueException()
+        public InsertColumnTimeseriesMissingValueException()
             : base() { }
 
-        public InsertFieldTimeseriesMissingValueException(string message)
+        public InsertColumnTimeseriesMissingValueException(string message)
             : base(message) { }
 
-        public InsertFieldTimeseriesMissingValueException(string format, params object[] args)
+        public InsertColumnTimeseriesMissingValueException(string format, params object[] args)
             : base(string.Format(format, args)) { }
 
     }

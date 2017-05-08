@@ -65,7 +65,7 @@ namespace Slicer.Console
                 {"type", "integer"},
                 {"storage", "latest-value"}
             };
-            client.CreateField(fieldData);
+            client.CreateColumn(fieldData);
 
             // Inserting data
             var insert = new Dictionary<string, dynamic>()
@@ -163,7 +163,7 @@ namespace SlicerTester.Console
 }
 ```
 
-### Dictionary&lt;string, dynamic> GetFields()
+### Dictionary&lt;string, dynamic> GetColumns()
 Get all created fields, both active and inactive ones. This method corresponds to a [GET request at /field](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-field).
 
 #### Request example
@@ -181,7 +181,7 @@ namespace SlicerTester.Console
         {
             var client = new SlicingDice(masterKey: "MASTER_API_KEY", usesTestEndpoint: false);
 
-            var result = client.GetFields();
+            var result = client.GetColumns();
 
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
@@ -217,7 +217,7 @@ namespace SlicerTester.Console
 }
 ```
 
-### Dictionary&lt;string, dynamic> CreateField(Dictionary&lt;string, dynamic> query)
+### Dictionary&lt;string, dynamic> CreateColumn(Dictionary&lt;string, dynamic> query)
 Create a new field. This method corresponds to a [POST request at /field](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-field).
 
 #### Request example
@@ -242,7 +242,7 @@ namespace SlicerTester.Console
                 {"description", "Year of manufacturing"},
                 {"storage", "latest-value"}
             };
-            var result = client.CreateField(field);
+            var result = client.CreateColumn(field);
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
@@ -258,7 +258,7 @@ namespace SlicerTester.Console
 }
 ```
 
-### Dictionary&lt;string, dynamic> Insert(Dictionary&lt;string, dynamic> data, bool autoCreateFields = false)
+### Dictionary&lt;string, dynamic> Insert(Dictionary&lt;string, dynamic> data, bool autoCreateColumns = false)
 Insert data to existing entities or create new entities, if necessary. This method corresponds to a [POST request at /insert](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-insert).
 
 #### Request example

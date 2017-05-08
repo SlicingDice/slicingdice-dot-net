@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Exceptions
 {
-    public class FieldIntegerValuesException : SlicingDiceException
+    public class ColumnStorageValueException : SlicingDiceException
     {
-        public FieldIntegerValuesException()
+        public ColumnStorageValueException()
             : base() { }
 
-        public FieldIntegerValuesException(string message)
+        public ColumnStorageValueException(string message)
             : base(message) { }
 
-        public FieldIntegerValuesException(string format, params object[] args)
+        public ColumnStorageValueException(string format, params object[] args)
             : base(string.Format(format, args)) { }
 
     }

@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Exceptions
 {
-    public class InsertFieldNotActiveException : SlicingDiceException
+    public class InsertColumnNotActiveException : SlicingDiceException
     {
-        public InsertFieldNotActiveException()
+        public InsertColumnNotActiveException()
             : base() { }
 
-        public InsertFieldNotActiveException(string message)
+        public InsertColumnNotActiveException(string message)
             : base(message) { }
 
-        public InsertFieldNotActiveException(string format, params object[] args)
+        public InsertColumnNotActiveException(string format, params object[] args)
             : base(string.Format(format, args)) { }
 
     }

@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Exceptions
 {
-    public class FieldTimeSeriesLimitException : SlicingDiceException
+    public class ColumnLimitException : SlicingDiceException
     {
-        public FieldTimeSeriesLimitException()
+        public ColumnLimitException()
             : base() { }
 
-        public FieldTimeSeriesLimitException(string message)
+        public ColumnLimitException(string message)
             : base(message) { }
 
-        public FieldTimeSeriesLimitException(string format, params object[] args)
+        public ColumnLimitException(string format, params object[] args)
             : base(string.Format(format, args)) { }
 
     }

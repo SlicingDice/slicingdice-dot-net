@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Exceptions
 {
-    public class CustomKeyInvalidFieldCreationException : SlicingDiceException
+    public class CustomKeyInvalidColumnCreationException : SlicingDiceException
     {
-        public CustomKeyInvalidFieldCreationException()
+        public CustomKeyInvalidColumnCreationException()
             : base() { }
 
-        public CustomKeyInvalidFieldCreationException(string message)
+        public CustomKeyInvalidColumnCreationException(string message)
             : base(message) { }
 
-        public CustomKeyInvalidFieldCreationException(string format, params object[] args)
+        public CustomKeyInvalidColumnCreationException(string format, params object[] args)
             : base(string.Format(format, args)) { }
 
     }

@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Exceptions
 {
-    public class FieldInvalidCardinalityException : SlicingDiceException
+    public class ColumnMissingParamException : SlicingDiceException
     {
-        public FieldInvalidCardinalityException()
+        public ColumnMissingParamException()
             : base() { }
 
-        public FieldInvalidCardinalityException(string message)
+        public ColumnMissingParamException(string message)
             : base(message) { }
 
-        public FieldInvalidCardinalityException(string format, params object[] args)
+        public ColumnMissingParamException(string format, params object[] args)
             : base(string.Format(format, args)) { }
 
     }

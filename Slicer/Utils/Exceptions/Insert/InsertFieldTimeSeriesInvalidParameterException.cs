@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Exceptions
 {
-    public class InsertFieldTimeSeriesInvalidParameterException : SlicingDiceException
+    public class InsertColumnTimeSeriesInvalidParameterException : SlicingDiceException
     {
-        public InsertFieldTimeSeriesInvalidParameterException()
+        public InsertColumnTimeSeriesInvalidParameterException()
             : base() { }
 
-        public InsertFieldTimeSeriesInvalidParameterException(string message)
+        public InsertColumnTimeSeriesInvalidParameterException(string message)
             : base(message) { }
 
-        public InsertFieldTimeSeriesInvalidParameterException(string format, params object[] args)
+        public InsertColumnTimeSeriesInvalidParameterException(string format, params object[] args)
             : base(string.Format(format, args)) { }
 
     }

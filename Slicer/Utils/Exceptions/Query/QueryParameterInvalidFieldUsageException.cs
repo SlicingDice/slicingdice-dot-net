@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Exceptions
 {
-    public class QueryParameterInvalidFieldUsageException : SlicingDiceException
+    public class QueryParameterInvalidColumnUsageException : SlicingDiceException
     {
-        public QueryParameterInvalidFieldUsageException()
+        public QueryParameterInvalidColumnUsageException()
             : base() { }
 
-        public QueryParameterInvalidFieldUsageException(string message)
+        public QueryParameterInvalidColumnUsageException(string message)
             : base(message) { }
 
-        public QueryParameterInvalidFieldUsageException(string format, params object[] args)
+        public QueryParameterInvalidColumnUsageException(string format, params object[] args)
             : base(string.Format(format, args)) { }
 
     }

@@ -33,9 +33,9 @@ namespace Slicer.Core
                 case 14:
                     throw new AuthInvalidRemoteAddrException(message);
                 case 15:
-                    throw new CustomKeyInvalidFieldCreationException(message);
+                    throw new CustomKeyInvalidColumnCreationException(message);
                 case 16:
-                    throw new CustomKeyInvalidPermissionForFieldException(message);
+                    throw new CustomKeyInvalidPermissionForColumnException(message);
                 case 17:
                     throw new CustomKeyInvalidOperationException(message);
                 case 18:
@@ -72,78 +72,78 @@ namespace Slicer.Core
                     throw new AccountDisabledException(message);
                 case 39:
                     throw new InsertInvalidRangeException(message);   
-                // Field errors (40 - 59)
+                // Column errors (40 - 59)
                 case 40:
-                    throw new FieldMissingParamException(message);
+                    throw new ColumnMissingParamException(message);
                 case 41:
-                    throw new FieldTypeException(message);
+                    throw new ColumnTypeException(message);
                 case 42:
-                    throw new FieldIntegerValuesException(message);
+                    throw new ColumnIntegerValuesException(message);
                 case 43:
-                    throw new FieldAlreadyExistsException(message);
+                    throw new ColumnAlreadyExistsException(message);
                 case 44:
-                    throw new FieldLimitException(message);
+                    throw new ColumnLimitException(message);
                 case 45:
-                    throw new FieldTimeSeriesLimitException(message);
+                    throw new ColumnTimeSeriesLimitException(message);
                 case 46:
-                    throw new FieldTimeSeriesSystemLimitException(message);
+                    throw new ColumnTimeSeriesSystemLimitException(message);
                 case 47:
-                    throw new FieldDecimalTypeException(message);
+                    throw new ColumnDecimalTypeException(message);
                 case 48:
-                    throw new FieldStorageValueException(message);
+                    throw new ColumnStorageValueException(message);
                 case 49:
-                    throw new FieldInvalidApiNameException(message);
+                    throw new ColumnInvalidApiNameException(message);
                 case 50:
-                    throw new FieldInvalidNameException(message);
+                    throw new ColumnInvalidNameException(message);
                 case 51:
-                    throw new FieldInvalidDescriptionException(message);
+                    throw new ColumnInvalidDescriptionException(message);
                 case 52:
-                    throw new FieldExceedDescriptionlengthException(message);
+                    throw new ColumnExceedDescriptionlengthException(message);
                 case 53:
-                    throw new FieldInvalidCardinalityException(message);
+                    throw new ColumnInvalidCardinalityException(message);
                 case 54:
-                    throw new FieldDecimalLimitException(message);
+                    throw new ColumnDecimalLimitException(message);
                 case 55:
-                    throw new FieldRangeLimitException(message);
+                    throw new ColumnRangeLimitException(message);
                 case 56:
-                    throw new FieldExceededMaxNameLenghtException(message);
+                    throw new ColumnExceededMaxNameLenghtException(message);
                 case 57:
-                    throw new FieldExceededMaxApiNameLenghtException(message);
+                    throw new ColumnExceededMaxApiNameLenghtException(message);
                 case 58:
-                    throw new FieldEmptyEntityIdException(message);
+                    throw new ColumnEmptyEntityIdException(message);
                 case 59:
-                    throw new FieldExceededPermitedValueException(message);
+                    throw new ColumnExceededPermitedValueException(message);
                 // Insert errors (60 - 79)
                 case 60:
                     throw new InsertInvalidDecimalPlacesException(message);
                 case 61:
                     throw new InsertEntityValueTypeException(message);
                 case 62:
-                    throw new InsertFieldNameTypeException(message);
+                    throw new InsertColumnNameTypeException(message);
                 case 63:
-                    throw new InsertFieldTypeException(message);
+                    throw new InsertColumnTypeException(message);
                 case 64:
                     throw new InsertEntityNameTooBigException(message);
                 case 65:
-                 throw new InsertFieldValueTooBigException(message);
+                 throw new InsertColumnValueTooBigException(message);
                 case 66:
                     throw new InsertTimeSeriesDateFormatException(message);
                 case 67:
-                    throw new InsertFieldNotActiveException(message);
+                    throw new InsertColumnNotActiveException(message);
                 case 68:
                     throw new InsertIdLimitException(message);
                 case 69:
-                    throw new InsertFieldLimitException(message);
+                    throw new InsertColumnLimitException(message);
                 case 70:
                     throw new InsertDateFormatException(message);
                 case 71:
-                    throw new InsertFieldStringEmptyValueException(message);
+                    throw new InsertColumnStringEmptyValueException(message);
                 case 72:
-                    throw new InsertFieldTimeSeriesInvalidParameterException(message);
+                    throw new InsertColumnTimeSeriesInvalidParameterException(message);
                 case 73:
-                    throw new InsertFieldNumericInvalidValueException(message);
+                    throw new InsertColumnNumericInvalidValueException(message);
                 case 74:
-                    throw new InsertFieldTimeseriesMissingValueException(message);
+                    throw new InsertColumnTimeseriesMissingValueException(message);
                 case 75:
                     throw new QueryTimeSeriesInvalidPrecisionSecondsException(message);
                 case 76:
@@ -166,7 +166,7 @@ namespace Slicer.Core
                 case 84:
                     throw new QueryIncorrectOperatorUsageException(message);
                 case 85:
-                    throw new QueryFieldNotActiveException(message);
+                    throw new QueryColumnNotActiveException(message);
                 case 86:
                     throw new QueryMissingOperatorException(message);
                 case 87:
@@ -178,7 +178,7 @@ namespace Slicer.Core
                 case 90:
                     throw new QueryIntegerException(message);
                 case 91:
-                    throw new QueryFieldLimitException(message);
+                    throw new QueryColumnLimitException(message);
                 case 92:
                     throw new QueryLevelLimitException(message);
                 case 93:
@@ -222,7 +222,7 @@ namespace Slicer.Core
                 case 113:
                     throw new QueryDataExtractionPageTokenValueException(message);
                 case 114:
-                    throw new QueryDataExtractionFieldLimitException(message);
+                    throw new QueryDataExtractionColumnLimitException(message);
                 case 115:
                     throw new QueryExistsEntityEmptyException(message);
                 case 116:
@@ -246,14 +246,14 @@ namespace Slicer.Core
                 case 125:
                     throw new QueryInvalidParameterUsageException(message);
                 case 126:
-                    throw new QueryParameterInvalidFieldUsageException(message);
+                    throw new QueryParameterInvalidColumnUsageException(message);
                 case 127:
-                    throw new QueryInvalidFieldUsageException(message);
+                    throw new QueryInvalidColumnUsageException(message);
                 // Internal errors (110 - 120)
                 case 130:
                     throw new InternalException(message);
                 case 131:
-                    throw new FieldCreateInternalException(message);
+                    throw new ColumnCreateInternalException(message);
                 // default
                 default:
                     throw new SlicingDiceHttpException(message);

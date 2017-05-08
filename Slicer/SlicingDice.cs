@@ -202,9 +202,9 @@ namespace Slicer
         }
 
         /// <summary>Get all fields</summary>
-        public Dictionary<string, dynamic> GetFields()
+        public Dictionary<string, dynamic> GetColumns()
         {
-            var url = this.testWrapper() + URLResources.Field;
+            var url = this.testWrapper() + URLResources.Column;
             return this.MakeRequest(url, false, 2);
         }
 
@@ -232,10 +232,10 @@ namespace Slicer
 
         /// <summary>Create a field on SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
-        public Dictionary<string, dynamic> CreateField(dynamic query)
+        public Dictionary<string, dynamic> CreateColumn(dynamic query)
         {
-            var url = this.testWrapper() + URLResources.Field;
-            var sdValidator = new FieldValidator(query);
+            var url = this.testWrapper() + URLResources.Column;
+            var sdValidator = new ColumnValidator(query);
             if (sdValidator.Validator()) return this.MakeRequest(url, query, false, 1);
             return null;
         }
