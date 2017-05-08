@@ -40,7 +40,7 @@
 - CLIENT: Create HandlerResponse class
 - CLIENT: Create SlicingDice class
 - CLIENT: GetProject() to get all projects from SlicingDice
-- CLIENT: GetColumns() to get all fields from SlicingDice
+- CLIENT: GetColumns() to get all columns from SlicingDice
 - CLIENT: GetSavedQuery() to get a query saved from SlicingDice
 - CLIENT: CreateSavedQuery() to create a saved query in SlicingDice
 - CLIENT: UpdateSavedQuery() to create a saved query in SlicingDice
@@ -50,4 +50,4 @@
 - CLIENT: CountEntity() to make a count entity query in SlicingDice
 - CLIENT: CountEntityTotal() get total count entity queries SlicingDice
 - CLIENT: Index() to index a data in SlicingDice
-- CLIENT: CreateColumn() to create field in SlicingDice
+- CLIENT: CreateColumn() to create column in SlicingDice

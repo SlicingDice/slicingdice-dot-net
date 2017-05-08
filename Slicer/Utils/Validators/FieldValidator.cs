@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Validators
 {
-    // Validates field
+    // Validates column
     public class ColumnValidator
     {
         dynamic Query;
@@ -22,45 +22,45 @@ namespace Slicer.Utils.Validators
                 "decimal-time-series", "string-time-series"
             };
         }
-        // Check if field name is valid
+        // Check if column name is valid
         private void ValidateName(Dictionary<string, dynamic> Query)
         {
             if (!Query.ContainsKey("name"))
             {
-                throw new InvalidColumnException("The field should have a name.");
+                throw new InvalidColumnException("The column should have a name.");
             }
             else
             {
                 var nameColumn = (string) Query["name"];
                 if (nameColumn.Count() > 80)
                 {
-                    throw new InvalidColumnNameException("The field's name have a very big content. (Max: 80 chars)");
+                    throw new InvalidColumnNameException("The column's name have a very big content. (Max: 80 chars)");
                 }
             }
         }
-        // Check if field description is valid
+        // Check if column description is valid
         private void ValidateDescription(Dictionary<string, dynamic> Query)
         {
             var description = (string)Query["description"];
             if (description.Count() > 300)
             {
-                throw new InvalidColumnDescriptionException("The field's description have a very big content. (Max: 300chars)");
+                throw new InvalidColumnDescriptionException("The column's description have a very big content. (Max: 300chars)");
             }
         }
-        // Check if field has a valid type
+        // Check if column has a valid type
         private void ValidateColumnType(Dictionary<string, dynamic> Query)
         {
             if (!Query.ContainsKey("type"))
             {
-                throw new InvalidColumnException("The field should have a type.");
+                throw new InvalidColumnException("The column should have a type.");
             }
-            var fieldType = (string)Query["type"];
-            if (!validTypesColumns.Contains(fieldType))
+            var columnType = (string)Query["type"];
+            if (!validTypesColumns.Contains(columnType))
             {
-                throw new InvalidColumnException("This field has a invalid type.");
+                throw new InvalidColumnException("This column has a invalid type.");
             }
         }
-        // Check if decimal field has a valid type
+        // Check if decimal column has a valid type
         private void ValidateDecimalType(Dictionary<string, dynamic> Query)
         {
             var decimalTypes = new List<string>()
@@ -70,15 +70,15 @@ namespace Slicer.Utils.Validators
             var typeColumn = (string) Query["type"];
             if (!decimalTypes.Contains(typeColumn))
             {
-                throw new InvalidColumnException("This field only accepts 'decimal' or 'decimal-time-series' types");
+                throw new InvalidColumnException("This column only accepts 'decimal' or 'decimal-time-series' types");
             }
         }
-        // Check if string field is valid
+        // Check if string column is valid
         private void CheckStringIntegrity(Dictionary<string, dynamic> Query)
         {
             if (!Query.ContainsKey("cardinality"))
             {
-                throw new InvalidColumnException("The field with type string should have 'cardinality' key.");
+                throw new InvalidColumnException("The column with type string should have 'cardinality' key.");
             }
             var cardinalityTypes = new List<string>()
             {
@@ -87,16 +87,16 @@ namespace Slicer.Utils.Validators
             var cardinality = (string) Query["cardinality"];
             if (!cardinalityTypes.Contains(cardinality))
             {
-                throw new InvalidColumnException("The field 'cardinality' has invalid value.");
+                throw new InvalidColumnException("The column 'cardinality' has invalid value.");
             }
         }
-        // Check if enumerate field is valid
+        // Check if enumerate column is valid
         private void ValidateEnumerateType(Dictionary<string, dynamic> Query)
         {
             if (!Query.ContainsKey("range"))
                 throw new InvalidColumnException("The 'enumerate' type needs of the 'range' parameter.");
         }
-        // Validate a field, returns true if the field is valid
+        // Validate a column, returns true if the column is valid
         public bool Validator()
         {
             if (this.Query is List<dynamic>) {

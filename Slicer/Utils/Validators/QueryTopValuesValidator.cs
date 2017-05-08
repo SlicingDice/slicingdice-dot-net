@@ -23,7 +23,7 @@ namespace Slicer.Utils.Validators
             }
             return false;
         }
-        // Validate if top values query exceeds fields limit
+        // Validate if top values query exceeds columns limit
         private bool ExceedsColumnsLimit()
         {
             foreach (KeyValuePair<string, dynamic> data in this.Query)
@@ -31,7 +31,7 @@ namespace Slicer.Utils.Validators
                 var v = data.Value;
                 if (v.Count > 6)
                 {
-                    throw new MaxLimitException(string.Format("The query '{0}' exceeds the limit of fields per query in request", data.Key));
+                    throw new MaxLimitException(string.Format("The query '{0}' exceeds the limit of columns per query in request", data.Key));
                 }
             }
             return false;

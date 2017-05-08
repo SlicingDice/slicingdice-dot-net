@@ -201,15 +201,15 @@ namespace Slicer
             return null;
         }
 
-        /// <summary>Get all fields</summary>
+        /// <summary>Get all columns</summary>
         public Dictionary<string, dynamic> GetColumns()
         {
             var url = this.testWrapper() + URLResources.Column;
             return this.MakeRequest(url, false, 2);
         }
 
-        /// <summary>Get all projects</summary>
-        public Dictionary<string, dynamic> GetProjects()
+        /// <summary>Get information about current database</summary>
+        public Dictionary<string, dynamic> GetDatabase()
         {
             var url = this.testWrapper() + URLResources.Project;
             return this.MakeRequest(url, false, 2);
@@ -230,7 +230,7 @@ namespace Slicer
             return this.MakeRequest(url, false, 2);
         }
 
-        /// <summary>Create a field on SlicingDice API</summary>
+        /// <summary>Create a column on SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
         public Dictionary<string, dynamic> CreateColumn(dynamic query)
         {

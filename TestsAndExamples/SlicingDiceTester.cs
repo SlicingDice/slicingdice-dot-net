@@ -79,7 +79,7 @@ namespace Slicer.Test
             }
         }
 
-        // Erase field translation dictionary
+        // Erase column translation dictionary
         private void EmptyColumnTranslation()
         {
             this.ColumnTranslation = new Dictionary<string, dynamic>();
@@ -97,50 +97,50 @@ namespace Slicer.Test
             return JsonConvert.DeserializeObject<List<Dictionary<string, dynamic>>>(queriesText);
         }
 
-        /// <summary>Create fields for a given test</summary>
-        /// <param name="test">Dictionary containing test name, fields metadata, data to be inserted, query, and expected results.</param>
+        /// <summary>Create columns for a given test</summary>
+        /// <param name="test">Dictionary containing test name, columns metadata, data to be inserted, query, and expected results.</param>
         private void CreateColumns(Dictionary<string, dynamic> test)
         {
-            JArray fieldsData = test["fields"];
-            List<Dictionary<string, dynamic>> fields = fieldsData.ToObject<List<Dictionary<string, dynamic>>>();
-            bool isSingular = fields.Count == 1;
-            string fieldOrColumns = string.Empty;
+            JArray columnsData = test["columns"];
+            List<Dictionary<string, dynamic>> columns = columnsData.ToObject<List<Dictionary<string, dynamic>>>();
+            bool isSingular = columns.Count == 1;
+            string columnOrColumns = string.Empty;
 
             if (isSingular)
             {
-                fieldOrColumns = "field";
+                columnOrColumns = "column";
             }
             else
             {
-                fieldOrColumns = "fields";
+                columnOrColumns = "columns";
             }
-            System.Console.WriteLine(string.Format("  Creating {0} {1}", fields.Count, fieldOrColumns));
+            System.Console.WriteLine(string.Format("  Creating {0} {1}", columns.Count, columnOrColumns));
 
-            for(int i = 0; i < fields.Count; i++) {
-                Dictionary<string, dynamic> field = fields[i];
-                this.AddTimestampToColumnName(field);
-                this.Client.CreateColumn(field);
+            for(int i = 0; i < columns.Count; i++) {
+                Dictionary<string, dynamic> column = columns[i];
+                this.AddTimestampToColumnName(column);
+                this.Client.CreateColumn(column);
 
                 if (this.Verbose)
                 {
-                    System.Console.WriteLine(string.Format("    - {0}", field["api-name"]));
+                    System.Console.WriteLine(string.Format("    - {0}", column["api-name"]));
                 }
             }
         }
 
-        /// <summary> Add timestamp to field name
-        /// This technique allows the same test suite to be executed over and over again, since each execution will use different field names.
+        /// <summary> Add timestamp to column name
+        /// This technique allows the same test suite to be executed over and over again, since each execution will use different column names.
         /// </summary>
-        /// <param name="field">Dicitonary containing the field to append timestamp</param>
-        private void AddTimestampToColumnName(Dictionary<string, dynamic> field)
+        /// <param name="column">Dicitonary containing the column to append timestamp</param>
+        private void AddTimestampToColumnName(Dictionary<string, dynamic> column)
         {
-            string oldName = string.Format("\"{0}\"", field["api-name"]);
+            string oldName = string.Format("\"{0}\"", column["api-name"]);
 
             string timestamp = this.GetTimestamp();
-            field["name"] = field["name"] + timestamp;
-            field["api-name"] = field["api-name"] + timestamp;
+            column["name"] = column["name"] + timestamp;
+            column["api-name"] = column["api-name"] + timestamp;
 
-            string newName = string.Format("\"{0}\"", field["api-name"]);
+            string newName = string.Format("\"{0}\"", column["api-name"]);
             this.ColumnTranslation[oldName] = newName;
         }
 
@@ -151,7 +151,7 @@ namespace Slicer.Test
         }
 
         ///<summary>Insert test data on SlicingDice API</summary>
-        ///<param name="test">Dictionary containing test name, fields metadata, data to be inserted, query, and expected results.</param>
+        ///<param name="test">Dictionary containing test name, columns metadata, data to be inserted, query, and expected results.</param>
         private void InsertData(Dictionary<string, dynamic> test)
         {
             JObject insertionObject = test["insert"];
@@ -185,7 +185,7 @@ namespace Slicer.Test
             Thread.Sleep(this.SleepTime * 1000);
         }
 
-        // Translate field name to match field name with timestamp.
+        // Translate column name to match column name with timestamp.
         private Dictionary<string, dynamic> TranslateColumnNames(Dictionary<string, dynamic> data){
             string dataString = JsonConvert.SerializeObject(data);
 
@@ -199,7 +199,7 @@ namespace Slicer.Test
 
         /// <summary>Execute a query on SlicingDice API</summary>
         /// <param name="queryType">The type of the query</param>
-        /// <param name="test">Dictionary containing test name, fields metadata, data to be inserted, query, and expected results.</param>
+        /// <param name="test">Dictionary containing test name, columns metadata, data to be inserted, query, and expected results.</param>
         private Dictionary<string, dynamic> ExecuteQuery(string queryType, Dictionary<string, dynamic> test)
         {
             JObject testQuery = test["query"];

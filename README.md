@@ -56,8 +56,8 @@ namespace Slicer.Console
             // Configure the client
             var client = new SlicingDice(masterKey: "API_KEY", usesTestEndpoint: false);
 
-            // Creating a field
-            var fieldData = new Dictionary<string, dynamic>()
+            // Creating a column
+            var columnData = new Dictionary<string, dynamic>()
             {
                 {"name", "Age"},
                 {"api-name", "age"},
@@ -65,7 +65,7 @@ namespace Slicer.Console
                 {"type", "integer"},
                 {"storage", "latest-value"}
             };
-            client.CreateColumn(fieldData);
+            client.CreateColumn(columnData);
 
             // Inserting data
             var insert = new Dictionary<string, dynamic>()
@@ -115,8 +115,8 @@ namespace Slicer.Console
 * `timeout (int)` - Amount of time, in seconds, to wait for results for each request.
 * `usesTestEndpoint (bool)` - If false the client will send requests to production end-point, otherwise to tests end-point.
 
-### Dictionary&lt;string, dynamic> GetProjects()
-Get all created projects, both active and inactive ones. This method corresponds to a [GET request at /project](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-project).
+### Dictionary&lt;string, dynamic> GetDatabase()
+Get information about current database. This method corresponds to a [GET request at /database](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-database).
 
 #### Request example
 
@@ -133,7 +133,7 @@ namespace SlicerTester.Console
         {
             var client = new SlicingDice(masterKey: "MASTER_API_KEY", usesTestEndpoint: false);
 
-            var result = client.GetProjects();
+            var result = client.GetDatabase();
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
@@ -146,16 +146,16 @@ namespace SlicerTester.Console
 {
     "active": [
         {
-            "name": "Project 1",
-            "description": "My first project",
+            "name": "Database 1",
+            "description": "My first database",
             "data-expiration": 30,
             "created-at": "2016-04-05T10:20:30Z"
         }
     ],
     "inactive": [
         {
-            "name": "Project 2",
-            "description": "My second project",
+            "name": "Database 2",
+            "description": "My second database",
             "data-expiration": 90,
             "created-at": "2016-04-05T10:20:30Z"
         }
@@ -164,7 +164,7 @@ namespace SlicerTester.Console
 ```
 
 ### Dictionary&lt;string, dynamic> GetColumns()
-Get all created fields, both active and inactive ones. This method corresponds to a [GET request at /field](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-field).
+Get all created columns, both active and inactive ones. This method corresponds to a [GET request at /column](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-column).
 
 #### Request example
 
@@ -218,7 +218,7 @@ namespace SlicerTester.Console
 ```
 
 ### Dictionary&lt;string, dynamic> CreateColumn(Dictionary&lt;string, dynamic> query)
-Create a new field. This method corresponds to a [POST request at /field](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-field).
+Create a new column. This method corresponds to a [POST request at /column](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-column).
 
 #### Request example
 
@@ -234,7 +234,7 @@ namespace SlicerTester.Console
         static void Main(string[] args)
         {
             var client = new SlicingDice(masterKey: "MASTER_API_KEY", usesTestEndpoint: false);
-            var field = new Dictionary<string, dynamic>()
+            var column = new Dictionary<string, dynamic>()
             {
                 {"name", "Year"},
                 {"api-name", "year"},
@@ -242,7 +242,7 @@ namespace SlicerTester.Console
                 {"description", "Year of manufacturing"},
                 {"storage", "latest-value"}
             };
-            var result = client.CreateColumn(field);
+            var result = client.CreateColumn(column);
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
@@ -331,13 +331,13 @@ namespace SlicerTester.Console
 {
     "status": "success",
     "inserted-entities": 4,
-    "inserted-fields": 10,
+    "inserted-columns": 10,
     "took": 0.023
 }
 ```
 
 ### Dictionary&lt;string, dynamic> ExistsEntity(ids)
-Verify which entities exist in a project given a list of entity IDs. This method corresponds to a [POST request at /query/exists/entity](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-exists-entity).
+Verify which entities exist in a database given a list of entity IDs. This method corresponds to a [POST request at /query/exists/entity](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-exists-entity).
 
 #### Request example
 
@@ -633,7 +633,7 @@ namespace SlicerTester.Console
 ```
 
 ### Dictionary&lt;string, dynamic> Aggregation(Dictionary&lt;string, dynamic> query)
-Return the aggregation of all fields in the given query. This method corresponds to a [POST request at /query/aggregation](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-aggregation).
+Return the aggregation of all columns in the given query. This method corresponds to a [POST request at /query/aggregation](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-aggregation).
 
 #### Request example
 
@@ -1030,7 +1030,7 @@ namespace SlicerTester.Console
                         }}
                     },
                 }},
-                {"fields", new List<string>{"car-model", "year"}},
+                {"columns", new List<string>{"car-model", "year"}},
                 {"limit", 2}
             };
 
@@ -1095,7 +1095,7 @@ namespace SlicerTester.Console
                         }}
                     },
                 }},
-                {"fields", new List<string>{"car-model", "year"}},
+                {"columns", new List<string>{"car-model", "year"}},
                 {"limit", 2}
             };
 
