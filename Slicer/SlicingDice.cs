@@ -211,7 +211,7 @@ namespace Slicer
         /// <summary>Get information about current database</summary>
         public Dictionary<string, dynamic> GetDatabase()
         {
-            var url = this.testWrapper() + URLResources.Project;
+            var url = this.testWrapper() + URLResources.Database;
             return this.MakeRequest(url, false, 2);
         }
 
