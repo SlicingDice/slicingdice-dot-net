@@ -8,9 +8,9 @@ namespace Slicer.Utils
 {
     public static class URLResources
     {
-        public static string Database { get { return "/project/"; } }
-        public static string Column { get { return "/field/"; } }
-        public static string Insert { get { return "/index/"; } }
+        public static string Database { get { return "/database/"; } }
+        public static string Column { get { return "/column/"; } }
+        public static string Insert { get { return "/insert/"; } }
         public static string QueryCountEntity { get { return "/query/count/entity/"; } }
         public static string QueryCountEvent { get { return "/query/count/event/"; } }
         public static string QueryCountEntityTotal { get { return "/query/count/entity/total/"; } }
