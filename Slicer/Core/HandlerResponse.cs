@@ -98,7 +98,7 @@ namespace Slicer.Core
                 case 51:
                     throw new ColumnInvalidDescriptionException(message);
                 case 52:
-                    throw new ColumnExceedDescriptionlengthException(message);
+                    throw new ColumnExceededDescriptionlengthException(message);
                 case 53:
                     throw new ColumnInvalidCardinalityException(message);
                 case 54:
@@ -143,7 +143,7 @@ namespace Slicer.Core
                 case 73:
                     throw new InsertColumnNumericInvalidValueException(message);
                 case 74:
-                    throw new InsertColumnTimeseriesMissingValueException(message);
+                    throw new InsertColumnTimeSeriesMissingValueException(message);
                 case 75:
                     throw new QueryTimeSeriesInvalidPrecisionSecondsException(message);
                 case 76:

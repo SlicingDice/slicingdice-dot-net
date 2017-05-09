@@ -85,7 +85,7 @@
     <Compile Include="Utils\Exceptions\Column\ColumnMissingParamException.cs" />
     <Compile Include="Utils\Exceptions\Column\ColumnLimitException.cs" />
     <Compile Include="Utils\Exceptions\Column\ColumnIntegerValuesException.cs" />
-    <Compile Include="Utils\Exceptions\Column\ColumnExceedDescriptionlengthException.cs" />
+    <Compile Include="Utils\Exceptions\Column\ColumnExceededDescriptionlengthException.cs" />
     <Compile Include="Utils\Exceptions\Column\ColumnExceededMaxNameLenghtException.cs" />
     <Compile Include="Utils\Exceptions\Column\ColumnExceededMaxApiNameLenghtException.cs" />
     <Compile Include="Utils\Exceptions\Column\ColumnEmptyEntityIdException.cs" />
@@ -93,7 +93,7 @@
     <Compile Include="Utils\Exceptions\Insert\QueryTimeSeriesInvalidPrecisionHoursException.cs" />
     <Compile Include="Utils\Exceptions\Insert\QueryTimeSeriesInvalidPrecisionMinutesException.cs" />
     <Compile Include="Utils\Exceptions\Insert\QueryTimeSeriesInvalidPrecisionSecondsException.cs" />
-    <Compile Include="Utils\Exceptions\Insert\InsertColumnTimeseriesMissingValueException.cs" />
+    <Compile Include="Utils\Exceptions\Insert\InsertColumnTimeSeriesMissingValueException.cs" />
     <Compile Include="Utils\Exceptions\Insert\InsertColumnNumericInvalidValueException.cs" />
     <Compile Include="Utils\Exceptions\Insert\InsertColumnTimeSeriesInvalidParameterException.cs" />
     <Compile Include="Utils\Exceptions\Insert\InsertColumnStringEmptyValueException.cs" />
