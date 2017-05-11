@@ -19,12 +19,12 @@ namespace Slicer.Utils.Validators
         // Validate data extraction query, if the query is valid will return true
         public bool Validator()
         {
-            if (this.Query.ContainsKey("fields"))
+            if (this.Query.ContainsKey("columns"))
             {
-                var fields = this.Query["fields"];
-                if (fields.Count > 10)
+                var columns = this.Query["columns"];
+                if (columns.Count > 10)
                 {
-                    throw new InvalidQueryException("The key 'fields' in data extraction result must have up to 10 fields.");
+                    throw new InvalidQueryException("The key 'columns' in data extraction result must have up to 10 columns.");
                 }
             }
             return true;

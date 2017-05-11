@@ -168,6 +168,20 @@ namespace Slicer
             }
             return null;
         }
+
+        /// <summary>Makes a count query on SlicingDice API</summary>
+        /// <param name="URL">Url to make request, identify if it's a count entity or a count event.</param>
+        /// <param name="query">The count query.</param>
+        private Dictionary<string, dynamic> CountQueryWrapper(string url, List<dynamic> query)
+        {
+            var sdValidator = new QueryCountValidator(query);
+            if (sdValidator.Validator())
+            {
+                return this.MakeRequest(url, query, false, 0);
+            }
+            return null;
+        }
+
         private string testWrapper()
         {
             if (this._usesTestEndpoint) return this._baseUrl + "/test";
@@ -187,17 +201,17 @@ namespace Slicer
             return null;
         }
 
-        /// <summary>Get all fields</summary>
-        public Dictionary<string, dynamic> GetFields()
+        /// <summary>Get all columns</summary>
+        public Dictionary<string, dynamic> GetColumns()
         {
-            var url = this.testWrapper() + URLResources.Field;
+            var url = this.testWrapper() + URLResources.Column;
             return this.MakeRequest(url, false, 2);
         }
 
-        /// <summary>Get all projects</summary>
-        public Dictionary<string, dynamic> GetProjects()
+        /// <summary>Get information about current database</summary>
+        public Dictionary<string, dynamic> GetDatabase()
         {
-            var url = this.testWrapper() + URLResources.Project;
+            var url = this.testWrapper() + URLResources.Database;
             return this.MakeRequest(url, false, 2);
         }
 
@@ -216,32 +230,35 @@ namespace Slicer
             return this.MakeRequest(url, false, 2);
         }
 
-        /// <summary>Create a field on SlicingDice API</summary>
+        /// <summary>Create a column on SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
-        public Dictionary<string, dynamic> CreateField(dynamic query)
+        public Dictionary<string, dynamic> CreateColumn(dynamic query)
         {
-            var url = this.testWrapper() + URLResources.Field;
-            var sdValidator = new FieldValidator(query);
+            var url = this.testWrapper() + URLResources.Column;
+            var sdValidator = new ColumnValidator(query);
             if (sdValidator.Validator()) return this.MakeRequest(url, query, false, 1);
             return null;
         }
 
-        /// <summary>Send a indexation command to SlicingDice API</summary>
-        /// <param name="query">The query to send to SlicingDice API</param>
-        /// <param name="autoCreateFields">if true SlicingDice API will create nonexistent fields automatically</param>
-        public Dictionary<string, dynamic> Index(Dictionary<string, dynamic> query, bool autoCreateFields = false)
+        /// <summary>Send a insertion command to SlicingDice API</summary>
+        /// <param name="data">The query to send to SlicingDice API</param>
+        public Dictionary<string, dynamic> Insert(Dictionary<string, dynamic> data)
         {
-            if (autoCreateFields)
-            {
-                query.Add("auto-create-fields", autoCreateFields);
-            }
-            var url = this.testWrapper() + URLResources.Index;
-            return this.MakeRequest(url, query, false, 1);
+            var url = this.testWrapper() + URLResources.Insert;
+            return this.MakeRequest(url, data, false, 1);
         }
         
         /// <summary>Makes a count entity query to SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
         public Dictionary<string, dynamic> CountEntity(Dictionary<string, dynamic> query)
+        {
+            var url = this.testWrapper() + URLResources.QueryCountEntity;
+            return this.CountQueryWrapper(url, query);
+        }
+
+        /// <summary>Makes a count entity query to SlicingDice API</summary>
+        /// <param name="query">The query to send to SlicingDice API</param>
+        public Dictionary<string, dynamic> CountEntity(List<dynamic> query)
         {
             var url = this.testWrapper() + URLResources.QueryCountEntity;
             return this.CountQueryWrapper(url, query);
@@ -257,6 +274,14 @@ namespace Slicer
         /// <summary>Makes a count event query to SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
         public Dictionary<string, dynamic> CountEvent(Dictionary<string, dynamic> query)
+        {
+            var url = this.testWrapper() + URLResources.QueryCountEvent;
+            return this.CountQueryWrapper(url, query);
+        }
+
+        /// <summary>Makes a count event query to SlicingDice API</summary>
+        /// <param name="query">The query to send to SlicingDice API</param>
+        public Dictionary<string, dynamic> CountEvent(List<dynamic> query)
         {
             var url = this.testWrapper() + URLResources.QueryCountEvent;
             return this.CountQueryWrapper(url, query);
