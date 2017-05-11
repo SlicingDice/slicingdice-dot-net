@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace Slicer.Utils.Exceptions
 {
-    public class RequestRateLimitException : SlicingDiceException
+    class RequestRateLimitException : SlicingDiceException
     {
         public RequestRateLimitException()
             : base() { }
 
         public RequestRateLimitException(string message)
-            : base(message) { }
+			: base(message) { }
+
+		public RequestRateLimitException(Dictionary<string, dynamic> data)
+			: base(data) { }
 
         public RequestRateLimitException(string format, params object[] args)
             : base(string.Format(format, args)) { }
