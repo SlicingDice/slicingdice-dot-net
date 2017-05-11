@@ -378,7 +378,7 @@ namespace SlicerTester.Console
 ```
 
 ### Dictionary&lt;string, dynamic> CountEntityTotal()
-Count the number of indexed entities. This method corresponds to a [GET request at /query/count/entity/total](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-query-count-entity-total).
+Count the number of indexed entities. This method corresponds to a [POST request at /query/count/entity/total](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-query-count-entity-total).
 
 #### Request example
 
@@ -394,7 +394,13 @@ namespace SlicerTester.Console
         static void Main(string[] args)
         {
             var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
-            var result = client.CountEntityTotal();
+            var tables = new Dictionary<string, dynamic>()
+                {
+                    {"tables", new List<string>(){
+                        "default"
+                    }}
+                };
+            var result = client.CountEntityTotal(tables);
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }

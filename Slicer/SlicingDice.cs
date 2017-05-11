@@ -254,6 +254,14 @@ namespace Slicer
             return this.MakeRequest(url, false, 0);
         }
 
+        /// <summary>Makes a total query to SlicingDice API</summary>
+        /// <param name="tables">The tables in which the total query will be performed</param>
+        public Dictionary<string, dynamic> CountEntityTotal(Dictionary<string, dynamic> tables)
+        {
+            var url = this.testWrapper() + URLResources.QueryCountEntityTotal;
+            return this.MakeRequest(url, tables, false, 0);
+        }
+
         /// <summary>Makes a count event query to SlicingDice API</summary>
         /// <param name="query">The query to send to SlicingDice API</param>
         public Dictionary<string, dynamic> CountEvent(Dictionary<string, dynamic> query)
