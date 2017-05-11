@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Added
+- CLIENT: Rename Index() to Insert()
 - CLIENT: Add missing API exceptions in client
 - CLIENT: Add support to custom key
 - CLIENT: Add endpoints keys level
@@ -18,7 +19,7 @@
 ### Added
 - CLIENT: Create TestSlicingDice class
 - CLIENT: Create DataExtractionQueryValidator class
-- CLIENT: Create FieldValidator class
+- CLIENT: Create ColumnValidator class
 - CLIENT: Create QueryCountValidator class
 - CLIENT: Create QueryTopValuesValidator class
 - CLIENT: Create SavedQueryValidator class
@@ -39,7 +40,7 @@
 - CLIENT: Create HandlerResponse class
 - CLIENT: Create SlicingDice class
 - CLIENT: GetProject() to get all projects from SlicingDice
-- CLIENT: GetFields() to get all fields from SlicingDice
+- CLIENT: GetColumns() to get all columns from SlicingDice
 - CLIENT: GetSavedQuery() to get a query saved from SlicingDice
 - CLIENT: CreateSavedQuery() to create a saved query in SlicingDice
 - CLIENT: UpdateSavedQuery() to create a saved query in SlicingDice
@@ -49,4 +50,4 @@
 - CLIENT: CountEntity() to make a count entity query in SlicingDice
 - CLIENT: CountEntityTotal() get total count entity queries SlicingDice
 - CLIENT: Index() to index a data in SlicingDice
-- CLIENT: CreateField() to create field in SlicingDice
+- CLIENT: CreateColumn() to create column in SlicingDice

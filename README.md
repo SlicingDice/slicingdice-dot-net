@@ -9,7 +9,7 @@ Official .NET/C# client for [SlicingDice](http://www.slicingdice.com/), Data War
 
 If you are new to SlicingDice, check our [quickstart guide](http://panel.slicingdice.com/docs/#quickstart-guide) and learn to use it in 15 minutes.
 
-Please refer to the [SlicingDice official documentation](http://panel.slicingdice.com/docs/) for more information on [analytics databases](http://panel.slicingdice.com/docs/#analytics-concepts), [data modeling](http://panel.slicingdice.com/docs/#data-modeling), [indexing](http://panel.slicingdice.com/docs/#data-indexing), [querying](http://panel.slicingdice.com/docs/#data-querying), [limitations](http://panel.slicingdice.com/docs/#current-slicingdice-limitations) and [API details](http://panel.slicingdice.com/docs/#api-details).
+Please refer to the [SlicingDice official documentation](http://panel.slicingdice.com/docs/) for more information on [analytics databases](http://panel.slicingdice.com/docs/#analytics-concepts), [data modeling](http://panel.slicingdice.com/docs/#data-modeling), [data insertion](http://panel.slicingdice.com/docs/#data-insertion), [querying](http://panel.slicingdice.com/docs/#data-querying), [limitations](http://panel.slicingdice.com/docs/#current-slicingdice-limitations) and [API details](http://panel.slicingdice.com/docs/#api-details).
 
 ## Tests and Examples
 
@@ -56,8 +56,8 @@ namespace Slicer.Console
             // Configure the client
             var client = new SlicingDice(masterKey: "API_KEY", usesTestEndpoint: false);
 
-            // Creating a field
-            var fieldData = new Dictionary<string, dynamic>()
+            // Creating a column
+            var columnData = new Dictionary<string, dynamic>()
             {
                 {"name", "Age"},
                 {"api-name", "age"},
@@ -65,32 +65,33 @@ namespace Slicer.Console
                 {"type", "integer"},
                 {"storage", "latest-value"}
             };
-            client.CreateField(fieldData);
+            client.CreateColumn(columnData);
 
-            // Indexing data
-            var indexData = new Dictionary<string, dynamic>()
+            // Inserting data
+            var insert = new Dictionary<string, dynamic>()
             {
                 {"user1@slicingdice.com", new Dictionary<string, int>(){
                     {"age", 2}
                }}
             };
-            client.Index(indexData);
+            client.Insert(insert);
 
             // Querying data
             var queryData = new Dictionary<string, dynamic>()
-            {
-                {"users-between-20-and-40",
-                    new List<Dictionary<string, dynamic>>()
-                    {
-                        new Dictionary<string, dynamic>(){
-                            {"age", new Dictionary<string, dynamic>(){
-                                    {"range", new List<int>(){ 20, 40 }}
+                        {
+                            {"query-name", "users-between-20-and-40"},
+                            {"query",
+                                new List<Dictionary<string, dynamic>>()
+                                {
+                                    new Dictionary<string, dynamic>(){
+                                        {"age", new Dictionary<string, dynamic>(){
+                                                {"range", new List<int>(){ 20, 40 }}
+                                            }
+                                        }
+                                    }
                                 }
                             }
-                        }
-                    }
-                }
-            };
+                        };
 
             var result = client.CountEntity(queryData);
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
@@ -114,8 +115,8 @@ namespace Slicer.Console
 * `timeout (int)` - Amount of time, in seconds, to wait for results for each request.
 * `usesTestEndpoint (bool)` - If false the client will send requests to production end-point, otherwise to tests end-point.
 
-### Dictionary&lt;string, dynamic> GetProjects()
-Get all created projects, both active and inactive ones. This method corresponds to a [GET request at /project](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-project).
+### Dictionary&lt;string, dynamic> GetDatabase()
+Get information about current database. This method corresponds to a [GET request at /database](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-database).
 
 #### Request example
 
@@ -132,7 +133,7 @@ namespace SlicerTester.Console
         {
             var client = new SlicingDice(masterKey: "MASTER_API_KEY", usesTestEndpoint: false);
 
-            var result = client.GetProjects();
+            var result = client.GetDatabase();
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
@@ -143,27 +144,15 @@ namespace SlicerTester.Console
 
 ```json
 {
-    "active": [
-        {
-            "name": "Project 1",
-            "description": "My first project",
-            "data-expiration": 30,
-            "created-at": "2016-04-05T10:20:30Z"
-        }
-    ],
-    "inactive": [
-        {
-            "name": "Project 2",
-            "description": "My second project",
-            "data-expiration": 90,
-            "created-at": "2016-04-05T10:20:30Z"
-        }
-    ]
+    "name": "Database 1",
+    "description": "My first database",
+    "data-expiration": 30,
+    "created-at": "2016-04-05T10:20:30Z"
 }
 ```
 
-### Dictionary&lt;string, dynamic> GetFields()
-Get all created fields, both active and inactive ones. This method corresponds to a [GET request at /field](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-field).
+### Dictionary&lt;string, dynamic> GetColumns()
+Get all created columns, both active and inactive ones. This method corresponds to a [GET request at /column](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-column).
 
 #### Request example
 
@@ -180,7 +169,7 @@ namespace SlicerTester.Console
         {
             var client = new SlicingDice(masterKey: "MASTER_API_KEY", usesTestEndpoint: false);
 
-            var result = client.GetFields();
+            var result = client.GetColumns();
 
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
@@ -216,8 +205,8 @@ namespace SlicerTester.Console
 }
 ```
 
-### Dictionary&lt;string, dynamic> CreateField(Dictionary&lt;string, dynamic> query)
-Create a new field. This method corresponds to a [POST request at /field](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-field).
+### Dictionary&lt;string, dynamic> CreateColumn(Dictionary&lt;string, dynamic> query)
+Create a new column. This method corresponds to a [POST request at /column](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-column).
 
 #### Request example
 
@@ -233,7 +222,7 @@ namespace SlicerTester.Console
         static void Main(string[] args)
         {
             var client = new SlicingDice(masterKey: "MASTER_API_KEY", usesTestEndpoint: false);
-            var field = new Dictionary<string, dynamic>()
+            var column = new Dictionary<string, dynamic>()
             {
                 {"name", "Year"},
                 {"api-name", "year"},
@@ -241,7 +230,7 @@ namespace SlicerTester.Console
                 {"description", "Year of manufacturing"},
                 {"storage", "latest-value"}
             };
-            var result = client.CreateField(field);
+            var result = client.CreateColumn(column);
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
@@ -257,8 +246,8 @@ namespace SlicerTester.Console
 }
 ```
 
-### Dictionary&lt;string, dynamic> Index(Dictionary&lt;string, dynamic> index, bool autoCreateFields = false)
-Index data to existing entities or create new entities, if necessary. This method corresponds to a [POST request at /index](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-index).
+### Dictionary&lt;string, dynamic> Insert(Dictionary&lt;string, dynamic> data)
+Insert data to existing entities or create new entities, if necessary. This method corresponds to a [POST request at /insert](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-insert).
 
 #### Request example
 
@@ -274,8 +263,11 @@ namespace SlicerTester.Console
         static void Main(string[] args)
         {
             var client = new SlicingDice(masterKey: "MASTER_OR_WRITE_API_KEY", usesTestEndpoint: false);
-            var index = new Dictionary<string, dynamic>()
+            var insert = new Dictionary<string, dynamic>()
             {
+                {"auto-create", new List<string>(){
+                    "table", "column"
+                }},
                 {"user1@slicingdice.com", new Dictionary<string, dynamic>{
                     {"car-model", "Ford Ka"},
                     {"year", 2006}
@@ -314,7 +306,7 @@ namespace SlicerTester.Console
                 }}
             };
 
-            var result = client.Index(index);
+            var result = client.Insert(insert);
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
@@ -326,14 +318,14 @@ namespace SlicerTester.Console
 ```json
 {
     "status": "success",
-    "indexed-entities": 4,
-    "indexed-fields": 10,
+    "inserted-entities": 4,
+    "inserted-columns": 10,
     "took": 0.023
 }
 ```
 
 ### Dictionary&lt;string, dynamic> ExistsEntity(ids)
-Verify which entities exist in a project given a list of entity IDs. This method corresponds to a [POST request at /query/exists/entity](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-exists-entity).
+Verify which entities exist in a database given a list of entity IDs. This method corresponds to a [POST request at /query/exists/entity](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-exists-entity).
 
 #### Request example
 
@@ -378,7 +370,7 @@ namespace SlicerTester.Console
 ```
 
 ### Dictionary&lt;string, dynamic> CountEntityTotal()
-Count the number of indexed entities. This method corresponds to a [POST request at /query/count/entity/total](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-query-count-entity-total).
+Count the number of inserted entities. This method corresponds to a [POST request at /query/count/entity/total](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-query-count-entity-total).
 
 #### Request example
 
@@ -436,29 +428,37 @@ namespace SlicerTester.Console
         static void Main(string[] args)
         {
             var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
-            var query = new Dictionary<string, dynamic>()
-            {
-                {"corolla-or-fit", new List<dynamic>{
-                    new Dictionary<string, dynamic>{
-                        {"car-model", new Dictionary<string, dynamic>{
-                            {"equals", "toyota corolla"}
-                        }}
+            var query = new List<dynamic>{
+                new Dictionary<string, dynamic>()
+                    {
+                        {"query-name", "corolla-or-fit"},
+                        {"query", new List<dynamic>{
+                            new Dictionary<string, dynamic>{
+                                {"car-model", new Dictionary<string, dynamic>{
+                                    {"equals", "toyota corolla"}
+                                }}
+                            },
+                            "or",
+                            new Dictionary<string, dynamic>{
+                                {"car-model", new Dictionary<string, dynamic>{
+                                    {"equals", "honda fit"}
+                                }}
+                            }
+                        }},
+                        {"bypass-cache", false}
                     },
-                    "or",
-                    new Dictionary<string, dynamic>{
-                        {"car-model", new Dictionary<string, dynamic>{
-                            {"equals", "honda fit"}
-                        }}
+                new Dictionary<string, dynamic>()
+                    {
+                        {"query-name", "users-from-ny"},
+                        {"query", new List<Dictionary<string, dynamic>>{
+                            new Dictionary<string, dynamic>{
+                                {"car-model", new Dictionary<string, dynamic>{
+                                    {"equals", "ford ka"}
+                                }}
+                            }
+                        }},
+                        {"bypass-cache", false}
                     }
-                }},
-                {"users-from-ny", new List<Dictionary<string, dynamic>>{
-                    new Dictionary<string, dynamic>{
-                        {"car-model", new Dictionary<string, dynamic>{
-                            {"equals", "ford ka"}
-                        }}
-                    }
-                }},
-                {"bypass-cache", false}
             };
 
             var result = client.CountEntity(query);
@@ -498,31 +498,39 @@ namespace SlicerTester.Console
         static void Main(string[] args)
         {
             var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
-            var query = new Dictionary<string, dynamic>()
-            {
-                {"test-drives-in-ny", new List<Dictionary<string, dynamic>>{
-                    new Dictionary<string, dynamic>{
-                        {"test-drives", new Dictionary<string, dynamic>{
-                            {"equals", "NY"},
-                            {"between", new List<string>{
-                                "2016-08-16T00:00:00Z",
-                                "2016-08-18T00:00:00Z"
-                            }}
-                        }}
+            var query = new List<dynamic>{
+                new Dictionary<string, dynamic>()
+                    {
+                        {"query-name", "test-drives-in-ny"},
+                        {"query", new List<Dictionary<string, dynamic>>{
+                            new Dictionary<string, dynamic>{
+                                {"test-drives", new Dictionary<string, dynamic>{
+                                    {"equals", "NY"},
+                                    {"between", new List<string>{
+                                        "2016-08-16T00:00:00Z",
+                                        "2016-08-18T00:00:00Z"
+                                    }}
+                                }}
+                            }
+                        }},
+                        {"bypass-cache", false}
                     },
-                }},
-                {"test-drives-in-ca", new List<Dictionary<string, dynamic>>{
-                    new Dictionary<string, dynamic>{
-                        {"test-drives", new Dictionary<string, dynamic>{
-                            {"equals", "CA"},
-                            {"between", new List<string>{
-                                "2016-04-04T00:00:00Z",
-                                "2016-04-06T00:00:00Z"
-                            }}
-                        }}
-                    },
-                }},
-                {"bypass-cache", false}
+                new Dictionary<string, dynamic>()
+                    {
+                        {"query-name", "test-drives-in-ca"},
+                        {"query", new List<Dictionary<string, dynamic>>{
+                            new Dictionary<string, dynamic>{
+                                {"test-drives", new Dictionary<string, dynamic>{
+                                    {"equals", "CA"},
+                                    {"between", new List<string>{
+                                        "2016-04-04T00:00:00Z",
+                                        "2016-04-06T00:00:00Z"
+                                    }}
+                                }}
+                            }
+                        }},
+                        {"bypass-cache", false}
+                    }
             };
 
             var result = client.CountEvent(query);
@@ -619,7 +627,7 @@ namespace SlicerTester.Console
 ```
 
 ### Dictionary&lt;string, dynamic> Aggregation(Dictionary&lt;string, dynamic> query)
-Return the aggregation of all fields in the given query. This method corresponds to a [POST request at /query/aggregation](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-aggregation).
+Return the aggregation of all columns in the given query. This method corresponds to a [POST request at /query/aggregation](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-aggregation).
 
 #### Request example
 
@@ -985,7 +993,7 @@ namespace SlicerTester.Console
 ```
 
 ### Dictionary&lt;string, dynamic> Result(Dictionary&lt;string, dynamic> query)
-Retrieve indexed values for entities matching the given query. This method corresponds to a [POST request at /data_extraction/result](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-data-extraction-result).
+Retrieve inserted values for entities matching the given query. This method corresponds to a [POST request at /data_extraction/result](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-data-extraction-result).
 
 #### Request example
 
@@ -1016,7 +1024,7 @@ namespace SlicerTester.Console
                         }}
                     },
                 }},
-                {"fields", new List<string>{"car-model", "year"}},
+                {"columns", new List<string>{"car-model", "year"}},
                 {"limit", 2}
             };
 
@@ -1050,7 +1058,7 @@ namespace SlicerTester.Console
 ```
 
 ### Dictionary&lt;string, dynamic> Score(Dictionary&lt;string, dynamic> query)
-Retrieve indexed values as well as their relevance for entities matching the given query. This method corresponds to a [POST request at /data_extraction/score](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-data-extraction-score).
+Retrieve inserted values as well as their relevance for entities matching the given query. This method corresponds to a [POST request at /data_extraction/score](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-data-extraction-score).
 
 #### Request example
 
@@ -1081,7 +1089,7 @@ namespace SlicerTester.Console
                         }}
                     },
                 }},
-                {"fields", new List<string>{"car-model", "year"}},
+                {"columns", new List<string>{"car-model", "year"}},
                 {"limit", 2}
             };
 
