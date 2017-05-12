@@ -446,7 +446,7 @@ namespace SlicerTester.Console
 }
 ```
 
-### Dictionary&lt;string, dynamic> CountEntity(new List&lt;dynamic> query)
+### Dictionary&lt;string, dynamic> CountEntity(List&lt;dynamic> query)
 Count the number of entities matching the given query. This method corresponds to a [POST request at /query/count/entity](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-count-entity).
 
 #### Request example
@@ -516,7 +516,7 @@ namespace SlicerTester.Console
 }
 ```
 
-### Dictionary&lt;string, dynamic> CountEntity(new Dictionary&lt;string, dynamic> query)
+### Dictionary&lt;string, dynamic> CountEntity(Dictionary&lt;string, dynamic> query)
 Count the number of entities matching the given query. This method corresponds to a [POST request at /query/count/entity](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-count-entity).
 
 #### Request example
@@ -571,7 +571,7 @@ namespace SlicerTester.Console
 }
 ```
 
-### Dictionary&lt;string, dynamic> CountEvent(new List&lt;dynamic> query)
+### Dictionary&lt;string, dynamic> CountEvent(List&lt;dynamic> query)
 Count the number of occurrences for time-series events matching the given query. This method corresponds to a [POST request at /query/count/event](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-count-event).
 
 #### Request example
