@@ -370,7 +370,7 @@ namespace SlicerTester.Console
 ```
 
 ### Dictionary&lt;string, dynamic> CountEntityTotal()
-Count the number of inserted entities. This method corresponds to a [GET request at /query/count/entity/total](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-query-count-entity-total).
+Count the number of inserted entities in the whole database. This method corresponds to a [POST request at /query/count/entity/total](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-query-count-entity-total).
 
 #### Request example
 
@@ -386,6 +386,7 @@ namespace SlicerTester.Console
         static void Main(string[] args)
         {
             var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
+            
             var result = client.CountEntityTotal();
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
@@ -405,7 +406,47 @@ namespace SlicerTester.Console
 }
 ```
 
-### Dictionary&lt;string, dynamic> CountEntity(Dictionary&lt;string, dynamic> query)
+### Dictionary&lt;string, dynamic> CountEntityTotal(List&lt;string> tables)
+Count the total number of inserted entities in the given tables. This method corresponds to a [POST request at /query/count/entity/total](http://panel.slicingdice.com/docs/#api-details-api-endpoints-get-query-count-entity-total).
+
+#### Request example
+
+```csharp
+using System.Collections.Generic;
+using Slicer;
+using Newtonsoft.Json;
+
+namespace SlicerTester.Console
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
+            var tables = new List<string>()
+            {
+                "default"
+            };
+            var result = client.CountEntityTotal(tables);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
+        }
+    }
+}
+```
+
+#### Output example
+
+```json
+{
+    "status": "success",
+    "result": {
+        "total": 42
+    },
+    "took": 0.103
+}
+```
+
+### Dictionary&lt;string, dynamic> CountEntity(List&lt;dynamic> query)
 Count the number of entities matching the given query. This method corresponds to a [POST request at /query/count/entity](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-count-entity).
 
 #### Request example
@@ -475,7 +516,62 @@ namespace SlicerTester.Console
 }
 ```
 
-### Dictionary&lt;string, dynamic> CountEvent(Dictionary&lt;string, dynamic> query)
+### Dictionary&lt;string, dynamic> CountEntity(Dictionary&lt;string, dynamic> query)
+Count the number of entities matching the given query. This method corresponds to a [POST request at /query/count/entity](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-count-entity).
+
+#### Request example
+
+```csharp
+using System.Collections.Generic;
+using Slicer;
+using Newtonsoft.Json;
+
+namespace SlicerTester.Console
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
+            var query = new Dictionary<string, dynamic>()
+            {
+                {"query-name", "corolla-or-fit"},
+                {"query", new List<dynamic>{
+                    new Dictionary<string, dynamic>{
+                        {"car-model", new Dictionary<string, dynamic>{
+                            {"equals", "toyota corolla"}
+                        }}
+                    },
+                    "or",
+                    new Dictionary<string, dynamic>{
+                        {"car-model", new Dictionary<string, dynamic>{
+                            {"equals", "honda fit"}
+                        }}
+                    }
+                }},
+                {"bypass-cache", false}
+            };
+
+            var result = client.CountEntity(query);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
+        }
+    }
+}
+```
+
+#### Output example
+
+```json
+{
+   "result":{
+      "corolla-or-fit":2
+   },
+   "took":0.083,
+   "status":"success"
+}
+```
+
+### Dictionary&lt;string, dynamic> CountEvent(List&lt;dynamic> query)
 Count the number of occurrences for time-series events matching the given query. This method corresponds to a [POST request at /query/count/event](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-count-event).
 
 #### Request example
@@ -541,6 +637,59 @@ namespace SlicerTester.Console
    "result":{
       "test-drives-in-ny":3,
       "test-drives-in-ca":0
+   },
+   "took":0.063,
+   "status":"success"
+}
+```
+
+### Dictionary&lt;string, dynamic> CountEvent(Dictionary&lt;string, dynamic> query)
+Count the number of occurrences for time-series events matching the given query. This method corresponds to a [POST request at /query/count/event](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-count-event).
+
+#### Request example
+
+```csharp
+using System.Collections.Generic;
+using Slicer;
+using Newtonsoft.Json;
+
+namespace SlicerTester.Console
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
+            var query = new Dictionary<string, dynamic>()
+            {
+                    {"query-name", "test-drives-in-ny"},
+                    {"query", new List<Dictionary<string, dynamic>>{
+                        new Dictionary<string, dynamic>{
+                            {"test-drives", new Dictionary<string, dynamic>{
+                                {"equals", "NY"},
+                                {"between", new List<string>{
+                                    "2016-08-16T00:00:00Z",
+                                    "2016-08-18T00:00:00Z"
+                                }}
+                            }}
+                        }
+                    }},
+                    {"bypass-cache", false}
+            };
+
+            var result = client.CountEvent(query);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
+        }
+    }
+}
+```
+
+#### Output example
+
+```json
+{
+   "result":{
+      "test-drives-in-ny":3
    },
    "took":0.063,
    "status":"success"
