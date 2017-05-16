@@ -323,11 +323,15 @@ namespace Slicer
 
         /// <summary>Makes a exists query to SlicingDice API</summary>
         /// <param name="ids">List of ids to test existence on SlicingDice API.</param>
-        public Dictionary<string, dynamic> ExistsEntity(List<string> ids)
+        /// <param name="table">In which table entities check be checked.</param>
+        public Dictionary<string, dynamic> ExistsEntity(List<string> ids, string table = null)
         {
             Dictionary<string, dynamic> query = new Dictionary<string, dynamic>{
                 {"ids", ids}
             };
+            if (table != null) {
+                query["table"] = table;
+            }
             var url = this.testWrapper() + URLResources.QueryExistsEntity;
             return this.MakeRequest(url, query, false, 0);
         }

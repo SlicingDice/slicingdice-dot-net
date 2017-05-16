@@ -9,6 +9,7 @@
 - CLIENT: Add tests for data extraction
 
 ### Updated
+- Update `ExistsEntity()` to receive `table` as parameter
 - Update API errors code
 
 ## [0.3] - 2016-09-29
