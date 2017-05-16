@@ -324,8 +324,8 @@ namespace SlicerTester.Console
 }
 ```
 
-### Dictionary&lt;string, dynamic> ExistsEntity(ids)
-Verify which entities exist in a database given a list of entity IDs. This method corresponds to a [POST request at /query/exists/entity](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-exists-entity).
+### Dictionary&lt;string, dynamic> ExistsEntity(ids, table = null)
+Verify which entities exist in a table (uses `default` table if not provided) given a list of entity IDs. This method corresponds to a [POST request at /query/exists/entity](http://panel.slicingdice.com/docs/#api-details-api-endpoints-post-query-exists-entity).
 
 #### Request example
 
