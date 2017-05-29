@@ -6,7 +6,7 @@ In this directory, you find unitary and regression tests for SlicingDice client.
 2. Provide regression tests that can be executed by anyone with one simple command
 
 ## Data
-The `examples/` directory contains one file for each [SlicingDice query](https://docs.slicingdice.com/docs/how-to-make-queries in JSON format.
+The `examples/` directory contains one file for each [SlicingDice query](https://docs.slicingdice.com/docs/how-to-make-queries) in JSON format.
 
 Each JSON file contains a list of examples, such as the following excerpt, with the following elements:
 
