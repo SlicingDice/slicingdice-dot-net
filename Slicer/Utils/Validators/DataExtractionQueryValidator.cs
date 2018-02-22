@@ -22,9 +22,13 @@ namespace Slicer.Utils.Validators
             if (this.Query.ContainsKey("columns"))
             {
                 var columns = this.Query["columns"];
-                if (columns.Count > 10)
+                if (columns is List<string>)
                 {
-                    throw new InvalidQueryException("The key 'columns' in data extraction result must have up to 10 columns.");
+                    if (columns.Count > 10) {
+                        throw new InvalidQueryException("The key 'columns' in data extraction result must have up to 10 columns.");
+                    }
+                } else if(columns is string && columns != "all") {
+                    throw new InvalidQueryException("The key 'columns' in data extraction result should be a list of columns or the 'all' keyword.");
                 }
             }
             return true;
