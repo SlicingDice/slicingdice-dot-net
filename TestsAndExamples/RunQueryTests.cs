@@ -13,12 +13,12 @@ namespace Slicer.Test
             bool _canceled = false;
             // The query types to test
             List<string> queryTypes = new List<string>(){
-                // "count_entity",
-                // "count_event",
-                // "top_values",
-                // "aggregation",
-                // "result",
-                // "score",
+                "count_entity",
+                "count_event",
+                "top_values",
+                "aggregation",
+                "result",
+                "score",
                 "sql"
             };
 
