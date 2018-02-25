@@ -23,9 +23,10 @@ namespace Slicer.Test
         public int NumSuccesses { get; set; }
         public int NumFails { get; set; }
         public List<dynamic> FailedTests { get; set; }
+        private bool perTestInsert;
         public SlicingDiceTester(string apiKey, bool verbose = false)
         {
-            this.Client = new SlicingDice(masterKey: apiKey, usesTestEndpoint: true);
+            this.Client = new SlicingDice(masterKey: apiKey);
             this.Verbose = verbose;
             // Path of examples directory, the replace is needed to point to the correct path, and it works on Unix and Windows systems
             this.Path = Directory.GetCurrentDirectory().Replace(@"\bin\Debug", @"\examples\").Replace(@"/bin/Debug", @"/examples/");
@@ -34,7 +35,7 @@ namespace Slicer.Test
             this.NumSuccesses = 0;
             this.NumFails = 0;
             // Sleep time in seconds
-            this.SleepTime = 10;
+            this.SleepTime = 5;
             this.FailedTests = new List<dynamic>();
         }
 
@@ -45,6 +46,16 @@ namespace Slicer.Test
             List<Dictionary<string, dynamic>> testData = this.LoadTestData(queryType);
             int numTests = testData.Count();
             int counter = 0;
+
+            this.perTestInsert = testData[0].ContainsKey("insert");
+
+            if (!this.perTestInsert) {
+                List<Dictionary<string, dynamic>> insertData = this.LoadTestData(queryType, "_insert");
+                foreach (Dictionary<string, dynamic> insert in insertData) {
+                    this.Client.Insert(insert);
+                }
+                Thread.Sleep(this.SleepTime * 1000);
+            }
 
             foreach (Dictionary<string, dynamic> test in testData)
             {
@@ -62,12 +73,15 @@ namespace Slicer.Test
                 Dictionary<string, dynamic> result = null;
                 try
                 {
-                    this.CreateColumns(test);
-                    this.InsertData(test);
+                    if (this.perTestInsert) {
+                        this.CreateColumns(test);
+                        this.InsertData(test);
+                    }
                     result = this.ExecuteQuery(queryType, test);
                 }
                 catch (Exception e)
                 {
+                    System.Console.WriteLine(e);
                     result = new Dictionary<string, dynamic>(){
                         {"result", new Dictionary<string, dynamic>(){
                             {"error", e.Message}
@@ -87,10 +101,10 @@ namespace Slicer.Test
 
         /// <summary>Load test data from examples files</summary>
         /// <param name="queryType">Type of the query</param>
-        private List<Dictionary<string, dynamic>> LoadTestData(string queryType)
+        private List<Dictionary<string, dynamic>> LoadTestData(string queryType, string suffix = "")
         {
             string queriesText = string.Empty;
-            using (StreamReader streamReader = new StreamReader(this.Path + queryType + this.Extension, Encoding.UTF8))
+            using (StreamReader streamReader = new StreamReader(this.Path + queryType + suffix + this.Extension, Encoding.UTF8))
             {
                 queriesText = streamReader.ReadToEnd();
             }
@@ -202,9 +216,14 @@ namespace Slicer.Test
         /// <param name="test">Dictionary containing test name, columns metadata, data to be inserted, query, and expected results.</param>
         private Dictionary<string, dynamic> ExecuteQuery(string queryType, Dictionary<string, dynamic> test)
         {
-            JObject testQuery = test["query"];
-            Dictionary<string, object> query = testQuery.ToObject<Dictionary<string, object>>();
-            Dictionary<string, dynamic> queryData = this.TranslateColumnNames(query);
+            dynamic queryData;
+            if (this.perTestInsert) {
+                JObject testQuery = test["query"];
+                Dictionary<string, object> query = testQuery.ToObject<Dictionary<string, object>>();
+                queryData = this.TranslateColumnNames(query);
+            } else {
+                queryData = test["query"];
+            }
             System.Console.WriteLine("  Querying");
 
             if (this.Verbose)
@@ -240,6 +259,10 @@ namespace Slicer.Test
             {
                 result = this.Client.Score(queryData);
             }
+            else if (queryType == "sql")
+            {
+                result = this.Client.Sql(queryData);
+            }
 
             return result;
         }
@@ -248,7 +271,12 @@ namespace Slicer.Test
         private void CompareResult(Dictionary<string, dynamic> test, Dictionary<string, dynamic> result)
         {
             Dictionary<string, dynamic> rawExpected = test["expected"].ToObject<Dictionary<string, dynamic>>();
-            Dictionary<string, dynamic> expected = this.TranslateColumnNames(rawExpected);
+            Dictionary<string, dynamic> expected;
+            if (this.perTestInsert) {
+                expected = this.TranslateColumnNames(rawExpected);
+            } else {
+                expected = rawExpected;                
+            }
 
             if (!this.CompareDictionary(expected, result)) {
                 this.NumFails += 1;
@@ -314,11 +342,23 @@ namespace Slicer.Test
                 return true;
             }
 
+            if (expected.Count != got.Count) {
+                return false;
+            }
+
             // check if keys and values are the same
             for (var i = 0; i < expected.Count; i++) {
                 dynamic expectedValue = expected[i];
-                dynamic gotValue = got[i];
-                if (!this.CompareDictionaryValue(expectedValue, gotValue)) {
+                bool hasValue = false;
+                for (var j = 0; j < got.Count; j++) {
+                    dynamic gotValue = got[j];
+
+                    if (this.CompareDictionaryValue(expectedValue, gotValue)) {
+                        hasValue = true;
+                    }
+                }
+
+                if (!hasValue) {
                     return false;
                 }
             }

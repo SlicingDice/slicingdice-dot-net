@@ -15,13 +15,13 @@ namespace Slicer.Core
 {
     public static class Requester
     {
-        private static HttpClient GetHttpClientConfigured(Dictionary<string, string> headers)
+        private static HttpClient GetHttpClientConfigured(Dictionary<string, string> headers, string contentType = "application/json")
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("Authorization", headers["authorization"]);
-            client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", contentType);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(contentType));
             return client;
         }
         public static string Get(string url, Dictionary<string, string> headers)
@@ -30,10 +30,25 @@ namespace Slicer.Core
             var responseString = client.GetStringAsync(new Uri(url)).Result;
             return responseString;
         }
-        public static HttpResponseMessage Post(string url, dynamic data, Dictionary<string, string> headers) {
-            var client = GetHttpClientConfigured(headers);
-            var content = new StringContent(JsonConvert.SerializeObject(data).ToString(), Encoding.UTF8, "application/json");
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+        public static HttpResponseMessage Post(string url, dynamic data, Dictionary<string, string> headers, bool sql) {
+            string contentType;
+            if (sql) {
+                contentType = "application/sql";
+            } else {
+                contentType = "application/json";
+            }
+            var client = GetHttpClientConfigured(headers, contentType);
+
+            dynamic dataConverted;
+
+            if (sql) {
+                dataConverted = data;
+            } else {
+                dataConverted = JsonConvert.SerializeObject(data).ToString();
+            }
+
+            var content = new StringContent(dataConverted, Encoding.UTF8, contentType);
+            content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
             var response = client.PostAsync(new Uri(url), content).Result;
             return response;
         }

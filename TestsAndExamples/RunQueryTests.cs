@@ -13,18 +13,19 @@ namespace Slicer.Test
             bool _canceled = false;
             // The query types to test
             List<string> queryTypes = new List<string>(){
-                "count_entity",
-                "count_event",
-                "top_values",
-                "aggregation",
-                "result",
-                "score"
+                // "count_entity",
+                // "count_event",
+                // "top_values",
+                // "aggregation",
+                // "result",
+                // "score",
+                "sql"
             };
 
             // Testing class with demo API key
             // To get a new Demo API key visit: http://panel.slicingdice.com/docs/#api-details-api-connection-api-keys-demo-key
             SlicingDiceTester sdTester = new SlicingDiceTester(
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfX3NhbHQiOiJkZW1vODRtIiwicGVybWlzc2lvbl9sZXZlbCI6MywicHJvamVjdF9pZCI6MjQ1LCJjbGllbnRfaWQiOjEwfQ.iJ2GH_OrgunwK8-5iEov7IZbAHObLVNnNzPTcrrpDtY",
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfX3NhbHQiOiIxNTE4NjA3ODQ0NDAzIiwicGVybWlzc2lvbl9sZXZlbCI6MywicHJvamVjdF9pZCI6NDY5NjYsImNsaWVudF9pZCI6OTUxfQ.S6LCWQDcLS1DEFy3lsqk2jTGIe5rJ5fsQIvWuuFBdkw",
                 verbose: false);
 
             Console.CancelKeyPress += delegate(object sender, ConsoleCancelEventArgs e)
