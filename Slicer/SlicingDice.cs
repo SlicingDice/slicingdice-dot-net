@@ -20,13 +20,11 @@ namespace Slicer
 
         private string _enviromentAddress = Environment.GetEnvironmentVariable("SD_API_ADDRESS");
         private string _baseUrl = null;
-        private bool _usesTestEndpoint;
-        public SlicingDice(string masterKey=null, string customKey=null, string writeKey=null, string readKey=null, int timeout=60, bool usesTestEndpoint=false)
+        public SlicingDice(string masterKey=null, string customKey=null, string writeKey=null, string readKey=null, int timeout=60)
         {
             this.Keys = this.OrganizeKeys(masterKey, customKey, writeKey, readKey);
             this.Timeout = timeout;
             this._baseUrl = this.GetBaseUrl();
-            this._usesTestEndpoint = usesTestEndpoint;
         }
         private Dictionary<string, string> OrganizeKeys(string masterKey, string customKey, string writeKey, string readKey)
         {
@@ -103,7 +101,7 @@ namespace Slicer
         /// <param name="query">The query to send to SlicingDice API.</param>
         /// <param name="update">if true it will make a put request.</param>
         /// <param name="keyLevel">Minimum key level to make the request.</param>
-        private Dictionary<string, dynamic> MakeRequest(string url, dynamic query, bool update, int keyLevel)
+        private Dictionary<string, dynamic> MakeRequest(string url, dynamic query, bool update, int keyLevel, bool sql = false)
         {
             HttpResponseMessage response;
             var key = this.GetKey(keyLevel);
@@ -117,7 +115,7 @@ namespace Slicer
             }
             else
             {
-                response = Requester.Post(url, query, headers);
+                response = Requester.Post(url, query, headers, sql);
             }
             var responseString = response.Content.ReadAsStringAsync().Result;
             if (this.HandlerResponseRequester(responseString))
@@ -182,12 +180,6 @@ namespace Slicer
             return null;
         }
 
-        private string testWrapper()
-        {
-            if (this._usesTestEndpoint) return this._baseUrl + "/test";
-            return this._baseUrl;
-        }
-
         /// <summary>Makes a data extraction query (score or result) on SlicingDice API</summary>
         /// <param name="URL">Url to make request, identify if it's a score or result query.</param>
         /// <param name="query">The data extraction query.</param>
@@ -204,14 +196,14 @@ namespace Slicer
         /// <summary>Get all columns</summary>
         public Dictionary<string, dynamic> GetColumns()
         {
-            var url = this.testWrapper() + URLResources.Column;
+            var url = this._baseUrl + URLResources.Column;
             return this.MakeRequest(url, false, 2);
         }
 
         /// <summary>Get information about current database</summary>
         public Dictionary<string, dynamic> GetDatabase()
         {
-            var url = this.testWrapper() + URLResources.Database;
+            var url = this._baseUrl + URLResources.Database;
             return this.MakeRequest(url, false, 2);
         }
 
@@ -219,14 +211,14 @@ namespace Slicer
         /// <param name="savedQueryName">The name of the saved query that will be retrieved.</param>
         public Dictionary<string, dynamic> GetSavedQuery(string savedQueryName)
         {
-            var url = this.testWrapper() + URLResources.QuerySaved + savedQueryName;
+            var url = this._baseUrl + URLResources.QuerySaved + savedQueryName;
             return this.MakeRequest(url, false, 0);
         }
 
         /// <summary>Get all saved queries</summary>
         public Dictionary<string, dynamic> GetSavedQueries()
         {
-            var url = this.testWrapper() + URLResources.QuerySaved;
+            var url = this._baseUrl + URLResources.QuerySaved;
             return this.MakeRequest(url, false, 2);
         }
 
@@ -234,7 +226,7 @@ namespace Slicer
         /// <param name="query">The query to send to SlicingDice API</param>
         public Dictionary<string, dynamic> CreateColumn(dynamic query)
         {
-            var url = this.testWrapper() + URLResources.Column;
+            var url = this._baseUrl + URLResources.Column;
             var sdValidator = new ColumnValidator(query);
             if (sdValidator.Validator()) return this.MakeRequest(url, query, false, 1);
             return null;
@@ -244,7 +236,7 @@ namespace Slicer
         /// <param name="data">The query to send to SlicingDice API</param>
         public Dictionary<string, dynamic> Insert(Dictionary<string, dynamic> data)
         {
-            var url = this.testWrapper() + URLResources.Insert;
+            var url = this._baseUrl + URLResources.Insert;
             return this.MakeRequest(url, data, false, 1);
         }
         
@@ -252,7 +244,7 @@ namespace Slicer
         /// <param name="query">The query to send to SlicingDice API</param>
         public Dictionary<string, dynamic> CountEntity(Dictionary<string, dynamic> query)
         {
-            var url = this.testWrapper() + URLResources.QueryCountEntity;
+            var url = this._baseUrl + URLResources.QueryCountEntity;
             return this.CountQueryWrapper(url, query);
         }
 
@@ -260,7 +252,7 @@ namespace Slicer
         /// <param name="query">The query to send to SlicingDice API</param>
         public Dictionary<string, dynamic> CountEntity(List<dynamic> query)
         {
-            var url = this.testWrapper() + URLResources.QueryCountEntity;
+            var url = this._baseUrl + URLResources.QueryCountEntity;
             return this.CountQueryWrapper(url, query);
         }
 
@@ -268,7 +260,7 @@ namespace Slicer
         public Dictionary<string, dynamic> CountEntityTotal()
         {
             var query = new Dictionary<string, List<string>>();
-            var url = this.testWrapper() + URLResources.QueryCountEntityTotal;
+            var url = this._baseUrl + URLResources.QueryCountEntityTotal;
             return this.MakeRequest(url, query, false, 0);
         }
 
@@ -280,7 +272,7 @@ namespace Slicer
             {
                 {"tables", tables}
             };
-            var url = this.testWrapper() + URLResources.QueryCountEntityTotal;
+            var url = this._baseUrl + URLResources.QueryCountEntityTotal;
             return this.MakeRequest(url, query, false, 0);
         }
 
@@ -288,7 +280,7 @@ namespace Slicer
         /// <param name="query">The query to send to SlicingDice API</param>
         public Dictionary<string, dynamic> CountEvent(Dictionary<string, dynamic> query)
         {
-            var url = this.testWrapper() + URLResources.QueryCountEvent;
+            var url = this._baseUrl + URLResources.QueryCountEvent;
             return this.CountQueryWrapper(url, query);
         }
 
@@ -296,7 +288,7 @@ namespace Slicer
         /// <param name="query">The query to send to SlicingDice API</param>
         public Dictionary<string, dynamic> CountEvent(List<dynamic> query)
         {
-            var url = this.testWrapper() + URLResources.QueryCountEvent;
+            var url = this._baseUrl + URLResources.QueryCountEvent;
             return this.CountQueryWrapper(url, query);
         }
 
@@ -304,7 +296,7 @@ namespace Slicer
         /// <param name="query">The query to send to SlicingDice API</param>
         public Dictionary<string, dynamic> Aggregation(Dictionary<string, dynamic> query)
         {
-            var url = this.testWrapper() + URLResources.QueryAggregation;
+            var url = this._baseUrl + URLResources.QueryAggregation;
             return this.MakeRequest(url, query, false, 0);
         }
 
@@ -312,7 +304,7 @@ namespace Slicer
         /// <param name="query">The query to send to SlicingDice API</param>
         public Dictionary<string, dynamic> TopValues(Dictionary<string, dynamic> query)
         {
-            var url = this.testWrapper() + URLResources.QueryTopValues;
+            var url = this._baseUrl + URLResources.QueryTopValues;
             var sdValidator = new QueryTopValuesValidator(query);
             if (sdValidator.Validator())
             {
@@ -332,7 +324,7 @@ namespace Slicer
             if (table != null) {
                 query["table"] = table;
             }
-            var url = this.testWrapper() + URLResources.QueryExistsEntity;
+            var url = this._baseUrl + URLResources.QueryExistsEntity;
             return this.MakeRequest(url, query, false, 0);
         }
 
@@ -340,7 +332,7 @@ namespace Slicer
         /// <param name="query">The query to send to SlicingDice API</param>
         public Dictionary<string, dynamic> CreateSavedQuery(Dictionary<string, dynamic> query)
         {
-            var url = this.testWrapper() + URLResources.QuerySaved;
+            var url = this._baseUrl + URLResources.QuerySaved;
             var savedQuery = new SavedQueryValidator(query);
             if (savedQuery.Validator())
             {
@@ -354,7 +346,7 @@ namespace Slicer
         /// <param name="query">The query to send to SlicingDice API</param>
         public Dictionary<string, dynamic> UpdateSavedQuery(string querySavedName, Dictionary<string, dynamic> query)
         {
-            var url = this.testWrapper() + URLResources.QuerySaved + querySavedName;
+            var url = this._baseUrl + URLResources.QuerySaved + querySavedName;
             return this.MakeRequest(url, query, true, 2);
         }
 
@@ -362,7 +354,7 @@ namespace Slicer
         /// <param name="savedQueryName">The name of the saved query that will be deleted.</param>
         public Dictionary<string, dynamic> DeleteSavedQuery(string savedQueryName)
         {
-            var url = this.testWrapper() + URLResources.QuerySaved + savedQueryName;
+            var url = this._baseUrl + URLResources.QuerySaved + savedQueryName;
             return this.MakeRequest(url, true, 2);
         }
 
@@ -370,7 +362,7 @@ namespace Slicer
         /// <param name="query">The query to send to SlicingDice API</param>
         public Dictionary<string, dynamic> Result(Dictionary<string, dynamic> query)
         {
-            var url = this.testWrapper() + URLResources.QueryDataExtractionResult;
+            var url = this._baseUrl + URLResources.QueryDataExtractionResult;
             return this.DataExtractionQueryWrapper(url, query);
         }
 
@@ -378,8 +370,13 @@ namespace Slicer
         /// <param name="query">The query to send to SlicingDice API</param>
         public Dictionary<string, dynamic> Score(Dictionary<string, dynamic> query)
         {
-            var url = this.testWrapper() + URLResources.QueryDataExtractionScore;
+            var url = this._baseUrl + URLResources.QueryDataExtractionScore;
             return this.DataExtractionQueryWrapper(url, query);
+        }
+
+        public Dictionary<string, dynamic> Sql(string query) {
+            var url = this._baseUrl + URLResources.QuerySQL;
+            return this.MakeRequest(url, query, false, 0, true);
         }
     }
 }

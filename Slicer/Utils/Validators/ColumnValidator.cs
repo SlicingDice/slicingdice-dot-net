@@ -19,7 +19,7 @@ namespace Slicer.Utils.Validators
             {
                 "unique-id", "boolean", "string", "integer", "decimal",
                 "enumerated", "date", "integer-time-series",
-                "decimal-time-series", "string-time-series"
+                "decimal-time-series", "string-time-series", "datetime"
             };
         }
         // Check if column name is valid

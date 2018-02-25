@@ -20,5 +20,6 @@ namespace Slicer.Utils
         public static string QuerySaved { get { return "/query/saved/"; } }
         public static string QueryDataExtractionResult { get { return "/data_extraction/result/"; } }
         public static string QueryDataExtractionScore { get { return "/data_extraction/score/"; } }
+        public static string QuerySQL { get { return "/query/sql/"; } }
     }
 }
