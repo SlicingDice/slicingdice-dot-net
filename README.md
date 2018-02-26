@@ -54,7 +54,7 @@ namespace Slicer.Console
         static void Main(string[] args)
         {
             // Configure the client
-            var client = new SlicingDice(masterKey: "API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "API_KEY");
 
             // Creating a column
             var columnData = new Dictionary<string, dynamic>()
@@ -113,7 +113,6 @@ namespace Slicer.Console
 * `writeKey (string)` - [API key](https://docs.slicingdice.com/docs/api-keys) to authenticate requests with the SlicingDice API.
 * `readKey (string)` - [API key](https://docs.slicingdice.com/docs/api-keys) to authenticate requests with the SlicingDice API.
 * `timeout (int)` - Amount of time, in seconds, to wait for results for each request.
-* `usesTestEndpoint (bool)` - If false the client will send requests to production end-point, otherwise to tests end-point.
 
 ### Dictionary&lt;string, dynamic> GetDatabase()
 Get information about current database. This method corresponds to a `GET` request at `/database`.
@@ -131,7 +130,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_API_KEY");
 
             var result = client.GetDatabase();
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
@@ -146,7 +145,7 @@ namespace SlicerTester.Console
 {
     "name": "Database 1",
     "description": "My first database",
-    "tables": [
+    "dimensions": [
     	"default",
         "users"
     ],
@@ -171,7 +170,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_API_KEY");
 
             var result = client.GetColumns();
 
@@ -225,7 +224,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_API_KEY");
             var column = new Dictionary<string, dynamic>()
             {
                 {"name", "Year"},
@@ -266,11 +265,11 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_OR_WRITE_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_OR_WRITE_API_KEY");
             var insert = new Dictionary<string, dynamic>()
             {
                 {"auto-create", new List<string>(){
-                    "table", "column"
+                    "dimension", "column"
                 }},
                 {"user1@slicingdice.com", new Dictionary<string, dynamic>{
                     {"car-model", "Ford Ka"},
@@ -328,8 +327,8 @@ namespace SlicerTester.Console
 }
 ```
 
-### Dictionary&lt;string, dynamic> ExistsEntity(ids, table = null)
-Verify which entities exist in a table (uses `default` table if not provided) given a list of entity IDs. This method corresponds to a [POST request at /query/exists/entity](https://docs.slicingdice.com/docs/exists).
+### Dictionary&lt;string, dynamic> ExistsEntity(ids, dimension = null)
+Verify which entities exist in a dimension (uses `default` dimension if not provided) given a list of entity IDs. This method corresponds to a [POST request at /query/exists/entity](https://docs.slicingdice.com/docs/exists).
 
 #### Request example
 
@@ -344,7 +343,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_API_KEY");
             var ids = new List<string>{
                 "user1@slicingdice.com",
                 "user2@slicingdice.com",
@@ -389,7 +388,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY");
             
             var result = client.CountEntityTotal();
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
@@ -410,8 +409,8 @@ namespace SlicerTester.Console
 }
 ```
 
-### Dictionary&lt;string, dynamic> CountEntityTotal(List&lt;string> tables)
-Count the total number of inserted entities in the given tables. This method corresponds to a [POST request at /query/count/entity/total](https://docs.slicingdice.com/docs/total#section-counting-specific-tables).
+### Dictionary&lt;string, dynamic> CountEntityTotal(List&lt;string> dimensions)
+Count the total number of inserted entities in the given dimensions. This method corresponds to a [POST request at /query/count/entity/total](https://docs.slicingdice.com/docs/total#section-counting-specific-tables).
 
 #### Request example
 
@@ -426,12 +425,12 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
-            var tables = new List<string>()
+            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY");
+            var dimensions = new List<string>()
             {
                 "default"
             };
-            var result = client.CountEntityTotal(tables);
+            var result = client.CountEntityTotal(dimensions);
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
     }
@@ -466,7 +465,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY");
             var query = new List<dynamic>{
                 new Dictionary<string, dynamic>()
                     {
@@ -536,7 +535,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY");
             var query = new Dictionary<string, dynamic>()
             {
                 {"query-name", "corolla-or-fit"},
@@ -591,7 +590,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY");
             var query = new List<dynamic>{
                 new Dictionary<string, dynamic>()
                     {
@@ -663,7 +662,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY");
             var query = new Dictionary<string, dynamic>()
             {
                     {"query-name", "test-drives-in-ny"},
@@ -716,7 +715,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY");
             var query = new Dictionary<string, dynamic>()
             {
                 {"car-year", new Dictionary<string, dynamic>{
@@ -789,7 +788,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY");
             var query = new Dictionary<string, dynamic>()
             {
                 {"query", new List<Dictionary<string, dynamic>>{
@@ -856,7 +855,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_API_KEY");
             var result = client.GetSavedQueries();
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
@@ -920,7 +919,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_API_KEY");
             var query = new Dictionary<string, dynamic>()
             {
                 {"name", "my-saved-query"},
@@ -989,7 +988,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_API_KEY");
             var query = new Dictionary<string, dynamic>()
             {
                 {"type", "count/entity"},
@@ -1056,7 +1055,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY");
             var result = client.GetSavedQuery("my-saved-query");
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
@@ -1106,7 +1105,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_API_KEY");
             var result = client.DeleteSavedQuery("my-saved-query");
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
         }
@@ -1155,7 +1154,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY");
             var query = new Dictionary<string, dynamic>()
             {
                 {"query", new List<dynamic>{
@@ -1220,7 +1219,7 @@ namespace SlicerTester.Console
     {
         static void Main(string[] args)
         {
-            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY", usesTestEndpoint: false);
+            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY");
             var query = new Dictionary<string, dynamic>()
             {
                 {"query", new List<dynamic>{
@@ -1269,3 +1268,46 @@ namespace SlicerTester.Console
    "status":"success"
 }
 ```
+
+### Dictionary&lt;string, dynamic> Sql(string query)
+Retrieve inserted values using a SQL syntax. This method corresponds to a POST request at /query/sql.
+
+#### Request example
+
+```csharp
+using System.Collections.Generic;
+using Slicer;
+using Newtonsoft.Json;
+
+namespace SlicerTester.Console
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY");
+            var query = "SELECT COUNT(*) FROM default WHERE age BETWEEN 0 AND 49";
+
+            var result = client.Sql(query);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
+        }
+    }
+}
+```
+
+#### Output example
+
+```json
+{
+   "took":0.063,
+   "result":[
+       {"COUNT": 3}
+   ],
+   "count":1,
+   "status":"success"
+}
+```
+
+## License
+
+[MIT](https://opensource.org/licenses/MIT)
