@@ -265,12 +265,12 @@ namespace Slicer
         }
 
         /// <summary>Makes a total query to SlicingDice API</summary>
-        /// <param name="tables">The tables in which the total query will be performed</param>
-        public Dictionary<string, dynamic> CountEntityTotal(List<string> tables)
+        /// <param name="dimensions">The dimensions in which the total query will be performed</param>
+        public Dictionary<string, dynamic> CountEntityTotal(List<string> dimensions)
         {
             var query = new Dictionary<string, List<string>>()
             {
-                {"tables", tables}
+                {"dimensions", dimensions}
             };
             var url = this._baseUrl + URLResources.QueryCountEntityTotal;
             return this.MakeRequest(url, query, false, 0);
@@ -315,14 +315,14 @@ namespace Slicer
 
         /// <summary>Makes a exists query to SlicingDice API</summary>
         /// <param name="ids">List of ids to test existence on SlicingDice API.</param>
-        /// <param name="table">In which table entities check be checked.</param>
-        public Dictionary<string, dynamic> ExistsEntity(List<string> ids, string table = null)
+        /// <param name="dimension">In which dimension entities check be checked.</param>
+        public Dictionary<string, dynamic> ExistsEntity(List<string> ids, string dimension = null)
         {
             Dictionary<string, dynamic> query = new Dictionary<string, dynamic>{
                 {"ids", ids}
             };
-            if (table != null) {
-                query["table"] = table;
+            if (dimension != null) {
+                query["dimension"] = dimension;
             }
             var url = this._baseUrl + URLResources.QueryExistsEntity;
             return this.MakeRequest(url, query, false, 0);
