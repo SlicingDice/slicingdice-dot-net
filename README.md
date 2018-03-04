@@ -1272,7 +1272,7 @@ namespace SlicerTester.Console
 ### Dictionary&lt;string, dynamic> Sql(string query)
 Retrieve inserted values using a SQL syntax. This method corresponds to a POST request at /query/sql.
 
-#### Request example
+#### Query statement
 
 ```csharp
 using System.Collections.Generic;
@@ -1287,6 +1287,28 @@ namespace SlicerTester.Console
         {
             var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY");
             var query = "SELECT COUNT(*) FROM default WHERE age BETWEEN 0 AND 49";
+
+            var result = client.Sql(query);
+            System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
+        }
+    }
+}
+```
+
+#### Insert statement
+```csharp
+using System.Collections.Generic;
+using Slicer;
+using Newtonsoft.Json;
+
+namespace SlicerTester.Console
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var client = new SlicingDice(masterKey: "MASTER_OR_READ_API_KEY");
+            var query = "SINSERT INTO default([entity-id], name, age) VALUES(1, 'john', 10)";
 
             var result = client.Sql(query);
             System.Console.WriteLine(JsonConvert.SerializeObject(result).ToString());
