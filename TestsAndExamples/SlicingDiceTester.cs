@@ -24,6 +24,7 @@ namespace Slicer.Test
         public int NumFails { get; set; }
         public List<dynamic> FailedTests { get; set; }
         private bool perTestInsert;
+        private bool insertSqlData = false;
         public SlicingDiceTester(string apiKey, bool verbose = false)
         {
             this.Client = new SlicingDice(masterKey: apiKey);
@@ -49,7 +50,7 @@ namespace Slicer.Test
 
             this.perTestInsert = testData[0].ContainsKey("insert");
 
-            if (!this.perTestInsert) {
+            if (!this.perTestInsert && this.insertSqlData) {
                 List<Dictionary<string, dynamic>> insertData = this.LoadTestData(queryType, "_insert");
                 foreach (Dictionary<string, dynamic> insert in insertData) {
                     this.Client.Insert(insert);
