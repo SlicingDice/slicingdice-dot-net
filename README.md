@@ -1,9 +1,12 @@
 # SlicingDice Official .NET/C# Client (v2.0.2)
-### Build Status: [![CircleCI](https://circleci.com/gh/SlicingDice/slicingdice-dot-net.svg?style=svg)](https://circleci.com/gh/SlicingDice/slicingdice-dot-net)
 
-Official .NET/C# client for [SlicingDice](http://www.slicingdice.com/), Data Warehouse and Analytics Database as a Service.  
+Official .NET/C# client for [SlicingDice - Data Warehouse and Analytics Database as a Service](http://www.slicingdice.com/).
 
-[SlicingDice](http://www.slicingdice.com/) is a serverless, API-based, easy-to-use and really cost-effective alternative to Amazon Redshift and Google BigQuery.
+[SlicingDice](http://www.slicingdice.com/) is a serverless, SQL & API-based, easy-to-use and really cost-effective alternative to Amazon Redshift and Google BigQuery.
+
+### Build Status: [![CircleCI](https://circleci.com/gh/SlicingDice/slicingdice-dot-net/tree/master.svg?style=svg)](https://circleci.com/gh/SlicingDice/slicingdice-dot-net/tree/master)
+
+### Code Quality: [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6b41f3f06cc34af7bbc255b4d6b5740e)](https://www.codacy.com/app/SimbioseVentures/slicingdice-dot-net?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SlicingDice/slicingdice-dot-net&amp;utm_campaign=Badge_Grade)
 
 ## Documentation
 
