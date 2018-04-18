@@ -36,7 +36,7 @@ namespace Slicer.Test
             this.NumSuccesses = 0;
             this.NumFails = 0;
             // Sleep time in seconds
-            this.SleepTime = 10;
+            this.SleepTime = 20;
             this.FailedTests = new List<dynamic>();
         }
 
