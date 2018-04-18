@@ -149,13 +149,13 @@ namespace Slicer.Test
         /// <param name="column">Dicitonary containing the column to append timestamp</param>
         private void AddTimestampToColumnName(Dictionary<string, dynamic> column)
         {
-            string oldName = string.Format("\"{0}", column["api-name"]);
+            string oldName = string.Format("\"{0}\"", column["api-name"]);
 
             string timestamp = this.GetTimestamp();
             column["name"] = column["name"] + timestamp;
             column["api-name"] = column["api-name"] + timestamp;
 
-            string newName = string.Format("\"{0}", column["api-name"]);
+            string newName = string.Format("\"{0}\"", column["api-name"]);
             this.ColumnTranslation[oldName] = newName;
         }
 
