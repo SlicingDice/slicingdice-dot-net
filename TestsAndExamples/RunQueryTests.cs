@@ -25,7 +25,7 @@ namespace Slicer.Test
             // Testing class with demo API key
             // To get a new Demo API key visit: http://panel.slicingdice.com/docs/#api-details-api-connection-api-keys-demo-key
             SlicingDiceTester sdTester = new SlicingDiceTester(
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfX3NhbHQiOiIxNTI0MDE4NjE3NjY3IiwicGVybWlzc2lvbl9sZXZlbCI6MywicHJvamVjdF9pZCI6MzAwMTEsImNsaWVudF9pZCI6MTF9.If9Pe6WZe-UfZ5yr-wq-P4E6JDvyCVOTxVJM89Os0xI",
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfX3NhbHQiOiIxNTI0MjQ4ODIwMDEyIiwicGVybWlzc2lvbl9sZXZlbCI6MywicHJvamVjdF9pZCI6MzAwMzAsImNsaWVudF9pZCI6MTF9.PpdlQxFmLSFFtKDeu1ECtA-YWYycyW5Bkk_UDcqetN4",
                 verbose: false);
 
             Console.CancelKeyPress += delegate(object sender, ConsoleCancelEventArgs e)
