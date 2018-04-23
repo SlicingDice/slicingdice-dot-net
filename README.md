@@ -1,4 +1,4 @@
-# SlicingDice Official .NET/C# Client (v2.0.2)
+# SlicingDice Official .NET/C# Client (v2.0.3)
 
 Official .NET/C# client for [SlicingDice - Data Warehouse and Analytics Database as a Service](http://www.slicingdice.com/).
 
