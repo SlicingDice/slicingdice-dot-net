@@ -60,6 +60,7 @@ namespace Slicer.Test
 
             foreach (Dictionary<string, dynamic> test in testData)
             {
+                string queryType_ = queryType;
                 this.EmptyColumnTranslation();
 
                 System.Console.WriteLine(string.Format("({0}/{1}) Executing test \"{2}\"", counter + 1, numTests, test["name"]));
@@ -74,11 +75,23 @@ namespace Slicer.Test
                 Dictionary<string, dynamic> result = null;
                 try
                 {
-                    if (this.perTestInsert) {
+                    if (this.perTestInsert) 
+                    {
                         this.CreateColumns(test);
                         this.InsertData(test);
                     }
-                    result = this.ExecuteQuery(queryType, test);
+
+                    if (queryType == "update" || queryType == "delete") 
+                    {
+                        bool resultAdditional = this.RunAdditionalOperations(queryType, test);
+                        if (!resultAdditional) 
+                        {
+                            continue;
+                        }
+                        queryType_ = "count_entity";
+                    }
+
+                    result = this.ExecuteQuery(queryType_, test);
                 }
                 catch (Exception e)
                 {
@@ -88,10 +101,70 @@ namespace Slicer.Test
                             {"error", e.Message}
                         }}
                     };
+
+                    if (queryType == "update" || queryType == "delete") 
+                    {
+                        this.NumFails += 1;
+                        this.FailedTests.Add(test["name"]);
+
+                        string resultString = JsonConvert.SerializeObject(result).Trim();
+
+                        System.Console.WriteLine(string.Format("  Result: {0}", resultString));
+                        System.Console.WriteLine("  Status: Failed\n");
+                        continue;
+                    }
                 }
 
                 this.CompareResult(test, result);
             }
+        }
+
+        private bool RunAdditionalOperations(string queryType, Dictionary<string, dynamic> test) {
+            Dictionary<string, dynamic> queryData = this.TranslateColumnNames(test["additional_operation"].ToObject<Dictionary<string, dynamic>>());
+            if (queryType == "delete") 
+            {
+                System.Console.WriteLine("  Deleting");
+            } else 
+            {
+                System.Console.WriteLine("  Updating");
+            }
+
+            if (this.Verbose)
+            {
+                foreach (KeyValuePair<string, dynamic> qData in queryData)
+                {
+                    System.Console.WriteLine(string.Format("    - \"{0}\": {1}", qData.Key, qData.Value));
+                }
+            }
+
+            Dictionary<string, dynamic> result = null;
+            if (queryType == "delete") 
+            {
+                result = this.Client.Delete(queryData);
+            } else if (queryType == "update") 
+            {
+                result = this.Client.Update(queryData);
+            }
+
+            Dictionary<string, dynamic> expected = this.TranslateColumnNames(test["result_additional"].ToObject<Dictionary<string, dynamic>>());
+
+            if (!this.CompareDictionary(expected, result)) 
+            {
+                this.NumFails += 1;
+                this.FailedTests.Add(test["name"]);
+
+                string expectedString = JsonConvert.SerializeObject(expected).Trim();
+                string resultString = JsonConvert.SerializeObject(result).Trim();
+
+                System.Console.WriteLine(string.Format("  Expected: {0}", expectedString));
+                System.Console.WriteLine(string.Format("  Result: {0}", resultString));
+                System.Console.WriteLine("  Status: Failed\n");
+                return false;
+            }
+
+            this.NumSuccesses += 1;
+            System.Console.WriteLine("  Status: Passed\n");
+            return true;
         }
 
         // Erase column translation dictionary
