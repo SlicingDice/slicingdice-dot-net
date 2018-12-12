@@ -21,5 +21,7 @@ namespace Slicer.Utils
         public static string QueryDataExtractionResult { get { return "/data_extraction/result/"; } }
         public static string QueryDataExtractionScore { get { return "/data_extraction/score/"; } }
         public static string QuerySQL { get { return "/sql/"; } }
+        public static string Delete { get { return "/delete/"; } }
+        public static string Update { get { return "/update/"; } }
     }
 }

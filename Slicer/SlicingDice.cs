@@ -378,5 +378,15 @@ namespace Slicer
             var url = this._baseUrl + URLResources.QuerySQL;
             return this.MakeRequest(url, query, false, 0, true);
         }
+
+        public Dictionary<string, dynamic> Delete(Dictionary<string, dynamic> query) {
+            var url = this._baseUrl + URLResources.Delete;
+            return this.MakeRequest(url, query, false, 2);
+        }
+
+        public Dictionary<string, dynamic> Update(Dictionary<string, dynamic> query) {
+            var url = this._baseUrl + URLResources.Update;
+            return this.MakeRequest(url, query, false, 2);
+        }
     }
 }
