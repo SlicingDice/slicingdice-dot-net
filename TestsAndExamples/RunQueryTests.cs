@@ -32,7 +32,7 @@ namespace Slicer.Test
 
             // Testing class with demo API key
             // To get a new Demo API key visit: http://panel.slicingdice.com/docs/#api-details-api-connection-api-keys-demo-key
-            SlicingDiceTester sdTester = new SlicingDiceTester(apiKey, verbose: true);
+            SlicingDiceTester sdTester = new SlicingDiceTester(apiKey, verbose: false);
 
             Console.CancelKeyPress += delegate(object sender, ConsoleCancelEventArgs e)
             {

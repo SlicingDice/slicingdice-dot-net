@@ -18,8 +18,8 @@ namespace Slicer.Utils.Validators
             this.validTypesColumns = new List<string>()
             {
                 "unique-id", "boolean", "string", "integer", "decimal",
-                "enumerated", "date", "integer-time-series",
-                "decimal-time-series", "string-time-series", "datetime"
+                "enumerated", "date", "integer-event",
+                "decimal-event", "string-event", "datetime"
             };
         }
         // Check if column name is valid
@@ -65,12 +65,12 @@ namespace Slicer.Utils.Validators
         {
             var decimalTypes = new List<string>()
             {
-                "decimal", "decimal-time-series"
+                "decimal", "decimal-event"
             };
             var typeColumn = (string) Query["type"];
             if (!decimalTypes.Contains(typeColumn))
             {
-                throw new InvalidColumnException("This column only accepts 'decimal' or 'decimal-time-series' types");
+                throw new InvalidColumnException("This column only accepts 'decimal' or 'decimal-event' types");
             }
         }
         // Check if string column is valid
